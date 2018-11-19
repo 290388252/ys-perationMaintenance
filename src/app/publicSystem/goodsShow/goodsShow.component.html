@@ -1,0 +1,219 @@
+<div class="am-message result" style="background-size: 100% 0;margin-top: 1%;border-top: 1px solid #e5e5e5;" [hidden]="close">
+  <!--<i class="am-icon result success" [hidden]="flag === '1' || flag === '2'"></i>-->
+  <!--<div [hidden]="flag === '1' || flag === '2'" class="am-message-main">补货完成</div>-->
+  <!--<p [hidden]="flag === '1' || flag === '2'" style="font-size: 12px;color: red">(如数量不对请点击修正，补货输入正数，拿货输入负数！)</p>-->
+  <div [hidden]="flag === '1' || flag === '2'" style="height: 30px;">
+    <img src="../../../assets/main/my_success.png" style="width: 24px;height: 24px;margin-top: -12px;">
+    <span style="font-size: 18px;color: #333333;font-weight: bolder;">补货成功</span>
+    <p style="font-size: 12px;color: #F6151C">(如数量不对请点击修正，补货输入正数，拿货输入负数！)</p>
+  </div>
+  <div [hidden]="flag === '3' || flag === '4'" style="height: 30px;">
+      <img src="../../../assets/main/my_success.png" style="width: 24px;height: 24px;margin-top: -12px;">
+      <span style="font-size: 18px;color: #333333;font-weight: bolder;">购买成功</span>
+  </div>
+  <div [hidden]="flag === '3' || flag === '4'" class="am-message-main" style="color: #333333; font-size: 14px;margin-top: 26px;font-weight: bold;">实付金额：￥{{price}}&nbsp;&nbsp;&nbsp;&nbsp;
+    <span *ngIf="sumDeductionMoney" style="color: #F6151C; font-size: 12px; font-weight: bold; ">优惠金额：￥{{sumDeductionMoney}}</span>
+  </div>
+  <a [hidden]="item.changeNum > 0 && flag === '1'" href="javascript:void(0);" *ngFor="let item of replenishList;let i = index" class="weui-media-box weui-media-box_appmsg">
+    <div class="weui-media-box__hd">
+      <img class="weui-media-box__thumb" [src]="img+item.pic" alt="">
+    </div>
+    <div class="weui-media-box__bd">
+      <h4 class="weui-media-box__title">{{item.itemName}}</h4>
+      <h5 style="margin-top: 1px" class="weui-media-box__desc">{{turnText(item)}}
+        <button class="fixed-button" [hidden]="flag === '1' || flag === '2'" (click)="fixedNum(item, i)">修正数量</button>
+      </h5>
+    </div>
+  </a>
+  <div style="margin-top: 18px;margin-bottom: 5px;">
+    <button nz-button nzType="default" (click)="exit()">返回首页</button>
+    <button nz-button nzType="dash" style="background-color: #eee;" (click)="seeOrder()" *ngIf="isFollow === 1">查看订单</button>
+  </div>
+  <div [hidden]="flag === '3' || flag === '4'" *ngIf="isFollow === 0" style="margin: 20px 0px; color: #3e85ff; font-size: 12px;">
+    <a href="javascript:void(0);" (click)="openShowModel()">关注公众号查看订单&nbsp;&gt;</a>
+  </div>
+  <a nz-row style="padding: 16px 0px;border-top: 1px solid #e5e5e5;" [hidden]="flag === '3' || flag === '4'" *ngIf="type === '1'">
+    <div nz-col nzSpan="8" style="color: #999999;font-size: 14px;">已使用优惠券</div>
+    <div nz-col nzSpan="8"></div>
+    <div nz-col nzSpan="8" style="font-size: 14px;color: #333333;" (click)="openDrawer()">{{couponName}}&nbsp;&nbsp;&gt;</div>
+  </a>
+  <a nz-row style="padding: 16px 0px;border-top: 1px solid #e5e5e5;" [hidden]="flag === '3' || flag === '4'" *ngIf="type === '2'">
+    <div nz-col nzSpan="8" style="color: #999999;font-size: 14px;">已使用提水券</div>
+    <div nz-col nzSpan="12"></div>
+    <div nz-col nzSpan="4" style="font-size: 14px;color: #333333;" (click)="openDrawer()">{{carryWaterCouponName}}&nbsp;&nbsp;&gt;</div>
+  </a>
+  <div [hidden]="flag === '3' || flag === '4'" style="background-color: #f3f3f3;height: 124px;padding-top: 5px;">
+    <div style="width: 100%;height: 108px;margin-top: 5px;background-image: url('../../../assets/main/my_recommon.png');background-size: 100% 100%;">
+      <div style="padding-top: 25px;font-size: 12px;">
+        <p style="font-weight: bold;margin-bottom: 10px;">&minus;推荐有奖	&minus;</p>
+        <p style="color: #666;">点击右上角分享给好友一起领取更多优惠券！</p>
+        <p style="color: #666;">推荐成功老用户可再领50元优惠券哦&sim;</p>
+      </div>
+    </div>
+  </div>
+  <div [hidden]="flag === '3' || flag === '4'">
+    <p style="font-weight: bold;margin-top: 15px; font-size: 16px; color: #333333;">&minus;新人优惠券&minus;</p>
+    <p style="color: #666666;font-size: 14px;">首次关注优水到家公众号，领取<a href="javascript:void(0)" style="font-weight: bolder; font-size: 16px;color: #3e85ff;">100元</a>购水大礼包</p>
+    <p style="margin:18px 0;">
+      <img src="../../../assets/main/my_erweima.png" style="width: 102px; height: 102px;">
+    </p>
+    <div style="text-align: left;padding-left: 30px;">
+      <p style="color: #666666;font-size: 12px;"><img src="../../../assets/main/my_wechat.png">&nbsp;微信用户长按二维码点击“关注”</p>
+      <p style="color: #666666;font-size: 12px;"><img src="../../../assets/main/my_ailipay.png">&nbsp;支付宝用户长按保存二维码到微信扫码关注</p>
+    </div>
+  </div>
+  <!--<div [hidden]="flag === '3' || flag === '4'" class="am-message-sub">广州优水到家工程感谢你的惠顾,系统将从零钱或者银行卡中自动扣取本次购买费用。点击右上角分享给好友可一起领取优惠券</div>-->
+  <!--<div *ngIf="youshuiCompany" [hidden]="flag === '3' || flag === '4'" class="am-message-sub" style="color: #118ee8;font-weight: 600">关注“优水到家”微信公众号，领取100元购水大礼包</div>-->
+  <!--<div *ngIf="youshuiCompany" [hidden]="flag === '3' || flag === '4'">-->
+    <!--<div [hidden]="flag === '3' || flag === '4'" class="am-message-sub" style="color: #118ee8;font-weight: 600">关注“优水到家”微信公众号，领取100元购水大礼包</div>-->
+    <!--<div [hidden]="flag === '3' || flag === '4'">-->
+    <!--&lt;!&ndash;<button [hidden]="aliPay" (click)="follow()" class="am-button" style="background: #2CA825">点击关注</button>&ndash;&gt;-->
+    <!--<img style="width: 300px;padding-bottom: 84px;opacity: 1" src="../../../assets/main/follow.png" alt="">-->
+    <!--</div>-->
+  <!--<div class="am-button-wrap" [hidden]="flag === '3' || flag === '4'">-->
+    <!--<button (click)="share()" class="am-button blue" >分享</button>-->
+  <!--</div>-->
+  <!--<div class="am-button-wrap">-->
+    <!--<button (click)="exit()" class="am-button blue" >直接退出</button>-->
+  <!--</div>-->
+</div>
+
+<!--<div [hidden]="more" class="weui-panel weui-panel_access">-->
+  <!--<div class="weui-panel__hd" style="color: red">请确认您所拿取的商品列表</div>-->
+  <!--<div class="weui-panel__bd">-->
+    <!--<a [hidden]="item.changeNum === 0" href="javascript:void(0);" *ngFor="let item of goodsList" class="weui-media-box weui-media-box_appmsg">-->
+      <!--<div class="weui-media-box__hd">-->
+        <!--<img class="weui-media-box__thumb" [src]="img+item.pic" alt="">-->
+      <!--</div>-->
+      <!--<div class="weui-media-box__bd">-->
+        <!--<h4 class="weui-media-box__title">{{item.itemName}}</h4>-->
+        <!--<h5 style="float: left;margin-top: 1px" class="weui-media-box__desc">{{turnText(item.changeNum)}}</h5>-->
+        <!--<span [hidden]="flag === '3' || flag === '4'" style="float: right;" class="weui-media-box__desc">{{(-item.changeNum * item.price).toFixed(2)}}元</span>-->
+      <!--</div>-->
+    <!--</a>-->
+
+  <!--</div>-->
+  <!--<div [hidden]="flag === '3' || flag === '4'" class="weui-panel__ft">-->
+    <!--<div href="javascript:void(0);" class="weui-cell weui-cell_access weui-cell_link">-->
+      <!--<div style="text-align: right" class="weui-cell__bd">总价:{{totalPrice}}元</div>-->
+    <!--</div>-->
+  <!--</div>-->
+<!--</div>-->
+<div [hidden]="more" class="weui-panel weui-panel_access">
+  <div style="font-size:12px; margin: 15px 5px;padding: 5px;color: #b0b0b0;border: 1px solid #b0b0b0;">
+    <p><i class="anticon anticon-exclamation-circle-o"></i>&nbsp;温馨提示：</p>
+    <p>为了您的账户资金安全，确认商品后请及时<a href="javascript:void(0)">关闭箱门</a>，系统将自动
+      结算。若长时间忘记关门，则可能造成商品丢失，相关费用将从您的账户扣取！</p>
+    <p style="border: 2px dashed #ffffda;margin-top: 15px;"></p>
+  </div>
+  <div class="weui-panel__hd">您已拿取商品</div>
+  <div class="weui-panel__bd">
+    <a [hidden]="item.changeNum === 0" href="javascript:void(0);" *ngFor="let item of goodsList" class="weui-media-box weui-media-box_appmsg">
+      <div class="weui-media-box__hd">
+        <img class="weui-media-box__thumb" [src]="img+item.pic" alt="">
+      </div>
+      <div class="weui-media-box__bd">
+        <h4 class="weui-media-box__title">{{item.itemName}}</h4>
+        <h6 style="color: #F6151C;" [hidden]="flag === '3' || flag === '4'">￥{{(item.price).toFixed(2)}}</h6>
+        <h5 style="float: left;margin-top: 1px" class="weui-media-box__desc">{{turnText(item.changeNum)}}</h5>
+        <span style="float: right;" class="weui-media-box__desc">×{{-item.changeNum}}</span>
+      </div>
+    </a>
+
+  </div>
+  <div [hidden]="flag === '3' || flag === '4'" class="weui-panel__ft">
+    <div href="javascript:void(0);" class="weui-cell weui-cell_access weui-cell_link">
+      <div style="text-align: right" class="weui-cell__bd">合计:<span style="color: #F6151C">{{totalPrice}}元</span></div>
+    </div>
+  </div>
+  <div [hidden]="flag === '3' || flag === '4'" style="margin-top: 20px;text-align: center;font-size: 14px;color: #FFA23E;">
+    <p style="background-color: #ffffda;height: 60px;line-height: 60px;">*如有提水券或优惠券，在结算时会自动扣取</p>
+  </div>
+</div>
+
+<div class="am-message result" style="background-size: 100% 0;margin-top: 25%" [hidden]="single">
+    <div class="am-message-sub">
+      <img style="width: 100%;" src="../../../assets/main/tips.png" alt="">
+    </div>
+</div>
+<nz-modal [nzVisible]="isVisibleOpen" [nzContent]="modalContent" [nzFooter]="modalFooter" [nzClosable]="false">
+  <ng-template #modalContent>
+    <p [hidden]="flag === '3' || flag === '4'" style="font-size: medium;">您的门还未关闭！优水到家提醒您,为了您账号资金安全,提水后请随手关门！</p>
+    <p [hidden]="flag === '1' || flag === '2'" style="font-size: medium;">您的门还未关闭！优水到家提醒您,提水后请随手关门！</p>
+  </ng-template>
+  <ng-template #modalFooter>
+    <button nz-button nzType="primary" (click)="openOk()">好的</button>
+  </ng-template>
+</nz-modal>
+<nz-modal [nzVisible]="isVisibleFixed" [nzContent]="modalContentFixed" [nzFooter]="modalFooterFixed" [nzClosable]="false">
+  <ng-template #modalContentFixed>
+    <nz-input-number style="width: 99%;" [(ngModel)]="num" [nzPlaceHolder]="'请输入桶数'" [nzMin]="-9999" [nzMax]="99999999"
+                     [nzStep]="1"></nz-input-number>
+  </ng-template>
+  <ng-template #modalFooterFixed>
+    <button nz-button nzType="primary" (click)="fixedYes()">修改</button>
+  </ng-template>
+</nz-modal>
+<nz-modal [nzVisible]="isVisibleWarn" [nzContent]="modalContentWarn" [nzFooter]="modalFooterWarn" [nzClosable]="false">
+  <ng-template #modalContentWarn>
+    <p>请检查补货数量是否正确，如不正确请点击修正数量校准！</p>
+  </ng-template>
+  <ng-template #modalFooterWarn>
+    <button nz-button nzType="primary" (click)="yes()">确定</button>
+  </ng-template>
+</nz-modal>
+<nz-modal [(nzVisible)]="wechatVisible" [nzContent]="modalContentEr" [nzFooter]="null" (nzOnCancel)="showCancel()">
+  <ng-template #modalContentEr>
+    <div style="margin: 0 auto;text-align: center;">
+      <img src="../../../assets/main/my_erweima.png">
+    </div>
+  </ng-template>
+</nz-modal>
+<!--自定义抽屉-->
+<div id="myModel">
+  <div class="model-content">
+    <div class="model-head">
+      <p style="color: #333; font-size: 14px;"><span *ngIf="type === '1'">已使用优惠券</span><span *ngIf="type === '2'">已使用提水券</span><span class="closed" id="closed">&times;</span></p>
+    </div>
+    <div class="model-body">
+      <div [hidden]="type === '2'" *ngFor="let item of couponList" nz-row style="border: 1px solid #eee;margin-top: 5px;height: 80px; width: 100%;">
+        <div nz-col [nzSpan]="10" style="width: 80px;height:100%;background-color: #ccc; text-align: center;">
+          <p style="font-size: 18px;color: #fff;font-weight: bolder;margin-top: 10px;">
+            <span *ngIf="item.type === '3' || item.type === 3 || item.type === '4' || item.type === 4">{{item.deductionMoney}}折</span>
+            <span *ngIf="item.type === '1' || item.type === 1 || item.type === '2' || item.type === 2">￥{{item.deductionMoney}}</span>
+          </p>
+          <p style="font-size: 16px;color: #fff;font-weight: bolder;">{{item.typeLabel}}</p>
+        </div>
+        <div nz-col [nzSpan]="14" style="padding-left: 10px;padding-top: 8px;">
+          <p>
+            <span style="color: #fff;background-color: #ccc;font-size: 12px;">{{item.useWhereLabel}}</span>
+            <span style="padding-left: 15px;" *ngIf="item.bindProduct === 1 || item.bindProduct === '1'">机器限购品类使用</span>
+            <span style="padding-left: 15px;" *ngIf="item.bindProduct === 0 || item.bindProduct === '0'">机器全品类商品使用</span>
+            <span class="my_transform">已使用</span></p>
+          <p>{{item.startTime.slice(0,11)}}-{{item.endTime.slice(0,11)}}</p>
+          <p>{{item.maximumDiscount}}</p>
+        </div>
+      </div>
+
+      <div [hidden]="type === '1'" *ngFor="let item of waterVoucherList" nz-row style="border: 1px solid #eee;margin-top: 5px;height: 80px; width: 100%;">
+        <div nz-col [nzSpan]="10" style="width: 80px;height:100%; text-align: center;">
+          <!--<p style="font-size: 18px;color: #fff;font-weight: bolder;margin-top: 15px;">提水券</p>-->
+          <img src="../../../assets/main/my_coupon.png" style="width: 80px;height: 80px;filter: grayscale(1);filter: gray(1);">
+        </div>
+        <div nz-col [nzSpan]="14" style="padding-left: 10px;padding-top: 8px;">
+          <p>
+            <span style="color: #fff;background-color: #ccc;font-size: 12px;">机器券</span>
+            <span style="padding-left: 15px;">{{item.name}}</span>
+            <span class="my_transform">已使用</span>
+          </p>
+          <p>{{item.startTime}}-{{item.endTime}}</p>
+          <p>{{item.maximumDiscount}}</p>
+        </div>
+      </div>
+
+      <p style="margin: 20px auto; text-align: center">
+        <button nz-button nzType="primary" (click)="sureModel()">确定</button>
+      </p>
+    </div>
+  </div>
+</div>

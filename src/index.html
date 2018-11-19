@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>上善若水</title>
+  <base href="/">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no"/>
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <!--<script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.4.0.js"></script>-->
+  <script type="text/javascript" src="https://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
+  <!-- 主文件 -->
+  <link rel="stylesheet" href="https://gw.alipayobjects.com/as/g/antui/antui/10.1.10/dpl/antui.css"/>
+  <!-- 组件 -->
+  <link rel="stylesheet" href="https://gw.alipayobjects.com/as/g/antui/antui/10.1.10/??dpl/widget/message.css,dpl/icon/message.css,dpl/widget/search.css"/>
+  <!-- js -->
+  <script src="https://gw.alipayobjects.com/as/g/antui/antui/10.1.10/antui.js"></script>
+  <script src="https://gw.alipayobjects.com/as/g/h5-lib/alipayjsapi/3.1.1/alipayjsapi.inc.min.js"></script>
+  <script type="text/javascript">
+    window.alert = function(name){
+      var iframe = document.createElement("IFRAME");
+      iframe.style.display="none";
+      iframe.setAttribute("src", 'data:text/plain,');
+      document.documentElement.appendChild(iframe);
+      window.frames[0].window.alert(name);
+      iframe.parentNode.removeChild(iframe);
+    }
+  </script>
+  <link href="//res.wx.qq.com/open/libs/weui/1.1.3/weui.min.css" rel="stylesheet">
+</head>
+<body>
+  <app-root></app-root>
+</body>
+</html>

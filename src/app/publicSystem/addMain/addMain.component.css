@@ -1,0 +1,767 @@
+.logo{
+  text-align: center;
+  position: relative;
+  margin-bottom: 5px;
+  height: 116px;
+}
+.rounded-circle{
+  margin-top: 8px;
+  margin-bottom: 19%;
+  height: 60px;
+}
+.rounded-circle {
+   border-radius: 0!important;
+}
+.rounded-circle-center {
+  top: 10%;
+  position: absolute;
+  left: 28%;
+  width: 150px;
+}
+.contain_all {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+.contain_btm {
+  position: absolute;
+  top: 116px;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background: url("../../../assets/main/bg.png") no-repeat;
+  background-size: 100% auto;
+}
+.lianye-logo{
+  margin: 40px 0 1px 0;
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+}
+.col-img{
+  margin-top: 5px;
+  margin-left: -10px;
+  margin-bottom: 21px;
+  width: 58px;
+  height: 58px;
+}
+.w-n-size{
+  font-size: 11px;
+  color:#CF2813;
+}
+.w-and-n{
+  position: absolute;
+  top: 47%;
+  margin-left: -5px;
+}
+.w-and-n-one{
+  position: absolute;
+  top: 44%;
+  margin-left: 22px;
+}
+.w-and-n-five-door{
+  position: absolute;
+  top: 10%;
+  margin-left: 84px;
+}
+.title {
+  font-size: 12px;
+  color: #B8996A;
+  background: url("../../../assets/main/textbg.png");
+  background-size: 100% 94%;
+  width: 35%;
+  margin-left: 31%;
+}
+.boxs-eight-one {
+  width: 90%;
+  height: 75px;
+  margin: 0 auto;
+  background: url("../../../assets/main/add-eight-door.png");
+  border: 0;
+  background-size: 100% 100%;
+}
+.boxs-eight {
+  width: 90%;
+  height: 75px;
+  margin: 0 auto;
+  background: url("../../../assets/main/add-eight-doors.png");
+  border: 0;
+  background-size: 100% 100%;
+}
+.text-eight-one {
+  color: white;
+  font-weight: 900;
+  overflow: hidden;
+  margin-left: 40px;
+  font-family: "宋体";
+  left: 32px;
+  top: 10px;
+  position: absolute;
+}
+
+.text-eight {
+  color: white;
+  font-weight: 900;
+  overflow: hidden;
+  margin-left: 10px;
+  font-family: "宋体";
+  left: 70%;
+  top: 10px;
+  position: absolute;
+}
+.eight-img-one{
+  width: 40px;
+  height: 40px;
+  position: absolute;
+  top: 11px;
+  left: 18px;
+}
+.eight-img{
+  width: 40px;
+  height: 40px;
+  position: absolute;
+  top: 11px;
+  left: 55%;
+}
+.eight-bt{
+  width: 53px;position: absolute;top: 38px;right: 10px;
+}
+.eight-bt-left{
+  width: 53px;position: absolute;top: 38px;left: 76px;
+}
+.text-custom {
+  color: white;
+  font-weight: 900;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  margin-left: 30px;
+  font-family: "宋体";
+}
+.text-customs {
+  color: white;
+  font-weight: 900;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.context{
+  width: 322px;
+  margin: 0 auto;
+}
+.context-five {
+  width: 305px;
+  margin: 0 auto;
+}
+.col-img-six{
+  margin-top: 26px;
+  margin-bottom: 16px;
+  width: 42px;
+  height: 48px;
+}
+.box-six{
+  float: left;
+  width: 111px;
+  height: 115px;
+  margin-right: 10px;
+  background: url("../../../assets/main/kuan.png");
+  border: 0;
+  background-size: 100% 100%;
+}
+.my-product{
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+button{
+  background: url("../../../assets/main/button.png");
+  background-size: 100% 100%;
+  width: 24%;
+  height: 25px;
+  border: none;
+  color: white;
+}
+.my-vol {
+  position: absolute;
+  top: 40px;
+  right: 0;
+}
+.my-reset{
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 36px;
+  height: 25px;
+  background: white;
+}
+.my-restart{
+  position: absolute;
+  bottom: 0;
+  left: 3px;
+  width: 100%;
+}
+.my-open{
+  position: absolute;
+  bottom: 0;
+  right: 0;
+}
+.radio-size{
+  width: 150px;
+}
+.boxssf-one {
+  /*float: left;*/
+  width: 150px;
+  height: 140px;
+  margin: 0 auto;
+  background: url("../../../assets/main/kuan.png");
+  border: 0;
+  background-size: 100% 100%;
+}
+.boxssf {
+  width: 150px;
+  height: 140px;
+  margin: 0 auto;
+  background: url("../../../assets/main/kuan1.png");
+  border: 0;
+  background-size: 100% 100%;
+}
+.box-one{
+  float: left;
+  width: 150px;
+  height: 150px;
+  margin-left: 5px;
+  background: url("../../../assets/main/kuan1.png");
+  border: 0;
+  background-size: 100% 100%;
+  display: -webkit-box;
+}
+.box{
+  float: left;
+  width: 150px;
+  height: 150px;
+  margin-left: 5px;
+  background: url("../../../assets/main/kuan.png");
+  border: 0;
+  background-size: 100% 100%;
+  display: -webkit-box;
+}
+.box:after{
+  -webkit-filter: blur(2px);
+  -moz-filter: blur(2px);
+  -ms-filter: blur(2px);
+  -o-filter: blur(2px);
+  filter: blur(2px);
+}
+.boxss-one{
+  width: 150px;
+  height: 90px;
+  margin: 0 auto;
+  background: url("../../../assets/main/kuan1.png");
+  border: 0;
+  background-size: 100% 100%;
+}
+.boxs-one{
+  /*float: left;*/
+  width: 150px;
+  height: 90px;
+  margin: 0 auto;
+  background: url("../../../assets/main/kuan1.png");
+  border: 0;
+  background-size: 100% 100%;
+}
+
+.boxss{
+  width: 150px;
+  height: 90px;
+  margin: 0 auto;
+  background: url("../../../assets/main/kuan.png");
+  border: 0;
+  background-size: 100% 100%;
+}
+.boxs{
+  width: 150px;
+  height: 90px;
+  margin: 0 auto;
+  background: url("../../../assets/main/kuan.png");
+  border: 0;
+  background-size: 100% 100%;
+}
+.boxs:after{
+  -webkit-filter: blur(2px);
+  -moz-filter: blur(2px);
+  -ms-filter: blur(2px);
+  -o-filter: blur(2px);
+  filter: blur(2px);
+}
+.box-body-one{
+  padding-left: 20px;
+  text-align: center;
+  width: 97%;
+}
+.box-body-one{
+  padding-left: 20px;
+  text-align: center;
+  width: 97%;
+}
+.box-body-one{
+  padding-left: 20px;
+  text-align: center;
+  width: 97%;
+}
+.box-body-one{
+  padding-left: 20px;
+  text-align: center;
+  width: 97%;
+}
+.box-body{
+  padding-left: 20px;
+  text-align: center;
+  width: 50%;
+}
+.box:active{
+  box-shadow:2px 2px 2px 2px #acacac;
+}
+.foot{
+  text-align: center;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+}
+.foot-img{
+  height: 30px;
+  width: 180px;
+  margin-bottom: 40px;
+  border: 0;
+  vertical-align: middle;
+}
+.detail-button{
+  font-size: 9px;
+  border: grey;
+  width: 41%;
+  background: url("../../../assets/main/button-bg.png");
+  position: absolute;
+  top: 58px;
+  left: 9px;
+  color: black;
+  background-size: 100% 100%;
+}
+.detail-button-four{
+  font-size: 9px;border: grey;width: 45%;background: url("../../../assets/main/button-bg.png");position: absolute;top: 78%;left: 8px;color: black;background-size: 100% 100%;
+}
+.detail-button-four-second{
+  font-size: 9px;border: grey;width: 45%;background: url("../../../assets/main/button-bg.png");position: absolute;top: 78%;left: 77px;color: black;background-size: 100% 100%;
+}
+.detailf-button{
+  font-size: 9px;border: grey;width: 44%;background: url("../../../assets/main/button-bg.png");position: absolute;top: 100px;left: 7px;color: black;background-size: 100% 100%;
+}
+.detailf-button-four{
+  font-size: 9px;border: grey;width: 45%;background: url("../../../assets/main/button-bg.png");position: absolute;top: 78%;left: 8px;color: black;background-size: 100% 100%;
+}
+.addMain-img-one{
+  width: 35px;
+  height: 35px;
+  margin-top: 5px;
+  margin-left: 20px;
+}
+.addMain-img{
+  width: 35px;
+  height: 35px;
+  position: absolute;
+  top: 7px;
+  left: 22px;
+}
+.addMain-imgf{
+  width: 60px;
+  height: 60px;
+  position: absolute;
+  top: 7px;
+  left: 10px;
+}
+.addMain-bottom{
+  margin-bottom: 4px!important;
+}
+.addMain-img-onef{
+  width: 60px;
+  height: 60px;
+  margin-top: 15px;
+  margin-left: 20px;
+}
+
+@media screen and (min-height: 570px){
+  .w-and-n {
+    position: absolute;
+    top: 47%;
+    margin-left: -14px;
+  }
+}
+@media screen and (max-height: 570px){
+  .min-padding {
+    padding: 5px;
+  }
+  .box-body{
+    padding-left: 10px;
+    text-align: center;
+    width: 50%;
+  }
+  .context{
+    width: 310px;
+    margin: 0 auto;
+    /*margin-left: 25px;*/
+  }
+  .rounded-circle{
+    margin-top: 8px;
+    margin-bottom: 19%;
+    height: 60px;
+  }
+  .box-one{
+    float: left;
+    width: 145px;
+    height: 150px;
+    margin-left: 5px;
+    background: url("../../../assets/main/kuan1.png");
+    border: 0;
+    background-size: 100% 100%;
+    display: -webkit-box;
+  }
+  .box{
+    float: left;
+    width: 150px;
+    height: 150px;
+    margin-left: 5px;
+    background: url("../../../assets/main/kuan.png");
+    border: 0;
+    background-size: 100% 100%;
+  }
+  .boxss-one{
+    width: 150px;
+    height: 90px;
+    margin: 0 auto;
+    background: url("../../../assets/main/kuan1.png");
+    border: 0;
+    background-size: 100% 100%;
+  }
+  .boxs-one{
+    /*float: left;*/
+    width: 150px;
+    height: 90px;
+    margin: 0 auto;
+    background: url("../../../assets/main/kuan1.png");
+    border: 0;
+    background-size: 100% 100%;
+  }
+  .boxss{
+    /*float: left;*/
+    width: 150px;
+    height: 90px;
+    margin: 0 auto;
+    background: url("../../../assets/main/kuan.png");
+    border: 0;
+    background-size: 100% 100%;
+  }
+  .boxs{
+    width: 150px;
+    height: 90px;
+    margin: 0 auto;
+    background: url("../../../assets/main/kuan.png");
+    border: 0;
+    background-size: 100% 100%;
+  }
+}
+@media screen and (min-height: 571px) {
+  .min-padding {
+    padding: 10px;
+  }
+  .box-body{
+    padding-left: 20px;
+    text-align: center;
+    width: 50%;
+  }
+  .context{
+    width: 340px;
+    margin: 0 auto;
+    /*margin-left: 33px;*/
+  }
+  .rounded-circle{
+    margin-top: 8px;
+    margin-bottom: 35%;
+    height: 60px;
+  }
+  .box-one{
+    float: left;
+    width: 155px;
+    height: 155px;
+    margin-left: 5px;
+    background: url("../../../assets/main/kuan1.png");
+    border: 0;
+    background-size: 100% 100%;
+    display: -webkit-box;
+  }
+  .box{
+    float: left;
+    width: 155px;
+    height: 155px;
+    margin-left: 5px;
+    background: url("../../../assets/main/kuan.png");
+    border: 0;
+    background-size: 100% 100%;
+  }
+  .boxss{
+    /*float: left;*/
+    width: 150px;
+    height: 90px;
+    margin: 0 auto;
+    background-color: rgba(0,0,0,0.1);
+  }
+  .boxs{
+    /*float: left;*/
+    width: 150px;
+    height: 90px;
+    margin: 0 auto;
+    background: url("../../../assets/main/kuan.png");
+    border: 0;
+    background-size: 100% 100%;
+  }
+}
+@media screen and (max-height: 500px){
+  .context{
+    width: 271px;
+    margin: 0 auto;
+  }
+  .rounded-circle  {
+    margin-bottom: 10%;
+  }
+  .box-one{
+    float: left;
+    width: 120px;
+    height: 115px;
+    margin-right: 10px;
+    background: url("../../../assets/main/kuan1.png");
+    border: 0;
+    background-size: 100% 100%;
+    display: -webkit-box;
+  }
+  .box{
+    float: left;
+    width: 120px;
+    height: 115px;
+    margin-right: 10px;
+    background: url("../../../assets/main/kuan.png");
+    border: 0;
+    background-size: 100% 100%;
+  }
+  .col-img {
+    margin-top: 6px;
+    margin-left: -7px;
+    margin-bottom: 21px;
+    width: 40px;
+    height: 40px;
+  }
+  .w-n-size{
+    font-size: 9px;
+  }
+  .w-and-n {
+    position: absolute;
+    top: 38%;
+    margin-left: -5px;
+  }
+  .w-and-n-one {
+    position: absolute;
+    top: 38%;
+    margin-left: 14px;
+  }
+  .detail-button-four{
+    top: 72%;
+  }
+  .detail-button-four-second{
+    top: 72%;
+    left: 64px;
+  }
+}
+@media screen and (max-width: 291px){
+  .big-col{
+    display: none;
+  }
+  .title{
+    font-size: 10px;
+  }
+  .small{
+    width: 80px;
+    height: 30px;
+    font-size: 10px;
+  }
+  .col-img{
+    margin-top: 25px;
+    margin-bottom:21px;
+    margin-right: 10px;
+    width: 55px;
+    height: 55px
+  }
+  .min-padding {
+    padding: 10px;
+  }
+  .box-body{
+    padding-left: 20px;
+    text-align: center;
+    width: 50%;
+  }
+  .context{
+    width: 270px;
+    margin: 0 auto;
+  }
+  .rounded-circle{
+    margin: 15px 0 10px 0;
+    width: 20%;
+    height: 0;
+  }
+  .lianye-logo{
+    margin: 20px 0 1px 0;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+  }
+  .box-one{
+    float: left;
+    width: 120px;
+    height: 120px;
+    margin-right: 10px;
+    background: url("../../../assets/main/kuan1.png");
+    border: 0;
+    background-size: 100% 100%;
+    display: -webkit-box;
+  }
+  .box{
+    float: left;
+    width: 120px;
+    height: 120px;
+    margin-right: 10px;
+    background: url("../../../assets/main/kuan.png");
+    border: 0;
+    background-size: 100% 100%;
+  }
+  .boxss-one{
+    width: 150px;
+    height: 90px;
+    margin: 0 auto;
+    background: url("../../../assets/main/kuan1.png");
+    border: 0;
+    background-size: 100% 100%;
+  }
+  .boxs-one{
+    width: 150px;
+    height: 90px;
+    margin: 0 auto;
+    background: url("../../../assets/main/kuan1.png");
+    border: 0;
+    background-size: 100% 100%;
+  }
+  .boxss{
+    width: 150px;
+    height: 90px;
+    margin: 0 auto;
+    background: url("../../../assets/main/kuan.png");
+    border: 0;
+    background-size: 100% 100%;
+  }
+  .boxs{
+    width: 150px;
+    height: 90px;
+    margin: 0 auto;
+    background: url("../../../assets/main/kuan.png");
+    border: 0;
+    background-size: 100% 100%;
+  }
+}
+.weui-mask {
+  position: fixed;
+  z-index: 1000;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.6);
+  transition: opacity 1s;
+}
+.weui-dialog {
+  position: fixed;
+  z-index: 5000;
+  width: 80%;
+  max-width: 300px;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  background-color: #FFFFFF;
+  text-align: center;
+  border-radius: 3px;
+  overflow: hidden;
+}
+.weui-skin_android .weui-dialog__bd:first-child {
+  padding: 1.6em 1.6em 2em;
+  color: #353535;
+}
+.weui-skin_android .weui-dialog__bd {
+  color: #808080;
+  padding: 0.25em 1.6em 2em;
+  font-size: 17px;
+  text-align: left;
+}
+.weui-dialog__bd:first-child {
+  padding: 2.7em 20px 1.7em;
+  color: #353535;
+}
+.weui-dialog__bd {
+  padding: 0 1.6em 0.8em;
+  min-height: 40px;
+  font-size: 15px;
+  line-height: 1.3;
+  word-wrap: break-word;
+  word-break: break-all;
+  color: #808080;
+}
+.weui-skin_android .weui-dialog__ft {
+  display: block;
+  text-align: right;
+  line-height: 42px;
+  font-size: 16px;
+  padding: 0 1.6em 0.7em;
+}
+.weui-dialog__ft {
+  position: relative;
+  line-height: 48px;
+  font-size: 18px;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+}
+.weui-skin_android .weui-dialog__btn:last-child {
+  margin-right: -0.8em;
+}
+.weui-skin_android .weui-dialog__btn:visited {
+  background-color: rgba(0, 0, 0, 0.06);
+}
+.weui-skin_android .weui-dialog__btn {
+  display: inline-block;
+  vertical-align: top;
+  padding: 0 .8em;
+}
+.weui-dialog__btn_primary {
+  color: #09BB07;
+}
+.weui-dialog__btn {
+  display: block;
+  -webkit-box-flex: 1;
+  -webkit-flex: 1;
+  flex: 1;
+  color: #09BB07;
+  text-decoration: none;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  position: relative;
+}
+.mask-visible {
+  opacity: 1;
+}
+.mask-invisible {
+  opacity: 0;
+  display: none;
+}
+* { touch-action: pan-y; }

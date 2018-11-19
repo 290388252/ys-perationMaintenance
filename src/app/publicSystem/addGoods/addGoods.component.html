@@ -1,0 +1,29 @@
+<div class="ag-bk" id="ag-bk">
+  <div class="head">
+    <img src="../../../assets/main/d.png" alt="" style="width: 160px;">
+  </div>
+  <div class="center">
+    <img class="center-img" src="../../../assets/main/add-head.png" alt="">
+    <div class="center-content">
+      <div style="margin-left: 5px;margin-right: 5px">
+        <p style="color: #3399ff;margin-left: 40%;padding: 6px 0;">温馨提示:</p>
+        <span style="color: red">请正确填写当前货道商品数量，两次商品数据不可相同，必须拿出一桶或者放入一桶!!</span>
+        <p style="color: #5f5a5a;margin-top: 5px;margin-bottom: 5px">当前次数: <span style="color: red">{{times}}</span>次</p>
+        <div [hidden]="backButton">
+          <span style="color: black">一号商品数量:</span><input (click)="focusCode()" type="text" [(ngModel)]="num" class="inputs" placeholder="请输入整数">
+        </div>
+        <br>
+        <div [hidden]="goods === 'false' || backButton">
+          <span style="color: #5f5a5a">二号商品数量:</span><input (click)="focusCode()" type="text" [(ngModel)]="num2" class="inputs" placeholder="请输入整数">
+        </div>
+        <br>
+        <button *ngIf="backButton" (click)="back()" class="ad-bt-cancel">成功,点击返回</button>
+        <br>
+        <br>
+        <button (click)="yes()" [class]="disableButton ? 'disable' : 'visible'" [disabled]="disableButton">
+          <img *ngIf="disableButton" src="../../../assets/main/circle.gif" alt=""><span [hidden]="disableButton">{{sureButtonText}}</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

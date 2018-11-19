@@ -1,0 +1,164 @@
+<div style="width: 100%;height: 150px;margin-bottom: 23px">
+  <p style="margin-left: 5px">留言区</p>
+  <div id="emoji" contenteditable="true" placeholder="大家一起来评论:" style="width: 97%;height: 130px;border: solid 1px #dadada;margin-left: 5px"></div>
+  <img style="width:20px;margin-left: 5px;margin-bottom: 3px" src="../../../assets/emoji/img.png" (click)="open()"/>
+  <nz-radio-group [(ngModel)]="radioValue" style="margin-top: 3px">
+    <label nz-radio [nzValue]="'1'">
+      <span>好评</span>
+    </label>
+    <label nz-radio [nzValue]="'2'">
+      <span>差评</span>
+    </label>
+  </nz-radio-group>
+</div>
+<div [hidden]="emoji" style="width:97%;height:200px;overflow: scroll;border: solid 1px #dadada;margin-left: 5px">
+  <div style="display: flex">
+    <dd><img (click)="select(1)" class="face" src="../../../assets/emoji/1.png"/></dd>
+    <dd><img (click)="select(2)" class="face" src="../../../assets/emoji/2.png"/></dd>
+    <dd><img (click)="select(3)" class="face" src="../../../assets/emoji/3.png"/></dd>
+    <dd><img (click)="select(4)" class="face" src="../../../assets/emoji/4.png"/></dd>
+    <dd><img (click)="select(5)" class="face" src="../../../assets/emoji/5.png"/></dd>
+    <dd><img (click)="select(6)" class="face" src="../../../assets/emoji/6.png"/></dd>
+    <dd><img (click)="select(7)" class="face" src="../../../assets/emoji/7.png"/></dd>
+    <dd><img (click)="select(8)" class="face" src="../../../assets/emoji/8.png"/></dd>
+    <dd><img (click)="select(9)" class="face" src="../../../assets/emoji/9.png"/></dd>
+    <dd><img (click)="select(10)" class="face" src="../../../assets/emoji/10.png"/></dd>
+    <dd><img (click)="select(11)" class="face" src="../../../assets/emoji/11.png"/></dd>
+  </div>
+
+  <div style="display: flex">
+    <dd><img (click)="select(12)" class="face" src="../../../assets/emoji/12.png"/></dd>
+    <dd><img (click)="select(13)" class="face" src="../../../assets/emoji/13.png"/></dd>
+    <dd><img (click)="select(14)" class="face" src="../../../assets/emoji/14.png"/></dd>
+    <dd><img (click)="select(15)" class="face" src="../../../assets/emoji/15.png"/></dd>
+    <dd><img (click)="select(16)" class="face" src="../../../assets/emoji/16.png"/></dd>
+    <dd><img (click)="select(17)" class="face" src="../../../assets/emoji/17.png"/></dd>
+    <dd><img (click)="select(18)" class="face" src="../../../assets/emoji/18.png"/></dd>
+    <dd><img (click)="select(19)" class="face" src="../../../assets/emoji/19.png"/></dd>
+    <dd><img (click)="select(20)" class="face" src="../../../assets/emoji/20.png"/></dd>
+    <dd><img (click)="select(21)" class="face" src="../../../assets/emoji/21.png"/></dd>
+    <dd><img (click)="select(22)" class="face" src="../../../assets/emoji/22.png"/></dd>
+  </div>
+
+  <div style="display: flex">
+    <dd><img (click)="select(23)" class="face" src="../../../assets/emoji/23.png"/></dd>
+    <dd><img (click)="select(24)" class="face" src="../../../assets/emoji/24.png"/></dd>
+    <dd><img (click)="select(25)" class="face" src="../../../assets/emoji/25.png"/></dd>
+    <dd><img (click)="select(26)" class="face" src="../../../assets/emoji/26.png"/></dd>
+    <dd><img (click)="select(27)" class="face" src="../../../assets/emoji/27.png"/></dd>
+    <dd><img (click)="select(28)" class="face" src="../../../assets/emoji/28.png"/></dd>
+    <dd><img (click)="select(29)" class="face" src="../../../assets/emoji/29.png"/></dd>
+    <dd><img (click)="select(30)" class="face" src="../../../assets/emoji/30.png"/></dd>
+    <dd><img (click)="select(31)" class="face" src="../../../assets/emoji/31.png"/></dd>
+    <dd><img (click)="select(32)" class="face" src="../../../assets/emoji/32.png"/></dd>
+    <dd><img (click)="select(33)" class="face" src="../../../assets/emoji/33.png"/></dd>
+  </div>
+
+  <div style="display: flex">
+    <dd><img (click)="select(34)" class="face" src="../../../assets/emoji/34.png"/></dd>
+    <dd><img (click)="select(35)" class="face" src="../../../assets/emoji/35.png"/></dd>
+    <dd><img (click)="select(36)" class="face" src="../../../assets/emoji/36.png"/></dd>
+    <dd><img (click)="select(37)" class="face" src="../../../assets/emoji/37.png"/></dd>
+    <dd><img (click)="select(38)" class="face" src="../../../assets/emoji/38.png"/></dd>
+    <dd><img (click)="select(39)" class="face" src="../../../assets/emoji/39.png"/></dd>
+    <dd><img (click)="select(40)" class="face" src="../../../assets/emoji/40.png"/></dd>
+    <dd><img (click)="select(41)" class="face" src="../../../assets/emoji/41.png"/></dd>
+    <dd><img (click)="select(42)" class="face" src="../../../assets/emoji/42.png"/></dd>
+    <dd><img (click)="select(43)" class="face" src="../../../assets/emoji/43.png"/></dd>
+    <dd><img (click)="select(44)" class="face" src="../../../assets/emoji/44.png"/></dd>
+  </div>
+
+  <div style="display: flex;">
+    <dd><img (click)="select(45)" class="face" src="../../../assets/emoji/45.png"/></dd>
+    <dd><img (click)="select(46)" class="face" src="../../../assets/emoji/46.png"/></dd>
+    <dd><img (click)="select(47)" class="face" src="../../../assets/emoji/47.png"/></dd>
+    <dd><img (click)="select(48)" class="face" src="../../../assets/emoji/48.png"/></dd>
+    <dd><img (click)="select(49)" class="face" src="../../../assets/emoji/49.png"/></dd>
+    <dd><img (click)="select(50)" class="face" src="../../../assets/emoji/50.png"/></dd>
+    <dd><img (click)="select(51)" class="face" src="../../../assets/emoji/51.png"/></dd>
+    <dd><img (click)="select(52)" class="face" src="../../../assets/emoji/52.png"/></dd>
+    <dd><img (click)="select(53)" class="face" src="../../../assets/emoji/53.png"/></dd>
+    <dd><img (click)="select(54)" class="face" src="../../../assets/emoji/54.png"/></dd>
+    <dd><img (click)="select(55)" class="face" src="../../../assets/emoji/55.png"/></dd>
+  </div>
+</div>
+<div style="height: 70px;border: solid 1px #dadada;border-radius: 3%;margin: 5px;padding: 5px">
+  <img *ngFor="let item of addPicList" style="width: 60px;height: 60px;margin-right: 5px;" [src]=imgPath+item>
+  <a href='javascript:void(0);' class="blueButton"><input type="file" class="myFileUpload" name="mPic" id="mPic"
+                                                          ng2FileSelect [uploader]="uploaderAdd"
+                                                          (change)="uploadAdd($event)" multiple="3">上传图片</a>
+</div>
+<p style="color: red;position: absolute;right: 6px;">注意最多上传3张图片</p>
+<button (click)="commit()" style="margin: 20px 5px;width: 97%;height: 35px;" nz-button [nzType]="'primary'">
+  <span>发布</span>
+</button>
+<div class="weui-panel">
+  <div class="weui-panel__hd">来自其他网友的评论:</div>
+  <div class="weui-panel__bd">
+    <div class="weui-media-box weui-media-box_text">
+      <h4 class="weui-media-box__title">134****12345</h4>
+      <p class="weui-media-box__desc">由各种物质组成的巨型球状天体，叫做星球。星球有一定的形状，有自己的运行轨道。</p>
+      <ul class="weui-media-box__info">
+        <li class="weui-media-box__info__meta">文字来源</li>
+        <li class="weui-media-box__info__meta">时间</li>
+        <li class="weui-media-box__info__meta weui-media-box__info__meta_extra">评论</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="weui-panel__bd">
+    <div class="weui-media-box weui-media-box_text">
+      <h4 class="weui-media-box__title">134****12345</h4>
+      <p class="weui-media-box__desc">由各种物质组成的巨型球状天体，叫做星球。星球有一定的形状，有自己的运行轨道。</p>
+      <ul class="weui-media-box__info">
+        <li class="weui-media-box__info__meta">文字来源</li>
+        <li class="weui-media-box__info__meta">时间</li>
+        <li class="weui-media-box__info__meta weui-media-box__info__meta_extra">其它信息</li>
+      </ul>
+    </div>
+  </div>
+  <div class="weui-panel__bd">
+    <div class="weui-media-box weui-media-box_text">
+      <h4 class="weui-media-box__title">134****12345</h4>
+      <p class="weui-media-box__desc">由各种物质组成的巨型球状天体，叫做星球。星球有一定的形状，有自己的运行轨道。</p>
+      <ul class="weui-media-box__info">
+        <li class="weui-media-box__info__meta">文字来源</li>
+        <li class="weui-media-box__info__meta">时间</li>
+        <li class="weui-media-box__info__meta weui-media-box__info__meta_extra">其它信息</li>
+      </ul>
+    </div>
+  </div>
+  <div class="weui-panel__bd">
+    <div class="weui-media-box weui-media-box_text">
+      <h4 class="weui-media-box__title">134****12345</h4>
+      <p class="weui-media-box__desc">由各种物质组成的巨型球状天体，叫做星球。星球有一定的形状，有自己的运行轨道。</p>
+      <ul class="weui-media-box__info">
+        <li class="weui-media-box__info__meta">文字来源</li>
+        <li class="weui-media-box__info__meta">时间</li>
+        <li class="weui-media-box__info__meta weui-media-box__info__meta_extra">其它信息</li>
+      </ul>
+    </div>
+  </div>
+  <div class="weui-panel__bd">
+    <div class="weui-media-box weui-media-box_text">
+      <h4 class="weui-media-box__title">134****12345</h4>
+      <p class="weui-media-box__desc">由各种物质组成的巨型球状天体，叫做星球。星球有一定的形状，有自己的运行轨道。</p>
+      <ul class="weui-media-box__info">
+        <li class="weui-media-box__info__meta">文字来源</li>
+        <li class="weui-media-box__info__meta">时间</li>
+        <li class="weui-media-box__info__meta weui-media-box__info__meta_extra">其它信息</li>
+      </ul>
+    </div>
+  </div>
+  <div class="weui-panel__bd">
+    <div class="weui-media-box weui-media-box_text">
+      <h4 class="weui-media-box__title">134****12345</h4>
+      <p class="weui-media-box__desc">由各种物质组成的巨型球状天体，叫做星球。星球有一定的形状，有自己的运行轨道。</p>
+      <ul class="weui-media-box__info">
+        <li class="weui-media-box__info__meta">文字来源</li>
+        <li class="weui-media-box__info__meta">时间</li>
+        <li class="weui-media-box__info__meta weui-media-box__info__meta_extra">其它信息</li>
+      </ul>
+    </div>
+  </div>
+</div>

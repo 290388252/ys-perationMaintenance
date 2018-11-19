@@ -1,0 +1,333 @@
+<div class="contain_all">
+  <!--<div class="containers" #bg>-->
+  <!--</div>-->
+  <div class="bgimg">
+    <div class="logo">
+      <carousel>
+        <slide>
+          <img src="../../../assets/main/banner1.png" alt="first slide" style="display: block; width: 100%;height: 116px;">
+          <div class="carousel-caption d-none d-md-block">
+            <h3>First slide label</h3>
+            <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
+          </div>
+        </slide>
+      </carousel>
+      <!--<img  src="../../../assets/main/guoqing.png" alt="..."-->
+           <!--class="rounded-circle-center" style="display: inline-block">-->
+      <!--<img src="../../../assets/main/guoqing.png" alt="..." class="rounded-circle">-->
+      <br>
+      <!--<p class="title">.</p>-->
+    </div>
+    <!--five-->
+    <div class="contain_btm">
+      <div style="display: flex;width: 100%;height: 20px;margin-bottom: 12px" *ngIf="isEightDoor">
+        <img (click)="eigthDoorChoose(0)" [src]="(eightDoorFlag === 0) ?'../../../assets/main/normal.png':'../../../assets/main/cold.png'"  alt="" style="width: 50%;height: 30px"><span (click)="eigthDoorChoose(0)" style="position: absolute;left: 15%;color: white;top: 4px;">点击冷藏商品</span>
+        <img (click)="eigthDoorChoose(1)" [src]="(eightDoorFlag === 1) ?'../../../assets/main/normal.png':'../../../assets/main/cold.png'"   alt="" style="width: 50%;height: 30px"><span (click)="eigthDoorChoose(1)" style="position: absolute;right: 15%;color: white;top: 4px;">点击常温商品</span>
+      </div>
+      <p class="title">.</p>
+      <div class="context-five" *ngIf="isFiveDoor">
+        <div style="float: left;margin-top: 5px">
+          <div (click)="openDoor(item)" *ngFor="let item of fiveIndexListLeft"
+               [ngClass]="item['wayItemList'].length === 1 ? 'boxssf-one' : 'boxssf'"
+               class=" card text-white addMain-bottom">
+            <div>
+              <img [ngClass]="item['wayItemList'].length === 1 ? 'addMain-img-onef' : 'addMain-imgf'"
+                   src="{{img}}{{item['wayItemList'][0]['pic']}}" alt="">
+              <div class="w-and-n-five-door" [hidden]="item['wayItemList'].length !== 1">
+                <span class="w-n-size">重量：{{item['wayWeight']}}</span>
+                <br>
+                <span class="w-n-size">数量：{{item['wayItemList'][0]['num']}}</span>
+              </div>
+              <button [hidden]="item['wayItemList'].length === 1"
+                      (click)="detail(item['wayItemList'][0], $event, item['wayWeight'])"
+                      class="detailf-button"></button>
+              <button [hidden]="item['wayItemList'].length !== 1"
+                      (click)="detail(item['wayItemList'][0], $event, item['wayWeight'])" class="detailf-button"
+                      style="left: 14%;width: 68%"></button>
+            </div>
+            <div style="text-align: center" [hidden]="item['wayItemList'].length === 1">
+              <img style="left: 86px;width: 60px;height: 60px;position: absolute;top: 7px;"
+                   [src]="turn(item['wayItemList'], 'img')" alt="">
+              <button (click)="detail(item['wayItemList'][1], $event, item['wayWeight'])" class="detailf-button"
+                      style="left: 75px"></button>
+            </div>
+          </div>
+        </div>
+        <div style="float: left;margin-top: 5px">
+          <div (click)="openDoor(item)" *ngFor="let item of fiveIndexListRigth"
+               [ngClass]="item['wayItemList'].length === 1 ? 'boxss-one' : 'boxss'"
+               class=" card text-white addMain-bottom">
+            <div>
+              <img [ngClass]="item['wayItemList'].length === 1 ? 'addMain-img-one' : 'addMain-img'"
+                   src="{{img}}{{item['wayItemList'][0]['pic']}}" alt="">
+              <div class="w-and-n-five-door" [hidden]="item['wayItemList'].length !== 1">
+                <span class="w-n-size">重量：{{item['wayWeight']}}</span>
+                <br>
+                <span class="w-n-size">数量：{{item['wayItemList'][0]['num']}}</span>
+              </div>
+              <button [hidden]="item['wayItemList'].length === 1"
+                      (click)="detail(item['wayItemList'][0], $event, item['wayWeight'])"
+                      class="detail-button"></button>
+              <button [hidden]="item['wayItemList'].length !== 1"
+                      (click)="detail(item['wayItemList'][0], $event, item['wayWeight'])" class="detail-button"
+                      style="left: 24%"></button>
+            </div>
+            <div style="text-align: center" [hidden]="item['wayItemList'].length === 1">
+              <img class="addMain-img" style="left: 91px" [src]="turn(item['wayItemList'], 'img')" alt="">
+              <button (click)="detail(item['wayItemList'][1], $event, item['wayWeight'])" class="detail-button"
+                      style="left: 75px"></button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!--five-->
+
+
+      <div class="context" *ngIf="isFourDoor">
+        <div (click)="openDoor(item)" *ngFor="let item of indexList"
+             [ngClass]="item['wayItemList'].length === 1 ? 'box-one' : 'box'" class=" card text-white mb-3">
+          <div [ngClass]="item['wayItemList'].length === 1 ? 'box-body-one' : 'box-body'">
+            <img class="col-img" src="{{img}}{{item['wayItemList'][0]['pic']}}" alt="">
+            <div [ngClass]="item['wayItemList'].length === 1 ? 'w-and-n-one' : 'w-and-n'">
+              <span class="w-n-size">重量：{{item['wayWeight']}}</span>
+              <br>
+              <span class="w-n-size">数量：{{item['wayItemList'][0]['num']}}</span>
+            </div>
+            <button [hidden]="item['wayItemList'].length === 1"
+                    (click)="detail(item['wayItemList'][0], $event, item['wayWeight'])"
+                    class="detail-button-four"></button>
+            <button [hidden]="item['wayItemList'].length !== 1"
+                    (click)="detail(item['wayItemList'][0], $event, item['wayWeight'])" class="detail-button-four"
+                    style="left: 30%"></button>
+            <br/>
+          </div>
+          <div [hidden]="item['wayItemList'].length === 1" class="box-body">
+            <img class="col-img" [src]="turnImg(item['wayItemList'])" alt="">
+            <div class="w-and-n">
+              <span class="w-n-size">重量：{{item['wayWeight']}}</span>
+              <br>
+              <span class="w-n-size">数量：{{turn(item['wayItemList'], 'num')}}</span>
+            </div>
+            <button (click)="detail(item['wayItemList'][1], $event, item['wayWeight'])"
+                    class="detail-button-four-second"></button>
+            <br/>
+          </div>
+        </div>
+      </div>
+      <!--8门-->
+      <div class="context" *ngIf="isEightDoor">
+        <div (click)="openDoor(item)" *ngFor="let item of eightIndexList" [ngClass]="item['wayItemList'].length === 1 ? 'boxs-eight-one' : 'boxs-eight'" class=" card text-white addMain-bottom">
+          <div style="text-align: center">
+            <img class="eight-img-one" src="{{img}}{{item['wayItemList'][0]['pic']}}" alt="">
+            <p class="text-eight-one"  style="color:#333333;font-wayWeight: 900;">重量:{{item['wayWeight']}}</p>
+            <p class="text-eight-one"  style="color:#333333;font-wayWeight: 900;top: 22px;">数量:{{item['wayItemList'][0]['num']}}</p>
+            <img (click)="detail(item['wayItemList'][0], $event, item['wayWeight'])" src="../../../assets/main/button-bg.png" alt="" class="eight-bt-left">
+          </div>
+          <div style="text-align: center" [hidden]="item['wayItemList'].length === 1">
+            <img class="eight-img" [src]="turnImg(item['wayItemList'])" alt="">
+            <!--<p class="text-eight" style="color: #333333;">重量:495387{{item['wayWeight']}}</p>-->
+            <p class="text-eight" style="color: #333333;top: 22px;">数量:{{turn(item['wayItemList'], 'num')}}</p>
+            <img (click)="detail(item['wayItemList'][1], $event, item['wayWeight'])" src="../../../assets/main/button-bg.png" alt="" class="eight-bt">
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--<div class="foot">-->
+    <!--<img class="foot-img" src="../../../assets/main/logo1.png" alt="">-->
+    <!--</div>-->
+    <!--<div class="my-product">-->
+      <!--<button (click)="openAll()" type="button" style="width: 72px">一键开门</button>-->
+    <!--</div>-->
+    <!--<div class="my-vol">-->
+
+    <!--</div>-->
+
+    <div class="my-reset">
+      <p style="color: black;font-size: 17px">{{temperature}}</p>
+    </div>
+    <div class="my-restart">
+      <button (click)="reStart()" type="button">重启</button>
+      <button (click)="resetNum()" type="button">校准所有</button>
+      <button (click)="adjustVol()" type="button">调节音量</button>
+      <button (click)="resetWeight()" type="button">校准</button>
+    </div>
+    <!--<div class="my-open">-->
+    <!--</div>-->
+  </div>
+  <nz-modal [nzVisible]="isVisibleOpenDoor" [nzContent]="modalContents" [nzFooter]="modalFooters" [nzClosable]="false">
+    <ng-template #modalContents #modalFooters style="text-align: center">
+      <p style="font-size: medium;">次数:{{times}}次</p>
+      <br>
+      <div>
+        <nz-radio-group [(ngModel)]="wayNo" [nzSize]="'large'" *ngIf="isFiveDoor">
+          <label (click)="selectDoor(5)" class="radio-size" nz-radio-button [nzValue]="'5'">
+            <span>5号门</span>
+          </label>
+        </nz-radio-group>
+
+        <nz-radio-group style="width: 100%" [(ngModel)]="wayNo" [nzSize]="'large'">
+          <label (click)="selectDoor(3)" style="width: 49%" class="radio-size" nz-radio-button [nzValue]="'3'">
+            <span>3号门</span>
+          </label>
+          <label (click)="selectDoor(4)" style="width: 49%" class="radio-size" nz-radio-button [nzValue]="'4'">
+            <span>4号门</span>
+          </label>
+        </nz-radio-group>
+        <br>
+        <nz-radio-group style="width: 100%" [(ngModel)]="wayNo" [nzSize]="'large'">
+          <label (click)="selectDoor(1)" style="width: 49%" class="radio-size" nz-radio-button [nzValue]="'1'">
+            <span>1号门</span>
+          </label>
+          <label (click)="selectDoor(2)" style="width: 49%" class="radio-size" nz-radio-button [nzValue]="'2'">
+            <!--<label (click)="selectDoor(2)" style="width: 49%" class="radio-size" nz-radio-button [nzValue]="'2'" [nzDisabled]="times === 2">-->
+            <span>2号门</span>
+          </label>
+        </nz-radio-group>
+      </div>
+      <br>
+      <!--<nz-input-number style="width: 100%;" [(ngModel)]="wayNo" [nzPlaceHolder]="'请输入货道'" [nzMin]="1" [nzMax]="4" [nzStep]="1" [nzDisabled]="count === 2"></nz-input-number>-->
+    </ng-template>
+    <ng-template #modalFooters style="text-align: center">
+      <button nz-button nzType="primary" (click)="no()">关闭</button>
+      <button nz-button nzType="primary" style="margin-right: -15px" (click)="yes()" (disabled)="times !== 2">校准
+      </button>
+      <button nz-button nzType="primary" style="visibility: hidden">否</button>
+    </ng-template>
+  </nz-modal>
+
+  <nz-modal [nzVisible]="isVisibleOpenEightDoor" [nzContent]="modalEightContents" [nzFooter]="modalEightFooters" [nzClosable]="false">
+    <ng-template #modalEightContents #modalEightFooters style="text-align: center">
+      <p style="font-size: medium;">次数:{{times}}次</p>
+      <br>
+      <div>
+        <nz-radio-group style="width: 100%" [(ngModel)]="wayNo" [nzSize]="'large'">
+          <label (click)="selectDoor(1)" style="width: 49%" class="radio-size" nz-radio-button [nzValue]="'1'">
+            <span>1号门</span>
+          </label>
+          <label (click)="selectDoor(5)" style="width: 49%" class="radio-size" nz-radio-button [nzValue]="'5'">
+            <span>5号门</span>
+          </label>
+        </nz-radio-group>
+        <br>
+        <nz-radio-group style="width: 100%" [(ngModel)]="wayNo" [nzSize]="'large'">
+          <label (click)="selectDoor(2)" style="width: 49%" class="radio-size" nz-radio-button [nzValue]="'2'">
+            <span>2号门</span>
+          </label>
+          <label (click)="selectDoor(6)" style="width: 49%" class="radio-size" nz-radio-button [nzValue]="'6'">
+            <!--<label (click)="selectDoor(2)" style="width: 49%" class="radio-size" nz-radio-button [nzValue]="'2'" [nzDisabled]="times === 2">-->
+            <span>6号门</span>
+          </label>
+        </nz-radio-group>
+        <nz-radio-group style="width: 100%" [(ngModel)]="wayNo" [nzSize]="'large'">
+          <label (click)="selectDoor(3)" style="width: 49%" class="radio-size" nz-radio-button [nzValue]="'3'">
+            <span>3号门</span>
+          </label>
+          <label (click)="selectDoor(7)" style="width: 49%" class="radio-size" nz-radio-button [nzValue]="'7'">
+            <span>7号门</span>
+          </label>
+        </nz-radio-group>
+        <br>
+        <nz-radio-group style="width: 100%" [(ngModel)]="wayNo" [nzSize]="'large'">
+          <label (click)="selectDoor(4)" style="width: 49%" class="radio-size" nz-radio-button [nzValue]="'4'">
+            <span>4号门</span>
+          </label>
+          <label (click)="selectDoor(8)" style="width: 49%" class="radio-size" nz-radio-button [nzValue]="'8'">
+            <!--<label (click)="selectDoor(2)" style="width: 49%" class="radio-size" nz-radio-button [nzValue]="'2'" [nzDisabled]="times === 2">-->
+            <span>8号门</span>
+          </label>
+        </nz-radio-group>
+      </div>
+      <br>
+      <!--<nz-input-number style="width: 100%;" [(ngModel)]="wayNo" [nzPlaceHolder]="'请输入货道'" [nzMin]="1" [nzMax]="4" [nzStep]="1" [nzDisabled]="count === 2"></nz-input-number>-->
+    </ng-template>
+    <ng-template #modalEightFooters style="text-align: center">
+      <button nz-button nzType="primary" (click)="no()">关闭</button>
+      <button nz-button nzType="primary" style="margin-right: -15px" (click)="yes()" (disabled)="times !== 2">校准
+      </button>
+      <button nz-button nzType="primary" style="visibility: hidden">否</button>
+    </ng-template>
+  </nz-modal>
+
+  <nz-modal [nzVisible]="isVisibleOpenDetail" [nzContent]="modalContentD" [nzFooter]="modalFooterD"
+            [nzClosable]="false">
+    <ng-template #modalContentD>
+      <p style="font-size: medium;">详情</p>
+      <p style="font-size: medium;">商品名称:{{itemName}}</p>
+      <p style="font-size: medium;">容量:{{numDetail}}桶</p>
+      <p style="font-size: medium;">规格:{{oneWeight}}</p>
+      <p style="font-size: medium;">重量:{{weight}}</p>
+      <p style="font-size: medium;">最大容量:{{fullNum}}桶</p>
+    </ng-template>
+    <ng-template #modalFooterD>
+      <button nz-button nzType="primary" (click)="closeDetail()">关闭</button>
+    </ng-template>
+  </nz-modal>
+
+  <nz-modal [nzVisible]="isVisibleOpen" [nzContent]="modalContent" [nzFooter]="modalFooter" [nzClosable]="false">
+    <ng-template #modalContent>
+      <p style="font-size: medium;">优水到家提醒您,补水后请随手关门</p>
+    </ng-template>
+    <ng-template #modalFooter>
+      <button nz-button nzType="primary" (click)="openOk()">关闭</button>
+    </ng-template>
+  </nz-modal>
+
+  <nz-modal [(nzVisible)]="isVisible" [nzTitle]="modalvolTitle" [nzContent]="modalVol" [nzFooter]="modalvolFooter"
+            (nzOnCancel)="myVolCancel()">
+    <ng-template #modalvolTitle>
+      请选择音量
+    </ng-template>
+
+    <ng-template #modalVol>
+      <nz-row>
+        <nz-col nzSpan="12">
+          <nz-slider [nzMin]="0" [nzMax]="7" [(ngModel)]="volValue"></nz-slider>
+        </nz-col>
+        <nz-col nzSpan="4" [ngStyle]="{ 'marginLeft': '16px' , 'marginTop': '4px'}">
+          <span>音量值</span>
+        </nz-col>
+        <div nz-col nzSpan="4" [ngStyle]="{ 'marginLeft': '0px' }">
+          <nz-input-number [nzMin]="0" [nzMax]="7" [(ngModel)]="volValue"></nz-input-number>
+        </div>
+      </nz-row>
+    </ng-template>
+
+    <ng-template #modalvolFooter>
+      <button nz-button nzType="default" (click)="myVolCancel()">取消</button>
+      <button nz-button nzType="primary" (click)="myVolOk()">提交</button>
+    </ng-template>
+  </nz-modal>
+
+  <nz-modal [nzVisible]="isVisibleOpenG" [nzContent]="modalContentG" [nzFooter]="modalFooterG" [nzClosable]="false">
+    <ng-template #modalContentG>
+      <p style="font-size: medium;">请选择商品</p>
+      <nz-radio-group style="width: 100%" [(ngModel)]="selectGoods" [nzSize]="'large'">
+        <label (click)="selectGood(0)" style="width: 49%" class="radio-size" nz-radio-button [nzValue]="'0'">
+          <span>1号商品</span>
+        </label>
+        <label *ngIf="visible" (click)="selectGood(1)" style="width: 49%" class="radio-size" nz-radio-button
+               [nzValue]="'1'">
+          <span>2号商品</span>
+        </label>
+        <br>
+        <!--[nzDisabled]="isDisabledOne"-->
+        <nz-input-number style="width: 49%;" [(ngModel)]="num" [nzPlaceHolder]="'请输入桶数'" [nzMin]="0" [nzMax]="99999999"
+                         [nzStep]="1"></nz-input-number>
+        <nz-input-number *ngIf="visible" style="width: 49%;" [(ngModel)]="num2" [nzPlaceHolder]="'请输入桶数'" [nzMin]="0"
+                         [nzMax]="99999999" [nzStep]="1"></nz-input-number>
+      </nz-radio-group>
+    </ng-template>
+    <ng-template #modalFooterG>
+      <button nz-button nzType="primary" (click)="openOkG()" [nzLoading]="isAdjustLoading">确定</button>
+    </ng-template>
+  </nz-modal>
+
+  <div class="js_dialog" id="androidDialog2" [class]="loadingVisible ? 'mask-visible' : 'mask-invisible'">
+    <div class="weui-mask"></div>
+    <div class="weui-dialog weui-skin_android">
+      <div class="weui-dialog__bd">
+        <span>正在重启，请等待{{restartTimes}}秒</span>
+      </div>
+    </div>
+  </div>
+</div>

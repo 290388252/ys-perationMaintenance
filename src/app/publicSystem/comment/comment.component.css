@@ -1,0 +1,39 @@
+.blueButton
+{
+  display: block;
+  width: 70px;
+  height: 30px;
+  background-color: #dadada;
+  color: #fff;
+  text-decoration: none;
+  text-align: center;
+  font:normal normal normal 16px/30px 'Microsoft YaHei';
+  cursor: pointer;
+  border-radius: 4px;
+  font-size: 14px;
+  float: right;
+  margin-top: 13px;
+}
+.blueButton:active {
+  background-color: #c7c7c7;
+}
+.myFileUpload
+{
+  position: absolute;
+  display: block;
+  width: 70px;
+  height: 30px;
+  opacity: 0;
+}
+.face{
+  width: 74%;
+  margin: 3px;
+}
+#emoji:empty:before{
+  content:attr(placeholder);
+  font-size: 12px;
+  color: #dadada;
+}
+#emoji:focus{
+  content:none;
+}

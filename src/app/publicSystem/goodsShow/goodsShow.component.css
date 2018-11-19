@@ -1,0 +1,84 @@
+.fixed-button {
+  background: #2196F3;
+  color: white;
+  border: none;
+  border-radius: 3px;
+  height: 22px;
+  width: 90px;
+}
+
+#myModel{
+  display: none;
+  z-index: 1;
+  position: fixed;
+  left:0;
+  top:0;
+  height:100%;
+  width:100%;
+  overflow: auto;
+  background-color: rgba(0,0,0,0.4);
+}
+.model-content{
+  position: fixed;
+  width:100%;
+  height:350px;
+  overflow-y: auto;
+  margin:0 auto;
+  right: 0;
+  bottom: 0;
+  background: #FFFFFF;
+  box-shadow:0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0
+  rgba(0,0,0,0.19);
+  -webkit-animation-name: animatetop;
+  -webkit-animation-duration: 0.4s;
+  animation-name: animatetop;
+  animation-duration: 0.4s;
+}
+@-webkit-keyframes animatetop {
+  from {bottom:-300px; opacity:0}
+  to {bottom:0; opacity:1}
+}
+@keyframes animatetop {
+  from {bottom:-300px; opacity:0}
+  to {bottom:0; opacity:1}
+}
+.model-head{
+  padding:2px 16px;
+  background: #fff;
+  color: white;
+  font-size:20px;
+  margin:0;
+  font-weight: bolder;
+}
+.model-head p {
+  margin-left: 0px;
+  padding-left: 0px;
+}
+.model-body{
+  padding: 0 10px;
+}
+.closed{
+  color: #666;
+  font-size:30px;
+  position: absolute;
+  top: -10px;
+  right: 10px;
+}
+.closed:hover{
+  cursor: pointer;
+  color: #000;
+}
+
+.my_transform {
+  display: inline-block;
+  transform: rotate(-8deg);
+  -webkit-transform:rotate(-8deg);
+  -ms-transform:rotate(-8deg);
+  -moz-transform:rotate(-8deg);
+  -o-transform:rotate(-8deg);
+  border: 1px solid #e5e5e5;
+  font-weight: bolder;
+  position: fixed;
+  right:15px;
+}
+
