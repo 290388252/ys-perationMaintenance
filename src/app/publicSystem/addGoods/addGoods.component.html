@@ -10,11 +10,11 @@
         <span style="color: red">请正确填写当前货道商品数量，两次商品数据不可相同，必须拿出一桶或者放入一桶!!</span>
         <p style="color: #5f5a5a;margin-top: 5px;margin-bottom: 5px">当前次数: <span style="color: red">{{times}}</span>次</p>
         <div [hidden]="backButton">
-          <span style="color: black">一号商品数量:</span><input (click)="focusCode()" type="text" [(ngModel)]="num" class="inputs" placeholder="请输入整数">
+          <span style="color: black">{{nameOne}}数量:</span><input (click)="focusCode()" type="text" [(ngModel)]="num" class="inputs" placeholder="请输入整数">
         </div>
         <br>
         <div [hidden]="goods === 'false' || backButton">
-          <span style="color: #5f5a5a">二号商品数量:</span><input (click)="focusCode()" type="text" [(ngModel)]="num2" class="inputs" placeholder="请输入整数">
+          <span style="color: #5f5a5a">{{nameTwo}}数量:</span><input (click)="focusCode()" type="text" [(ngModel)]="num2" class="inputs" placeholder="请输入整数">
         </div>
         <br>
         <button *ngIf="backButton" (click)="back()" class="ad-bt-cancel">成功,点击返回</button>

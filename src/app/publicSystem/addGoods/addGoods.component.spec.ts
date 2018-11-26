@@ -1,26 +1,25 @@
 import { TestBed, async } from '@angular/core/testing';
-import { AddMainComponent } from './addGoods.component';
-import {AddMainModule} from './addGoods.module';
-describe('AddMainComponent', () => {
+import { AddGoodsComponent } from './addGoods.component';
+describe('AddGoodsComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [
-        AddMainComponent
+        AddGoodsComponent
       ],
     }).compileComponents();
   }));
   it('should create the app', async(() => {
-    const fixture = TestBed.createComponent(AddMainComponent);
+    const fixture = TestBed.createComponent(AddGoodsComponent);
     const app = fixture.debugElement.componentInstance;
     expect(app).toBeTruthy();
   }));
   it(`should have as title 'app'`, async(() => {
-    const fixture = TestBed.createComponent(AddMainComponent);
+    const fixture = TestBed.createComponent(AddGoodsComponent);
     const app = fixture.debugElement.componentInstance;
     expect(app.title).toEqual('app');
   }));
   it('should render title in a h1 tag', async(() => {
-    const fixture = TestBed.createComponent(AddMainComponent);
+    const fixture = TestBed.createComponent(AddGoodsComponent);
     fixture.detectChanges();
     const compiled = fixture.debugElement.nativeElement;
     expect(compiled.querySelector('h1').textContent).toContain('Welcome to app!');

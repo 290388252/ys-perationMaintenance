@@ -45,15 +45,15 @@ export class VmLoginComponent implements OnInit {
       this.appService.getData(this.appProperties.adminLoginUrl,
         {
           phone: this.validateForm.controls.phoneForm.value,
-          smsCode: this.validateForm.controls.password.value,
-          payType: this.payType,
+          phoneCode: this.validateForm.controls.password.value,
+          wxOrAli: this.payType,
           vmCode: urlParse(window.location.search)['vmCode'],
           openId: urlParse(window.location.search)['openId']
         }).subscribe(
         data => {
-          if (data.code !== 0) {
-            alert(data.msg);
-          } else if (data.code === 0) {
+          if (data.status !== 1) {
+            alert(data.message);
+          } else if (data.status === 1301 || data.status === 1401 || data.status === 1) {
             console.log(data);
             const exp = new Date();
             exp.setTime(exp.getTime() + 1000 * 60 * 60 * 24 * 30);

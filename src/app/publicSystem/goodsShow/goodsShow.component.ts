@@ -175,16 +175,16 @@ export class GoodsShowComponent implements OnInit {
     this.isVisibleWarn = false;
   }
   fixedYes() {
-    this.appService.postAliData(this.appProperties.machineControlAdjustReplenish +
+    this.appService.getAliData(this.appProperties.machineControlAdjustReplenish +
       `vmCode=${urlParse(window.location.search)['vmCode']}&wayNum=${this.wayNum}&basicItemId=${this.basicItemId}&adjustNum=${this.num}`,
       '', this.token).subscribe(
       data => {
         console.log(data);
-        if (data.code === 0) {
+        if (data.status === 1) {
           this.replenishList[this.index].changeNewNum = this.num;
           alert('修改成功');
         } else {
-          alert(data.msg);
+          alert(data.message);
         }
         this.isVisibleFixed = false;
       },
@@ -229,9 +229,13 @@ export class GoodsShowComponent implements OnInit {
       data => {
         console.log(data);
         console.log(this.token);
-        this.goodsList = data.data.itemList;
-        this.totalPrice = data.data.totalPrice;
-        this.isClosed();
+        if (data.status === 1) {
+          this.goodsList = data.returnObject.itemList;
+          // this.totalPrice = data.returnObject.totalPrice;
+          this.isClosed();
+        } else {
+          alert(data.message);
+        }
       },
       error2 => {
         console.log(error2);
@@ -270,10 +274,11 @@ export class GoodsShowComponent implements OnInit {
             this.token).subscribe(
             data3 => {
               console.log(data3);
-              if (data3.data === '') {
-                this.replenishList = [];
+              if (data3.status === 1 && data3.returnObject !== '') {
+                this.replenishList = data3.returnObject;
               }  else {
-                this.replenishList = data3.data;
+                this.replenishList = [];
+                alert(data3.message);
               }
               if (this.flag === 3 || this.flag === '3' || this.flag === 4 || this.flag === '4') {
                 this.isVisibleWarn = true;

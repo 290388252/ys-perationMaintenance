@@ -25,6 +25,8 @@ export class AddGoodsComponent implements OnInit {
   public disableButton = false;
   public backButton = false;
   public sureButtonText = '输入确定';
+  public nameOne = '';
+  public nameTwo = '';
   private saveNum = [];
 
   constructor(private router: Router,
@@ -37,7 +39,9 @@ export class AddGoodsComponent implements OnInit {
   ngOnInit() {
     this.getCookies();
     this.goods = urlParse(window.location.href)['goods'];
-    console.log(urlParse(window.location.href)['orderNumber']);
+    console.log(urlParse(window.location.href)['itemName'].split(','));
+    // this.nameOne = urlParse(window.location.href)['itemName'].split(',')[0];
+    // this.nameTwo = urlParse(window.location.href)['itemName'].split(',')[1];
   }
   focusCode() {
     document.getElementById('ag-bk').style.height = (document.documentElement.offsetWidth + 100) + 'px';
@@ -122,7 +126,7 @@ export class AddGoodsComponent implements OnInit {
       }, this.token).subscribe(
       data => {
         console.log(data);
-        if (data.code === 0) {
+        if (data.status === 0) {
           if (this.times === 2) {
             this.sureButtonText = '如果有误可重新输入后点此按钮重新校准';
             this.backButton = true;
@@ -134,17 +138,17 @@ export class AddGoodsComponent implements OnInit {
             this.sureButtonText = '如果有误可重新输入后点此按钮重新校准';
             this.backButton = true;
           }
-        } else if (data.code === -1) {
+        } else if (data.status === -1) {
           this.router.navigate(['vmLogin'], {
             queryParams: {
               vmCode: urlParse(window.location.search)['vmCode']
             }
           });
-        } else if (data.code === 3) {
+        } else if (data.status === 3) {
           this.count = 1;
           alert('校准失败请重试！');
         } else {
-          alert(data.msg);
+          alert(data.message);
         }
       },
       error => {
