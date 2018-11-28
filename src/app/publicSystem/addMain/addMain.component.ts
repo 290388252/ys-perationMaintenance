@@ -18,11 +18,9 @@ export class AddMainComponent implements OnInit {
   public fiveIndexListLeft = [];
   public fiveIndexListRigth = [];
   private wayNumber: number;
-  public isVisibleOpen = false;
   public loadingVisible = false;
   public isVisibleOpenDoor = false;
   public isVisibleOpenEightDoor = false;
-  public isVisibleOpenG = false;
   public isVisibleOpenDetail = false;
   public isAdjustLoading = false;
   public token: string;
@@ -71,6 +69,8 @@ export class AddMainComponent implements OnInit {
   ngOnInit() {
     // 数据初始化
     this.getCookies();
+    this.token = urlParse(window.location.search)['token'];
+    sessionStorage.setItem('token', urlParse(window.location.search)['token']);
     // 数据初始化
     this.getInitData();
     if (this.token === null
@@ -78,6 +78,9 @@ export class AddMainComponent implements OnInit {
       || this.token === 'undefined') {
       this.getAuth();
     } else {
+      const exp = new Date();
+      exp.setTime(exp.getTime() + 1000 * 60 * 60 * 24 * 30);
+      document.cookie = 'adminToken=' + urlParse(window.location.search)['token'] + ';expired=' + exp.toUTCString();
       if (urlParse(window.location.search)['payType'] === '1') {
         this.canReplenish('main');
       } else if (urlParse(window.location.search)['payType'] === '2') {
@@ -108,8 +111,10 @@ export class AddMainComponent implements OnInit {
       this.visible = false;
     }
     const orderNumber = [];
+    const itemName = [];
     for (let i = 0; i < this.indexList[this.wayIndex]['wayItemList'].length; i++) {
       orderNumber.push(this.indexList[this.wayIndex]['wayItemList'][i].orderNumber);
+      itemName.push(this.indexList[this.wayIndex]['wayItemList'][i].itemName);
     }
     // 跳转校准
     this.router.navigate(['addGoods'], {
@@ -117,6 +122,7 @@ export class AddMainComponent implements OnInit {
         vmCode: urlParse(window.location.search)['vmCode'],
         goods: this.visible,
         orderNumber: orderNumber.join(','),
+        itemName: itemName.join(','),
         wayNo: this.wayNo
       }
     });
@@ -156,7 +162,8 @@ export class AddMainComponent implements OnInit {
         data => {
           console.log(data);
           let newData;
-          const newWlhUrl = '/vmLogin?vmCode=' + urlParse(window.location.search)['vmCode'] + '&payType=1';
+          const newWlhUrl = '/vmLogin?vmCode=' + urlParse(window.location.search)['vmCode'] + '-/addMain?vmCode='
+            + urlParse(window.location.search)['vmCode'];
           if (typeof(data.data) === 'string' && data.data.length > 0) {
             newData = data.data.replace(data.data.substring(data.data.indexOf('state=') + 6, data.data.length),
               newWlhUrl);
@@ -170,7 +177,8 @@ export class AddMainComponent implements OnInit {
       );
     } else if (urlParse(window.location.search)['payType'] === '2') {
       // 支付宝授权登陆验证
-      const newWlhUrl = '?state=/vmLogin?vmCode=' + urlParse(window.location.search)['vmCode'] + '&payType=2';
+      const newWlhUrl = '?state=/vmLogin?vmCode=' + urlParse(window.location.search)['vmCode'] + '-/addMain?vmCode='
+        + urlParse(window.location.search)['vmCode'];
       this.appService.getData(this.appProperties.aliVmGetUserIdUrl + '?vmCode=' + urlParse(window.location.search)['vmCode'], '').subscribe(
         data2 => {
           console.log(data2);
@@ -331,35 +339,6 @@ export class AddMainComponent implements OnInit {
     }
   }
 
-  // 检测是否已关门
-  isClosed(vmCode) {
-    this.appService.getDataOpen(this.appProperties.isClosedUrl, {vmCode: vmCode}, this.token).subscribe(
-      data2 => {
-        if (data2.data === false) {
-          this.isVisibleOpen = true;
-          // this.isClosed(urlParse(window.location.search)['vmCode']);
-        } else if (data2.data === true) {
-          this.getInitData();
-          this.appService.postAliData(this.appProperties.orderResetWaysNumUrl + urlParse(window.location.search)['vmCode'],
-            '', this.token).subscribe(
-            data => {
-              console.log(data);
-              alert(data.msg);
-              this.getInitData();
-            },
-            error => {
-              console.log(error);
-            }
-          );
-          this.isVisibleOpen = false;
-        }
-      },
-      error2 => {
-        console.log(error2);
-      }
-    );
-  }
-
   // 校准数量
   resetNum() {
     console.log(urlParse(window.location.search)['vmCode']);
@@ -511,98 +490,6 @@ export class AddMainComponent implements OnInit {
     );
   }
 
-  // 是否校准开门（是）
-  yes() {
-    console.log(this.num);
-    console.log(this.num2);
-    if (this.visible) {
-      if (this.num === undefined || this.num2 === undefined) {
-        alert('您还有数量未输入');
-        this.isVisibleOpenG = true;
-        this.isVisibleOpenDoor = true;
-      } else {
-        this.count++;
-        this.adjust();
-      }
-    } else {
-      if (this.num === undefined) {
-        alert('您还有数量未输入');
-        this.isVisibleOpenG = true;
-        this.isVisibleOpenDoor = true;
-      } else {
-        this.count++;
-        this.adjust();
-      }
-    }
-  }
-  adjust() {
-    let num;
-    console.log(this.indexList[this.wayIndex]['wayItemList']);
-    if (this.indexList[this.wayIndex]['wayItemList'].length === 1) {
-      num = this.num;
-    } else {
-      num = [this.num, this.num2].join(',');
-    }
-    const orderNumber = [];
-    for (let i = 0; i < this.indexList[this.wayIndex]['wayItemList'].length; i++) {
-      orderNumber.push(this.indexList[this.wayIndex]['wayItemList'][i].orderNumber);
-    }
-    // if (this.isDisabledOne) {
-    //   num = this.num2;
-    // } else if (this.isDisabledTwo) {
-    //   num = this.num;
-    // }
-    this.num = undefined;
-    this.num2 = undefined;
-    this.appService.postAliData(this.appProperties.reviseUrl,
-      {
-        vmCode: urlParse(window.location.search)['vmCode'],
-        wayNum: this.wayNo,
-        times: this.times,
-        num: num,
-        orderNumber: orderNumber.join(',')
-      }, this.token).subscribe(
-      data => {
-        console.log(data);
-        if (data.status === 0) {
-          if (this.times === 2) {
-            this.isVisibleOpenG = false;
-            this.isVisibleOpenDoor = false;
-          } else {
-            this.isAdjustLoading = true;
-            setTimeout(() => {
-              this.isAdjustLoading = false;
-              this.times = 2;
-            }, 7000);
-          }
-        } else if (data.status === -1) {
-          this.router.navigate(['vmLogin'], {
-            queryParams: {
-              vmCode: urlParse(window.location.search)['vmCode']
-            }
-          });
-        } else if (data.status === 3) {
-          alert('校准失败请重试！');
-          this.isVisibleOpenG = true;
-          this.isVisibleOpenDoor = true;
-        } else {
-          alert(data.message);
-          this.isVisibleOpenG = true;
-          this.isVisibleOpenDoor = true;
-        }
-      },
-      error => {
-        console.log(error);
-      }
-    );
-    if (this.count >= 3) {
-      this.getInitData();
-      this.count = 1;
-      this.isVisibleOpenG = false;
-      this.isVisibleOpenDoor = false;
-    }
-  }
-  // 是否开门（否）
   no() {
     this.isVisibleOpenDoor = false;
     this.isVisibleOpenEightDoor = false;
@@ -613,34 +500,7 @@ export class AddMainComponent implements OnInit {
     this.isVisibleOpenDetail = false;
   }
 
-  // 是否关门按钮事件（是）
-  openOk() {
-    this.isClosed(urlParse(window.location.search)['vmCode']);
-  }
 
-  openOkG() {
-    this.yes();
-    console.log(this.count);
-    // if (this.isDisabledOne) {
-    //   if (this.num2 === undefined) {
-    //     alert('请输入桶数');
-    //   } else {
-    //     this.yes();
-    //     if (this.times === 2) {
-    //       this.isVisibleOpenG = false;
-    //     }
-    //   }
-    // } else if (this.isDisabledTwo) {
-    //   if (this.num === undefined) {
-    //     alert('请输入桶数');
-    //   } else {
-    //     this.yes();
-    //     if (this.times === 2) {
-    //       this.isVisibleOpenG = false;
-    //     }
-    //   }
-    // }
-  }
 
   getCookies() {
     if (this.token === null || this.token === undefined || this.token === 'undefined') {

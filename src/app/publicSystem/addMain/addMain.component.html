@@ -263,15 +263,6 @@
     </ng-template>
   </nz-modal>
 
-  <nz-modal [nzVisible]="isVisibleOpen" [nzContent]="modalContent" [nzFooter]="modalFooter" [nzClosable]="false">
-    <ng-template #modalContent>
-      <p style="font-size: medium;">优水到家提醒您,补水后请随手关门</p>
-    </ng-template>
-    <ng-template #modalFooter>
-      <button nz-button nzType="primary" (click)="openOk()">关闭</button>
-    </ng-template>
-  </nz-modal>
-
   <nz-modal [(nzVisible)]="isVisible" [nzTitle]="modalvolTitle" [nzContent]="modalVol" [nzFooter]="modalvolFooter"
             (nzOnCancel)="myVolCancel()">
     <ng-template #modalvolTitle>
@@ -298,29 +289,6 @@
     </ng-template>
   </nz-modal>
 
-  <nz-modal [nzVisible]="isVisibleOpenG" [nzContent]="modalContentG" [nzFooter]="modalFooterG" [nzClosable]="false">
-    <ng-template #modalContentG>
-      <p style="font-size: medium;">请选择商品</p>
-      <nz-radio-group style="width: 100%" [(ngModel)]="selectGoods" [nzSize]="'large'">
-        <label (click)="selectGood(0)" style="width: 49%" class="radio-size" nz-radio-button [nzValue]="'0'">
-          <span>1号商品</span>
-        </label>
-        <label *ngIf="visible" (click)="selectGood(1)" style="width: 49%" class="radio-size" nz-radio-button
-               [nzValue]="'1'">
-          <span>2号商品</span>
-        </label>
-        <br>
-        <!--[nzDisabled]="isDisabledOne"-->
-        <nz-input-number style="width: 49%;" [(ngModel)]="num" [nzPlaceHolder]="'请输入桶数'" [nzMin]="0" [nzMax]="99999999"
-                         [nzStep]="1"></nz-input-number>
-        <nz-input-number *ngIf="visible" style="width: 49%;" [(ngModel)]="num2" [nzPlaceHolder]="'请输入桶数'" [nzMin]="0"
-                         [nzMax]="99999999" [nzStep]="1"></nz-input-number>
-      </nz-radio-group>
-    </ng-template>
-    <ng-template #modalFooterG>
-      <button nz-button nzType="primary" (click)="openOkG()" [nzLoading]="isAdjustLoading">确定</button>
-    </ng-template>
-  </nz-modal>
 
   <div class="js_dialog" id="androidDialog2" [class]="loadingVisible ? 'mask-visible' : 'mask-invisible'">
     <div class="weui-mask"></div>

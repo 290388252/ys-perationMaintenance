@@ -5,26 +5,28 @@
   <div [hidden]="flag === '1' || flag === '2'" style="height: 30px;">
     <img src="../../../assets/main/my_success.png" style="width: 24px;height: 24px;margin-top: -12px;">
     <span style="font-size: 18px;color: #333333;font-weight: bolder;">补货成功</span>
-    <p style="font-size: 12px;color: #F6151C">(如数量不对请点击修正，补货输入正数，拿货输入负数！)</p>
+    <p style="font-size: 12px;color: #F6151C">(如数量不对请点击修正，补货输入正数，拿货输入负数！并与后台人员联系修正补货数，所有补货数据以系统为准！！！)</p>
   </div>
   <div [hidden]="flag === '3' || flag === '4'" style="height: 30px;">
-      <img src="../../../assets/main/my_success.png" style="width: 24px;height: 24px;margin-top: -12px;">
-      <span style="font-size: 18px;color: #333333;font-weight: bolder;">购买成功</span>
+    <img src="../../../assets/main/my_success.png" style="width: 24px;height: 24px;margin-top: -12px;">
+    <span style="font-size: 18px;color: #333333;font-weight: bolder;">购买成功</span>
   </div>
   <div [hidden]="flag === '3' || flag === '4'" class="am-message-main" style="color: #333333; font-size: 14px;margin-top: 26px;font-weight: bold;">实付金额：￥{{price}}&nbsp;&nbsp;&nbsp;&nbsp;
     <span *ngIf="sumDeductionMoney" style="color: #F6151C; font-size: 12px; font-weight: bold; ">优惠金额：￥{{sumDeductionMoney}}</span>
   </div>
-  <a [hidden]="item.changeNum > 0 && flag === '1'" href="javascript:void(0);" *ngFor="let item of replenishList;let i = index" class="weui-media-box weui-media-box_appmsg">
-    <div class="weui-media-box__hd">
-      <img class="weui-media-box__thumb" [src]="img+item.pic" alt="">
-    </div>
-    <div class="weui-media-box__bd">
-      <h4 class="weui-media-box__title">{{item.itemName}}</h4>
-      <h5 style="margin-top: 1px" class="weui-media-box__desc">{{turnText(item)}}
-        <button class="fixed-button" [hidden]="flag === '1' || flag === '2'" (click)="fixedNum(item, i)">修正数量</button>
-      </h5>
-    </div>
-  </a>
+  <div style="margin-top: 55px">
+    <a [hidden]="item.changeNum > 0 && flag === '1'" href="javascript:void(0);" *ngFor="let item of replenishList;let i = index" class="weui-media-box weui-media-box_appmsg">
+      <div class="weui-media-box__hd">
+        <img class="weui-media-box__thumb" [src]="img+item.pic" alt="">
+      </div>
+      <div class="weui-media-box__bd">
+        <h4 class="weui-media-box__title">{{item.itemName}}</h4>
+        <h5 style="margin-top: 1px" class="weui-media-box__desc">{{turnText(item)}}
+          <button class="fixed-button" [hidden]="flag === '1' || flag === '2'" (click)="fixedNum(item, i)">修正数量</button>
+        </h5>
+      </div>
+    </a>
+  </div>
   <div style="margin-top: 18px;margin-bottom: 5px;">
     <button nz-button nzType="default" (click)="exit()">返回首页</button>
     <button nz-button nzType="dash" style="background-color: #eee;" (click)="seeOrder()" *ngIf="isFollow === 1">查看订单</button>
@@ -51,7 +53,7 @@
       </div>
     </div>
   </div>
-  <div [hidden]="flag === '3' || flag === '4'">
+  <div [hidden]="flag === '3' || flag === '4' || youshuiCompany === false">
     <p style="font-weight: bold;margin-top: 15px; font-size: 16px; color: #333333;">&minus;新人优惠券&minus;</p>
     <p style="color: #666666;font-size: 14px;">首次关注优水到家公众号，领取<a href="javascript:void(0)" style="font-weight: bolder; font-size: 16px;color: #3e85ff;">100元</a>购水大礼包</p>
     <p style="margin:18px 0;">
@@ -65,39 +67,39 @@
   <!--<div [hidden]="flag === '3' || flag === '4'" class="am-message-sub">广州优水到家工程感谢你的惠顾,系统将从零钱或者银行卡中自动扣取本次购买费用。点击右上角分享给好友可一起领取优惠券</div>-->
   <!--<div *ngIf="youshuiCompany" [hidden]="flag === '3' || flag === '4'" class="am-message-sub" style="color: #118ee8;font-weight: 600">关注“优水到家”微信公众号，领取100元购水大礼包</div>-->
   <!--<div *ngIf="youshuiCompany" [hidden]="flag === '3' || flag === '4'">-->
-    <!--<div [hidden]="flag === '3' || flag === '4'" class="am-message-sub" style="color: #118ee8;font-weight: 600">关注“优水到家”微信公众号，领取100元购水大礼包</div>-->
-    <!--<div [hidden]="flag === '3' || flag === '4'">-->
-    <!--&lt;!&ndash;<button [hidden]="aliPay" (click)="follow()" class="am-button" style="background: #2CA825">点击关注</button>&ndash;&gt;-->
-    <!--<img style="width: 300px;padding-bottom: 84px;opacity: 1" src="../../../assets/main/follow.png" alt="">-->
-    <!--</div>-->
+  <!--<div [hidden]="flag === '3' || flag === '4'" class="am-message-sub" style="color: #118ee8;font-weight: 600">关注“优水到家”微信公众号，领取100元购水大礼包</div>-->
+  <!--<div [hidden]="flag === '3' || flag === '4'">-->
+  <!--&lt;!&ndash;<button [hidden]="aliPay" (click)="follow()" class="am-button" style="background: #2CA825">点击关注</button>&ndash;&gt;-->
+  <!--<img style="width: 300px;padding-bottom: 84px;opacity: 1" src="../../../assets/main/follow.png" alt="">-->
+  <!--</div>-->
   <!--<div class="am-button-wrap" [hidden]="flag === '3' || flag === '4'">-->
-    <!--<button (click)="share()" class="am-button blue" >分享</button>-->
+  <!--<button (click)="share()" class="am-button blue" >分享</button>-->
   <!--</div>-->
   <!--<div class="am-button-wrap">-->
-    <!--<button (click)="exit()" class="am-button blue" >直接退出</button>-->
+  <!--<button (click)="exit()" class="am-button blue" >直接退出</button>-->
   <!--</div>-->
 </div>
 
 <!--<div [hidden]="more" class="weui-panel weui-panel_access">-->
-  <!--<div class="weui-panel__hd" style="color: red">请确认您所拿取的商品列表</div>-->
-  <!--<div class="weui-panel__bd">-->
-    <!--<a [hidden]="item.changeNum === 0" href="javascript:void(0);" *ngFor="let item of goodsList" class="weui-media-box weui-media-box_appmsg">-->
-      <!--<div class="weui-media-box__hd">-->
-        <!--<img class="weui-media-box__thumb" [src]="img+item.pic" alt="">-->
-      <!--</div>-->
-      <!--<div class="weui-media-box__bd">-->
-        <!--<h4 class="weui-media-box__title">{{item.itemName}}</h4>-->
-        <!--<h5 style="float: left;margin-top: 1px" class="weui-media-box__desc">{{turnText(item.changeNum)}}</h5>-->
-        <!--<span [hidden]="flag === '3' || flag === '4'" style="float: right;" class="weui-media-box__desc">{{(-item.changeNum * item.price).toFixed(2)}}元</span>-->
-      <!--</div>-->
-    <!--</a>-->
+<!--<div class="weui-panel__hd" style="color: red">请确认您所拿取的商品列表</div>-->
+<!--<div class="weui-panel__bd">-->
+<!--<a [hidden]="item.changeNum === 0" href="javascript:void(0);" *ngFor="let item of goodsList" class="weui-media-box weui-media-box_appmsg">-->
+<!--<div class="weui-media-box__hd">-->
+<!--<img class="weui-media-box__thumb" [src]="img+item.pic" alt="">-->
+<!--</div>-->
+<!--<div class="weui-media-box__bd">-->
+<!--<h4 class="weui-media-box__title">{{item.itemName}}</h4>-->
+<!--<h5 style="float: left;margin-top: 1px" class="weui-media-box__desc">{{turnText(item.changeNum)}}</h5>-->
+<!--<span [hidden]="flag === '3' || flag === '4'" style="float: right;" class="weui-media-box__desc">{{(-item.changeNum * item.price).toFixed(2)}}元</span>-->
+<!--</div>-->
+<!--</a>-->
 
-  <!--</div>-->
-  <!--<div [hidden]="flag === '3' || flag === '4'" class="weui-panel__ft">-->
-    <!--<div href="javascript:void(0);" class="weui-cell weui-cell_access weui-cell_link">-->
-      <!--<div style="text-align: right" class="weui-cell__bd">总价:{{totalPrice}}元</div>-->
-    <!--</div>-->
-  <!--</div>-->
+<!--</div>-->
+<!--<div [hidden]="flag === '3' || flag === '4'" class="weui-panel__ft">-->
+<!--<div href="javascript:void(0);" class="weui-cell weui-cell_access weui-cell_link">-->
+<!--<div style="text-align: right" class="weui-cell__bd">总价:{{totalPrice}}元</div>-->
+<!--</div>-->
+<!--</div>-->
 <!--</div>-->
 <div [hidden]="more" class="weui-panel weui-panel_access">
   <div style="font-size:12px; margin: 15px 5px;padding: 5px;color: #b0b0b0;border: 1px solid #b0b0b0;">
@@ -132,9 +134,9 @@
 </div>
 
 <div class="am-message result" style="background-size: 100% 0;margin-top: 25%" [hidden]="single">
-    <div class="am-message-sub">
-      <img style="width: 100%;" src="../../../assets/main/tips.png" alt="">
-    </div>
+  <div class="am-message-sub">
+    <img style="width: 100%;" src="../../../assets/main/tips.png" alt="">
+  </div>
 </div>
 <nz-modal [nzVisible]="isVisibleOpen" [nzContent]="modalContent" [nzFooter]="modalFooter" [nzClosable]="false">
   <ng-template #modalContent>

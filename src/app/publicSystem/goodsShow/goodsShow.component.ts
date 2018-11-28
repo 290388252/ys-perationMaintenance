@@ -202,6 +202,7 @@ export class GoodsShowComponent implements OnInit {
             this.router.navigate(['addMain'], {
               queryParams: {
                 vmCode: urlParse(window.location.search)['vmCode'],
+                token: sessionStorage.getItem('token'),
                 payType: 1
               }});
           } else {
@@ -215,6 +216,7 @@ export class GoodsShowComponent implements OnInit {
             this.router.navigate(['addMain'], {
               queryParams: {
                 vmCode: urlParse(window.location.search)['vmCode'],
+                token: sessionStorage.getItem('token'),
                 payType: 2
               }});
           } else {
@@ -253,7 +255,7 @@ export class GoodsShowComponent implements OnInit {
           clearInterval(this.timeInterval);
         }
         console.log(data2);
-        if (data2.data === false) {
+        if (data2.status !== 1) {
           // alert('您的门还未关闭！优水到家提醒您,为了您账号资金安全,提水后请随手关门');
           if (this.flag === 1 || this.flag === '1'
             || this.flag === 4 || this.flag === '4') {
@@ -265,7 +267,7 @@ export class GoodsShowComponent implements OnInit {
             this.close = true;
             this.single = true;
           }
-        } else if (data2.data === true) {
+        } else if (data2.status === 1) {
           this.close = false;
           this.more = true;
           this.single = true;

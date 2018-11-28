@@ -42,11 +42,11 @@ export class AppProperties {
 
   constructor() {
     // Public
-    // this.appUrl = 'http://47.106.92.82:6662/ys_sms';
-    this.appUrl = 'http://192.168.0.114:6662/ys_mms';
+    this.appUrl = 'http://47.106.92.82:6662/ys_mms/mms';
+    // this.appUrl = 'http://192.168.0.114:6662/ys_mms';
     this.adminUrl = 'http://119.23.233.123:6662/ys_admin';
     this.imgUrl = this.adminUrl + '/files/';
-    this.isClosedUrl = this.appUrl + '/wechat/isClosed';
+    this.isClosedUrl = this.appUrl + '/change/isClosed';
     this.adminLoginUrl = this.appUrl + '/login/do'; // old /admin/login
     this.addOpendoorUrl = this.appUrl + '/open/one'; // old /index/yunWeiOpenDoor
     this.operateOpendoorUrl = this.appUrl + '/open/all'; // old /index/operateOpenDoor
