@@ -156,7 +156,7 @@
   </div>
   <nz-modal [nzVisible]="isVisibleOpenDoor" [nzContent]="modalContents" [nzFooter]="modalFooters" [nzClosable]="false">
     <ng-template #modalContents #modalFooters style="text-align: center">
-      <p style="font-size: medium;">次数:{{times}}次</p>
+      <p style="font-size: medium;">请选择货道</p>
       <br>
       <div>
         <nz-radio-group [(ngModel)]="wayNo" [nzSize]="'large'" *ngIf="isFiveDoor">
@@ -189,15 +189,12 @@
     </ng-template>
     <ng-template #modalFooters style="text-align: center">
       <button nz-button nzType="primary" (click)="no()">关闭</button>
-      <button nz-button nzType="primary" style="margin-right: -15px" (click)="yes()" (disabled)="times !== 2">校准
-      </button>
-      <button nz-button nzType="primary" style="visibility: hidden">否</button>
     </ng-template>
   </nz-modal>
 
   <nz-modal [nzVisible]="isVisibleOpenEightDoor" [nzContent]="modalEightContents" [nzFooter]="modalEightFooters" [nzClosable]="false">
     <ng-template #modalEightContents #modalEightFooters style="text-align: center">
-      <p style="font-size: medium;">次数:{{times}}次</p>
+      <p style="font-size: medium;">请选择货道</p>
       <br>
       <div>
         <nz-radio-group style="width: 100%" [(ngModel)]="wayNo" [nzSize]="'large'">
@@ -242,9 +239,6 @@
     </ng-template>
     <ng-template #modalEightFooters style="text-align: center">
       <button nz-button nzType="primary" (click)="no()">关闭</button>
-      <button nz-button nzType="primary" style="margin-right: -15px" (click)="yes()" (disabled)="times !== 2">校准
-      </button>
-      <button nz-button nzType="primary" style="visibility: hidden">否</button>
     </ng-template>
   </nz-modal>
 

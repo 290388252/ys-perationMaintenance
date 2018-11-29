@@ -11,8 +11,6 @@ const routes: Routes = [/*
     { path: 'addGoods', loadChildren: './publicSystem/addGoods/addGoods.module#AddGoodsModule' },
     { path: 'comment', loadChildren: './publicSystem/comment/comment.module#CommentModule' },
     { path: 'goodsShow', loadChildren: './publicSystem/goodsShow/goodsShow.module#GoodsShowModule' },
-    { path: 'share', loadChildren: './publicSystem/share/share.module#ShareModule' },
-    { path: 'shareGzh', loadChildren: './publicSystem/shareGzh/share.module#ShareModule' },
     { path: 'rotate', loadChildren: './publicSystem/rotate/rotate.module#RotateModule' },
 ];
 

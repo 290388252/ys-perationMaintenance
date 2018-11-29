@@ -22,18 +22,15 @@ export class AddMainComponent implements OnInit {
   public isVisibleOpenDoor = false;
   public isVisibleOpenEightDoor = false;
   public isVisibleOpenDetail = false;
-  public isAdjustLoading = false;
   public token: string;
   // public radioValue: string;
   public count = 1;
   public restartTimes = 15; // 重启时间（秒）
-  public times = 1;
   public num: number;
   public num2: number;
   public wayNo: number;
   public wayIndex: number;
   public temperature: number;
-  public selectGoods = '0';
   // public img = 'http://lenvar-resource-products.oss-cn-shenzhen.aliyuncs.com/';
   // public img = 'http://119.23.233.123:6662/ys_admin/files/';
   public img = this.appProperties.imgUrl;
@@ -41,16 +38,10 @@ export class AddMainComponent implements OnInit {
   public isFourDoor = false; // 四门
   public isFiveDoor = false; // 五门
   public isEightDoor = false; // 8门
-  // public myVol = false;
-  // public isConfirmLoading = false;
   public isVisible = false;
   public isOkLoading = false;
   public visible = false;
-  // public isDisabledOne = false;
-  // public isDisabledTwo = true;
-  // public beginvolValue;
   public volValue;
-  // public endVole;
   public fullNum;
   public numDetail;
   public costPrice;
@@ -70,6 +61,7 @@ export class AddMainComponent implements OnInit {
     // 数据初始化
     this.getCookies();
     this.token = urlParse(window.location.search)['token'];
+    console.log(urlParse(window.location.search)['token']);
     sessionStorage.setItem('token', urlParse(window.location.search)['token']);
     // 数据初始化
     this.getInitData();
@@ -126,7 +118,6 @@ export class AddMainComponent implements OnInit {
         wayNo: this.wayNo
       }
     });
-    // this.isVisibleOpenG = true; // 弹框校准
   }
 
   selectGood(num) {
@@ -238,9 +229,6 @@ export class AddMainComponent implements OnInit {
           this.temperature = data.returnObject.temperature;
           //   let volvalue = data.data.volume;
           //   // this.beginvolValue = data.data.volume;
-          //   console.log('ok1');
-          //   console.log(volvalue);
-          //   console.log(volvalue === '99');
           //   if(volvalue === undefined) {
           //     volvalue = 0;
           //   }
@@ -258,19 +246,6 @@ export class AddMainComponent implements OnInit {
   detail(item, event, weight) {
     event.stopPropagation();
     console.log(item);
-    // costPrice: 6.88
-    // endTime: "2018-05-05 00:00:00"
-    // fullNum: 24
-    // hot: 1
-    // itemId: "4572"
-    // itemName: "怡宝纯净水4.5L"
-    // num: 0
-    // pic: "20180601_084447.png"
-    // price: 8.2
-    // state: 30001
-    // wayId: "44332"
-    // wayNumber: 3
-    // weight: 0
     this.itemName = item.itemName;
     this.costPrice = item.costPrice;
     this.weight = weight;
@@ -414,7 +389,6 @@ export class AddMainComponent implements OnInit {
   resetWeight() {
     this.wayNo = undefined;
     this.num = undefined;
-    this.times = 1;
     this.count = 1;
     if (this.isEightDoor) {
       this.isVisibleOpenEightDoor = true;

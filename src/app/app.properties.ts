@@ -26,24 +26,21 @@ export class AppProperties {
   public gameReceive: string;
   public machineControlUrl: string;
   public machineControlGetReplenishInfoUrl: string;
-  public machineInfoGetCompanyIdUrl: string;
   public adminCreateForeverStrQrUrl: string;
   public machineControlAdjustReplenish: string;
   // WeChat
   public indexListUrl: string;
   public smsSendUrl: string;
-  public wechatShareInfoUrl: string;
   // AliPay
   public aliVmGetUserIdUrl: string;
 
-  public storeOrderFininshPayUrl: string;
   public useCouponUrl: string;
   public useWaterVouchersUrl: string;
 
   constructor() {
     // Public
     this.appUrl = 'http://47.106.92.82:6662/ys_mms/mms';
-    // this.appUrl = 'http://192.168.0.114:6662/ys_mms';
+    // this.appUrl = 'http://192.168.0.114:6662/ys_mms/mms';
     this.adminUrl = 'http://119.23.233.123:6662/ys_admin';
     this.imgUrl = this.adminUrl + '/files/';
     this.isClosedUrl = this.appUrl + '/change/isClosed';
@@ -65,19 +62,16 @@ export class AppProperties {
     this.gameReceive = this.appUrl + '/game/receive';
     this.machineControlUrl = this.appUrl + '/change/itemInfo'; // old /machineControl/getChangeInfo
     this.machineControlGetReplenishInfoUrl = this.appUrl + '/change/ultimateInfo?vmCode='; // old /machineControl/getReplenishInfo
-    this.machineInfoGetCompanyIdUrl = this.appUrl + '/machineInfo/getCompanyId?vmCode=';
     this.adminCreateForeverStrQrUrl = this.appUrl + '/admin/createStrQr';
-    this.machineControlAdjustReplenish = this.appUrl + '/ adjust/replenish?'; // old /machineControl/adjustReplenish
+    this.machineControlAdjustReplenish = this.appUrl + '/adjust/replenish?'; // old /machineControl/adjustReplenish
 
     // WeChat
     this.indexListUrl = this.appUrl + '/item/home'; // old /index/listWay
     this.smsSendUrl = this.appUrl + '/sms/send';
-    this.wechatShareInfoUrl = this.appUrl + '/wechat/shareInfo';
 
     // AliPay
     this.aliVmGetUserIdUrl = this.appUrl + '/aliUser/getAiInfoUrl';
     //
-    this.storeOrderFininshPayUrl = this.appUrl + '/order/storeOrderFininshPay';
     this.useCouponUrl = this.appUrl + '/coupon/usedCouponId';
     this.useWaterVouchersUrl = this.appUrl + '/carryWaterVouchers/listPage';
   }

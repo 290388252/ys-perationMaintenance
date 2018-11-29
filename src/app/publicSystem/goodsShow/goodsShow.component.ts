@@ -24,26 +24,13 @@ export class GoodsShowComponent implements OnInit {
   public index: string;
   public num: number;
   public goodsList = [];
-  public totalPrice = 0;
   public count = 0;
   private timeInterval;
   public flag;
   public img = this.appProperties.imgUrl;
   public replenishList = [];
   public aliPay = false;
-  public youshuiCompany = false;
-  public visible = false;
-  public placement = 'left';
-  public wechatVisible;
-
-  public couponName;
-  public carryWaterCouponName;
-  public orderId;
   public price: string;
-  public couponId: string;
-  public type: string;
-  public isFollow: number;
-  public sumDeductionMoney: string;
   public couponList;
   public waterVoucherList = [];
 
@@ -52,30 +39,12 @@ export class GoodsShowComponent implements OnInit {
               private appService: AppService) {
   }
   ngOnInit() {
-    this.wechatVisible = false;
     this.couponList = [];
     this.waterVoucherList = [];
     this.flag = sessionStorage.getItem('flag');
     // this.flag = urlParse(window.location.search)['flag'];
     this.getToken();
-    this.share();
     this.goodsList = [];
-    this.appService.postData(this.appProperties.machineInfoGetCompanyIdUrl + urlParse(window.location.search)['vmCode'], '').subscribe(
-      data2 => {
-        console.log(data2);
-        if (data2.returnObject === 76 || data2.returnObject === '76'
-          || data2.returnObject === 114 || data2.returnObject === '114'
-          || data2.returnObject === 115 || data2.returnObject === '115'
-          || data2.returnObject === 116 || data2.returnObject === '116'
-          || data2.returnObject === 117 || data2.returnObject === '117') {
-          this.youshuiCompany = true;
-        } else {
-          this.youshuiCompany = false;
-        }
-      },
-      error2 => {
-        console.log(error2);
-      });
     const ua = window.navigator.userAgent.toLowerCase();
     if (ua.match(/AlipayClient/i)) {
       if (ua.match(/AlipayClient/i)[0] === 'alipayclient') {
@@ -98,72 +67,6 @@ export class GoodsShowComponent implements OnInit {
         text = item.changeNewNum === undefined ? `补货数量${item.changeNum}` : `补货数量${item.changeNum},修正后数量${item.changeNewNum}`;
       }
     return text;
-  }
-  follow() {
-    window.location.href = 'https://mp.weixin.qq.com/mp/profile_ext?action=home&__biz=MzU0NzQ4MTY0Mg==&scene=124#wechat_redirect';
-  }
-  share() {
-    this.appService.postAliData(this.appProperties.wechatShareInfoUrl
-      + '?url=http://sms.youshuidaojia.com/goodsShow?vmCode=' + urlParse(window.location.href)['vmCode'],
-      '', this.token).subscribe(
-      data => {
-        console.log(data);
-        wx.config({
-          debug: false,
-          appId: data.data.appId,
-          timestamp: data.data.timestamp,
-          nonceStr: data.data.nonceStr,
-          signature: data.data.signature,
-          jsApiList: ['checkJsApi',
-            'onMenuShareAppMessage',
-            'onMenuShareTimeline',
-            'onMenuShareQQ',
-            'onMenuShareWeibo',
-          ]
-        });
-        const link = 'http://sms.youshuidaojia.com/share?token=' + this.token;
-        console.log(link);
-        wx.ready(function () {
-          console.log(123);
-          // wx.ready(function () {   // 需在用户可能点击分享按钮前就先调用
-          //   wx.updateAppMessageShareData({
-          //     title: '优水到家', // 分享标题
-          //     desc: '分享领取优惠', // 分享描述
-          //     link: '', // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
-          //     imgUrl: '../../../assets/main/logo.png', // 分享图标
-          //   }, function (res) {
-          //     // 这里是回调函数
-          //     console.log(res);
-          //   });
-          // });
-          const shareData = {
-            title: '优水到家',
-            desc: '分享领取优惠', // 这里请特别注意是要去除html
-            link: link,
-            imgUrl: 'http://119.23.233.123:6662/ys_admin/companyLogo/20181008_142714.png',
-            // imgUrl: '../../../assets/main/logo.png',
-            success: function () {
-              // 用户确认分享后执行的回调函数
-              console.log('success');
-            },
-            cancel: function () {
-              // 用户取消分享后执行的回调函数
-              console.log('cancel');
-            }
-          };
-          wx.onMenuShareAppMessage(shareData);
-          // wx.onMenuShareTimeline(shareData);
-          // wx.onMenuShareQQ(shareData);
-          // wx.onMenuShareWeibo(shareData);
-        });
-        wx.error(function (res) {
-          console.log(res);
-        });
-      },
-      error2 => {
-        console.log(error2);
-      }
-    );
   }
   fixedNum(item, index) {
     this.isVisibleFixed = true;
@@ -291,26 +194,6 @@ export class GoodsShowComponent implements OnInit {
             }
           );
           // alert('广州优水到家工程感谢你的惠顾,系统将从零钱或者银行卡中自动扣取本次购买费用。');
-          // 支付完成后拿到要显示的数据
-          this.appService.getAliData(this.appProperties.storeOrderFininshPayUrl, {vmCode: urlParse(window.location.search)['vmCode']},
-            this.token).subscribe(
-              data4 => {
-                console.log(data4);
-                this.couponName = data4.couponName;
-                this.carryWaterCouponName = data4.carryWaterCouponName;
-                this.orderId = data4.orderId;
-                this.price = data4.price;
-                this.couponId = data4.couponId;
-                this.type = data4.type;
-                this.isFollow = data4.follow;
-                this.sumDeductionMoney = data4.sumDeductionMoney;
-                console.log(this.price);
-                console.log(this.sumDeductionMoney);
-              },
-            error4 => {
-                console.log(error4);
-            }
-          );
         }
       },
       error2 => {
@@ -361,61 +244,5 @@ export class GoodsShowComponent implements OnInit {
         }
       }
     }
-  }
-
-  // 查看优惠券
-  openDrawer () {
-
-    const model = document.getElementById('myModel');
-    const closed = document.getElementById('closed');
-    model.style.display = 'block';
-    document.body.style.overflow = 'hidden';
-    window.addEventListener('click', function (event) {
-      if (event.target === closed || event.target === model) {
-        model.style.display = 'none';
-        document.body.style.overflow = 'auto';
-      }
-    });
-
-    // 判断是使用优惠券还是提水券type为1是优惠券，type=2为提水券
-    // 使用优惠券
-    if (this.type === '1') {
-      this.appService.postAliData(this.appProperties.useCouponUrl, this.couponId, this.token).subscribe(
-        data => {
-          if (data) {
-            this.couponList = data.returnObject;
-          }
-        },
-        error => {
-          console.log(error);
-        }
-      );
-    }
-    // 使用提水券
-    if (this.type === '2') {
-      this.appService.postAliData(this.appProperties.useWaterVouchersUrl, {orderId: this.orderId}, this.token).subscribe(
-        data => {
-          this.waterVoucherList = data.returnObject;
-        },
-        error => {
-          console.log(error);
-        }
-      );
-    }
-
-  }
-
-  sureModel() {
-    const model = document.getElementById('myModel');
-    model.style.display = 'none';
-  }
-  openShowModel() {
-    this.wechatVisible = true;
-  }
-  showCancel() {
-    this.wechatVisible = false;
-  }
-  seeOrder () {
-    window.location.href = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxa41aef1ebf72a4b2&redirect_uri=http://yms.youshuidaojia.com/admin/getCustomerToken&response_type=code&scope=snsapi_userinfo&state=/detail?flag=1';
   }
 }

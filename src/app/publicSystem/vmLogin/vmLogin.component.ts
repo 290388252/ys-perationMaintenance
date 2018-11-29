@@ -64,7 +64,8 @@ export class VmLoginComponent implements OnInit {
             this.router.navigate(['addMain'], {
               queryParams: {
                 vmCode: this.vmCode,
-                payType: this.payType
+                payType: this.payType,
+                token: data.data
               }});
           }
         },

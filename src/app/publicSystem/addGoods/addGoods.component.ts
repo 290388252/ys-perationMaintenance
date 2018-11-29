@@ -127,7 +127,7 @@ export class AddGoodsComponent implements OnInit {
       }, this.token).subscribe(
       data => {
         console.log(data);
-        if (data.status === 0) {
+        if (data.status === 1) {
           if (this.times === 2) {
             this.sureButtonText = '如果有误可重新输入后点此按钮重新校准';
             this.backButton = true;
@@ -162,6 +162,7 @@ export class AddGoodsComponent implements OnInit {
     this.router.navigate(['addMain'], {
       queryParams: {
         vmCode: urlParse(window.location.search)['vmCode'],
+        token: sessionStorage.getItem('token')
       }
     });
   }
