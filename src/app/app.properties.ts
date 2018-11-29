@@ -20,10 +20,6 @@ export class AppProperties {
   public restartUrl: string;
   public volumeUrl: string;
   public canReplenishUrl: string;
-  public gameGetGamePrize: string;
-  public gameLottery: string;
-  public gameGetCusPrize: string;
-  public gameReceive: string;
   public machineControlUrl: string;
   public machineControlGetReplenishInfoUrl: string;
   public adminCreateForeverStrQrUrl: string;
@@ -56,10 +52,6 @@ export class AppProperties {
     this.restartUrl = this.appUrl + '/command/restart?vmCode='; // old /machineControl/restart
     this.volumeUrl = this.appUrl + '/command/updateVolume'; // old /index/updateVolume
     this.canReplenishUrl = this.appUrl + '/change/canReplenish'; // old /index/canReplenish
-    this.gameGetGamePrize = this.appUrl + '/game/getGamePrize';
-    this.gameLottery = this.appUrl + '/game/lottery';
-    this.gameGetCusPrize = this.appUrl + '/game/getCusPrize';
-    this.gameReceive = this.appUrl + '/game/receive';
     this.machineControlUrl = this.appUrl + '/change/itemInfo'; // old /machineControl/getChangeInfo
     this.machineControlGetReplenishInfoUrl = this.appUrl + '/change/ultimateInfo?vmCode='; // old /machineControl/getReplenishInfo
     this.adminCreateForeverStrQrUrl = this.appUrl + '/admin/createStrQr';
