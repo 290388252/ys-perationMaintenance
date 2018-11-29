@@ -29,7 +29,6 @@ export class GoodsShowComponent implements OnInit {
   public flag;
   public img = this.appProperties.imgUrl;
   public replenishList = [];
-  public aliPay = false;
   public price: string;
   public couponList;
   public waterVoucherList = [];
@@ -42,17 +41,9 @@ export class GoodsShowComponent implements OnInit {
     this.couponList = [];
     this.waterVoucherList = [];
     this.flag = sessionStorage.getItem('flag');
+    this.token = sessionStorage.getItem('token');
     // this.flag = urlParse(window.location.search)['flag'];
-    this.getToken();
     this.goodsList = [];
-    const ua = window.navigator.userAgent.toLowerCase();
-    if (ua.match(/AlipayClient/i)) {
-      if (ua.match(/AlipayClient/i)[0] === 'alipayclient') {
-        this.aliPay = true;
-      }
-    } else {
-      this.aliPay = false;
-    }
     this.isVisibleOpen = false;
     this.isVisibleFixed = false;
     console.log(this.token);
@@ -224,25 +215,6 @@ export class GoodsShowComponent implements OnInit {
       this.more = false;
       this.close = true;
       this.single = true;
-    }
-  }
-  getToken () {
-    let token;
-    if (this.flag === 1 || this.flag === '1'
-      || this.flag === 2 || this.flag === '2') {
-      token = 'token';
-    } else {
-      token = 'adminToken';
-    }
-    if (this.token === null || this.token === undefined || this.token === 'undefined') {
-      const strCookie = document.cookie;
-      const arrCookie = strCookie.split(';');
-      for (let i = 0; i < arrCookie.length; i++) {
-        const arr = arrCookie[i].split('=');
-        if (arr[0].trim() === token) {
-          this.token = arr[1];
-        }
-      }
     }
   }
 }

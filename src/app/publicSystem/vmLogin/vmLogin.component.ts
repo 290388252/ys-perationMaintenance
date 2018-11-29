@@ -19,7 +19,6 @@ export class VmLoginComponent implements OnInit {
   public truePhone = true;
   public times = 60;
   public payType: number;
-  private vmCode: string;
   constructor(private fb: FormBuilder,
               private router: Router,
               private appProperties: AppProperties,
@@ -30,7 +29,6 @@ export class VmLoginComponent implements OnInit {
       phoneForm: [ null, [ Validators.required  ] ],
       password: [ null, [ Validators.required ] ]
     });
-    this.vmCode = this.getVmCode();
     this.IsWeixinOrAlipay();
     console.log(this.payType);
   }
@@ -63,7 +61,7 @@ export class VmLoginComponent implements OnInit {
             }
             this.router.navigate(['addMain'], {
               queryParams: {
-                vmCode: this.vmCode,
+                vmCode: urlParse(window.location.search)['vmCode'],
                 payType: this.payType,
                 token: data.data
               }});
@@ -76,19 +74,6 @@ export class VmLoginComponent implements OnInit {
     } else {
       alert('请输入账号密码');
     }
-  }
-  // 获取机器码
-  getVmCode() {
-    const url = window.location.href.toString();
-    const arrUrl = url.split('?');
-    let vmCode: string;
-    if (arrUrl[1] !== undefined) {
-      const firstArr = arrUrl[1].split('&')[0];
-      vmCode =  firstArr.substring(firstArr.indexOf('=') + 1, firstArr.length);
-    } else {
-      vmCode = '';
-    }
-    return vmCode;
   }
   // 手机端打开小键盘获取焦点是改变背景高度px
   focusCode() {

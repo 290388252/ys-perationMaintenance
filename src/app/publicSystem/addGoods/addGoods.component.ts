@@ -15,8 +15,6 @@ export class AddGoodsComponent implements OnInit {
 
   public num;
   public num2;
-  public indexList;
-  public wayIndex;
   public wayNo;
   public times = 1;
   public goods;
@@ -37,7 +35,6 @@ export class AddGoodsComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.getCookies();
     this.token = sessionStorage.getItem('token');
     this.goods = urlParse(window.location.href)['goods'];
     console.log(urlParse(window.location.href)['itemName'].split(','));
@@ -167,16 +164,4 @@ export class AddGoodsComponent implements OnInit {
     });
   }
 
-  getCookies() {
-    if (this.token === null || this.token === undefined || this.token === 'undefined') {
-      const strCookie = document.cookie;
-      const arrCookie = strCookie.split(';');
-      for (let i = 0; i < arrCookie.length; i++) {
-        const arr = arrCookie[i].split('=');
-        if (arr[0].trim() === 'adminToken') {
-          this.token = arr[1];
-        }
-      }
-    }
-  }
 }

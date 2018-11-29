@@ -59,7 +59,6 @@ export class AddMainComponent implements OnInit {
 
   ngOnInit() {
     // 数据初始化
-    this.getCookies();
     this.token = urlParse(window.location.search)['token'];
     console.log(urlParse(window.location.search)['token']);
     sessionStorage.setItem('token', urlParse(window.location.search)['token']);
@@ -472,21 +471,6 @@ export class AddMainComponent implements OnInit {
 
   closeDetail() {
     this.isVisibleOpenDetail = false;
-  }
-
-
-
-  getCookies() {
-    if (this.token === null || this.token === undefined || this.token === 'undefined') {
-      const strCookie = document.cookie;
-      const arrCookie = strCookie.split(';');
-      for (let i = 0; i < arrCookie.length; i++) {
-        const arr = arrCookie[i].split('=');
-        if (arr[0].trim() === 'adminToken') {
-          this.token = arr[1];
-        }
-      }
-    }
   }
 
   turnImg(item) {

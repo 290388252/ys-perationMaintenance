@@ -54,7 +54,6 @@
 </div>
 <nz-modal [nzVisible]="isVisibleOpen" [nzContent]="modalContent" [nzFooter]="modalFooter" [nzClosable]="false">
   <ng-template #modalContent>
-    <p [hidden]="flag === '3' || flag === '4'" style="font-size: medium;">您的门还未关闭！优水到家提醒您,为了您账号资金安全,提水后请随手关门！</p>
     <p [hidden]="flag === '1' || flag === '2'" style="font-size: medium;">您的门还未关闭！优水到家提醒您,提水后请随手关门！</p>
   </ng-template>
   <ng-template #modalFooter>

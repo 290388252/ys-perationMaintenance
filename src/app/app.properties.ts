@@ -30,9 +30,6 @@ export class AppProperties {
   // AliPay
   public aliVmGetUserIdUrl: string;
 
-  public useCouponUrl: string;
-  public useWaterVouchersUrl: string;
-
   constructor() {
     // Public
     this.appUrl = 'http://47.106.92.82:6662/ys_mms/mms';
@@ -64,7 +61,5 @@ export class AppProperties {
     // AliPay
     this.aliVmGetUserIdUrl = this.appUrl + '/aliUser/getAiInfoUrl';
     //
-    this.useCouponUrl = this.appUrl + '/coupon/usedCouponId';
-    this.useWaterVouchersUrl = this.appUrl + '/carryWaterVouchers/listPage';
   }
 }

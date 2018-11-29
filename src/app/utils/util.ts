@@ -23,3 +23,18 @@ export let getActiveItemId = () => {
 export let getActiveCompanyId = () => {
   return ['76', '113', '114', '115', '116', '117', '119'];
 };
+
+
+
+// getCookies() {
+//   if (this.token === null || this.token === undefined || this.token === 'undefined') {
+//     const strCookie = document.cookie;
+//     const arrCookie = strCookie.split(';');
+//     for (let i = 0; i < arrCookie.length; i++) {
+//       const arr = arrCookie[i].split('=');
+//       if (arr[0].trim() === 'adminToken') {
+//         this.token = arr[1];
+//       }
+//     }
+//   }
+// }
