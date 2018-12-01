@@ -40,7 +40,7 @@ export class AppProperties {
     this.adminLoginUrl = this.appUrl + '/login/do'; // old /admin/login
     this.addOpendoorUrl = this.appUrl + '/open/one'; // old /index/yunWeiOpenDoor
     this.operateOpendoorUrl = this.appUrl + '/open/all'; // old /index/operateOpenDoor
-    this.orderResetWaysNumUrl = this.appUrl + '/order/resetWaysNum/';
+    this.orderResetWaysNumUrl = this.appUrl + '/adjust/readHB?vmCode='; // old /order/resetWaysNum/
     this.aliMachineQueryVMListUrl = this.appUrl + '/aliMachine/queryVMList';
     this.aliMachineQueryDetailUrl = this.appUrl + '/aliMachine/queryDetail';
     this.aliMachineQueryTradeDetailUrl = this.appUrl + '/aliMachine/queryTradeDetail';

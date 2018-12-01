@@ -39,9 +39,8 @@
       </div>
       <div class="weui-media-box__bd">
         <h4 class="weui-media-box__title">{{item.itemName}}</h4>
-        <h6 style="color: #F6151C;" [hidden]="flag === '3' || flag === '4'">￥{{(item.price).toFixed(2)}}</h6>
-        <h5 style="float: left;margin-top: 1px" class="weui-media-box__desc">{{turnText(item.changeNum)}}</h5>
-        <span style="float: right;" class="weui-media-box__desc">×{{-item.changeNum}}</span>
+        <!--<h5 style="float: left;margin-top: 1px" class="weui-media-box__desc">{{turnText(item.changeNum)}}</h5>-->
+        <span style="float: right;" class="weui-media-box__desc">商品数量×{{item.changeNum}}</span>
       </div>
     </a>
   </div>

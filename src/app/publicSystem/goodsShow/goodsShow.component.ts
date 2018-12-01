@@ -126,7 +126,7 @@ export class GoodsShowComponent implements OnInit {
         console.log(data);
         console.log(this.token);
         if (data.status === 1) {
-          this.goodsList = data.returnObject.itemList;
+          this.goodsList = data.returnObject;
           // this.totalPrice = data.returnObject.totalPrice;
           this.isClosed();
         } else {

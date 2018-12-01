@@ -316,11 +316,11 @@ export class AddMainComponent implements OnInit {
   // 校准数量
   resetNum() {
     console.log(urlParse(window.location.search)['vmCode']);
-    this.appService.postAliData(this.appProperties.orderResetWaysNumUrl + urlParse(window.location.search)['vmCode'],
+    this.appService.getAliData(this.appProperties.orderResetWaysNumUrl + urlParse(window.location.search)['vmCode'],
       '', this.token).subscribe(
       data => {
         console.log(data);
-        if (data.code === 0) {
+        if (data.status === 1) {
           alert('成功');
           this.getInitData();
         } else {

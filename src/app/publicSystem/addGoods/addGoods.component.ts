@@ -44,6 +44,9 @@ export class AddGoodsComponent implements OnInit {
   focusCode() {
     document.getElementById('ag-bk').style.height = (document.documentElement.offsetWidth + 100) + 'px';
   }
+  phone() {
+    window.location.href = 'tel://10086';
+  }
   yes() {
     if (this.backButton) {
       this.count = 1;
