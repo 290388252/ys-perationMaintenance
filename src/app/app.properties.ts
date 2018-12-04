@@ -56,7 +56,8 @@ export class AppProperties {
 
     // WeChat
     this.indexListUrl = this.appUrl + '/item/home'; // old /index/listWay
-    this.smsSendUrl = this.appUrl + '/sms/send';
+    this.smsSendUrl = 'http://47.106.92.82:6662/ys_sms' + '/sms/send';
+    // this.smsSendUrl = this.appUrl + '/sms/send';
 
     // AliPay
     this.aliVmGetUserIdUrl = this.appUrl + '/aliUser/getAiInfoUrl';
