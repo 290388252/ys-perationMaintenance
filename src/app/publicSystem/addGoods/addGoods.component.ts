@@ -18,6 +18,7 @@ export class AddGoodsComponent implements OnInit {
   public wayNo;
   public times = 1;
   public goods;
+  public doorNums;
   public token;
   public count = 1;
   public disableButton = false;
@@ -37,6 +38,7 @@ export class AddGoodsComponent implements OnInit {
   ngOnInit() {
     this.token = sessionStorage.getItem('token');
     this.goods = urlParse(window.location.href)['goods'];
+    this.doorNums = urlParse(window.location.href)['doorNums'];
     console.log(urlParse(window.location.href)['itemName'].split(','));
     this.nameOne = urlParse(window.location.href)['itemName'].split(',')[0];
     this.nameTwo = urlParse(window.location.href)['itemName'].split(',')[1];
@@ -92,8 +94,9 @@ export class AddGoodsComponent implements OnInit {
         num = [this.num, this.num2].join(',');
         this.count++;
       } else {
-        if (Math.abs(this.num - this.saveNum[0]) !== 1 && Math.abs(this.num2 - this.saveNum[1]) !== 1) {
+        if (Math.abs(this.num - this.saveNum[0]) !== 1 && Math.abs(this.num2 - this.saveNum[1]) !== 1 && this.doorNums !== '5') {
           alert('必须拿出一桶或者放入一桶，两次商品数量差值必须为1');
+          return;
         } else {
           num = [this.num, this.num2].join(',');
           this.count++;
@@ -106,8 +109,9 @@ export class AddGoodsComponent implements OnInit {
         num = this.num;
         this.count++;
       } else {
-        if ((Math.abs(this.num - this.saveNum[0]) !== 1)) {
+        if ((Math.abs(this.num - this.saveNum[0]) !== 1) && this.doorNums !== '5') {
           alert('必须拿出一桶或者放入一桶，两次商品数量差值必须为1');
+          return;
         } else {
           num = this.num;
           this.count++;

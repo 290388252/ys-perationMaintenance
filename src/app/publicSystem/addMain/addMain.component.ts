@@ -114,7 +114,8 @@ export class AddMainComponent implements OnInit {
         goods: this.visible,
         orderNumber: orderNumber.join(','),
         itemName: itemName.join(','),
-        wayNo: this.wayNo
+        wayNo: this.wayNo,
+        doorNums: this.indexList.length
       }
     });
   }
