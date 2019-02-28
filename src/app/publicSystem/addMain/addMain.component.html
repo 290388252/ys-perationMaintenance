@@ -142,6 +142,16 @@
     <div class="my-reset">
       <p style="color: black;font-size: 17px">{{temperature}}</p>
     </div>
+    <div style="position: absolute;top: 0;right: 0;">
+      <span>机器异常了略略略</span>
+      <select (change)="mselectState($event.target.value)" class="form-control select-state" style="height: 25px" [(ngModel)]="selectState">
+        <option value="0">请选择状态</option>
+        <option value="1">测试失败</option>
+        <option value="2">测试成功</option>
+        <option value="3">开始测试</option>
+        <option value="4">测试记录</option>
+      </select>
+    </div>
     <div class="my-restart">
       <button (click)="reStart()" type="button">重启</button>
       <button (click)="resetNum()" type="button">校准所有</button>
@@ -248,6 +258,61 @@
       <p style="font-size: medium;">规格:{{oneWeight}}</p>
       <p style="font-size: medium;">重量:{{weight}}</p>
       <p style="font-size: medium;">最大容量:{{fullNum}}桶</p>
+    </ng-template>
+    <ng-template #modalFooterD>
+      <button nz-button nzType="primary" (click)="closeDetail()">关闭</button>
+    </ng-template>
+  </nz-modal>
+
+  <nz-modal [nzVisible]="isVisibleOpenState" [nzContent]="modalContentD" [nzFooter]="modalFooterD"
+            [nzClosable]="false">
+    <ng-template #modalContentD>
+      购买测试记录:
+      <table class="table-bordered table-hover">
+        <thead>
+        <tr>
+          <th>商品名称</th>
+          <th>数量</th>
+          <th>货道号</th>
+          <th>创建时间</th>
+          <th>测试人手机</th>
+          <th>描述</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let item of purchaseTestResult">
+          <td class="td-padding">{{item.itemName}}</td>
+          <td class="td-padding">{{item.num}}</td>
+          <td class="td-padding">{{item.wayNumber}}</td>
+          <td class="td-padding">{{item.createTime}}</td>
+          <td class="td-padding">{{item.phone}}</td>
+          <td class="td-padding">{{item.remark}}</td>
+        </tr>
+        </tbody>
+      </table>
+      补货测试记录:
+      <table class="table-bordered table-hover">
+        <thead>
+        <tr>
+          <th>商品名称</th>
+          <th>数量</th>
+          <th>货道号</th>
+          <th>创建时间</th>
+          <th>测试人手机</th>
+          <th>描述</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let item of replenishTestResult">
+          <td class="td-padding">{{item.itemName}}</td>
+          <td class="td-padding">{{item.num}}</td>
+          <td class="td-padding">{{item.wayNumber}}</td>
+          <td class="td-padding">{{item.createTime}}</td>
+          <td class="td-padding">{{item.phone}}</td>
+          <td class="td-padding">{{item.remark}}</td>
+        </tr>
+        </tbody>
+      </table>
     </ng-template>
     <ng-template #modalFooterD>
       <button nz-button nzType="primary" (click)="closeDetail()">关闭</button>

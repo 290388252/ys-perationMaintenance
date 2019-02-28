@@ -94,7 +94,7 @@ export class AddGoodsComponent implements OnInit {
         num = [this.num, this.num2].join(',');
         this.count++;
       } else {
-        if (Math.abs(this.num - this.saveNum[0]) !== 1 && Math.abs(this.num2 - this.saveNum[1]) !== 1 && this.doorNums !== '5') {
+        if (Math.abs(this.num - this.saveNum[0]) !== 1 && Math.abs(this.num2 - this.saveNum[1]) !== 1 && this.doorNums !== '5' && this.doorNums !== '8') {
           alert('必须拿出一桶或者放入一桶，两次商品数量差值必须为1');
           return;
         } else {
@@ -109,7 +109,7 @@ export class AddGoodsComponent implements OnInit {
         num = this.num;
         this.count++;
       } else {
-        if ((Math.abs(this.num - this.saveNum[0]) !== 1) && this.doorNums !== '5') {
+        if ((Math.abs(this.num - this.saveNum[0]) !== 1) && this.doorNums !== '5' && this.doorNums !== '8') {
           alert('必须拿出一桶或者放入一桶，两次商品数量差值必须为1');
           return;
         } else {
@@ -153,6 +153,7 @@ export class AddGoodsComponent implements OnInit {
           this.count = 1;
           alert('校准失败请重试！');
         } else {
+          this.count = 1;
           alert(data.message);
         }
       },

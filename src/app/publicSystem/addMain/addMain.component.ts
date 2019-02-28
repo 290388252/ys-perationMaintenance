@@ -22,8 +22,12 @@ export class AddMainComponent implements OnInit {
   public isVisibleOpenDoor = false;
   public isVisibleOpenEightDoor = false;
   public isVisibleOpenDetail = false;
+  public isVisibleOpenState = false;
+  public purchaseTestResult  = false;
+  public replenishTestResult = false;
   public token: string;
-  // public radioValue: string;
+  public state: string;
+  public selectState = 0;
   public count = 1;
   public restartTimes = 15; // 重启时间（秒）
   public num: number;
@@ -233,6 +237,21 @@ export class AddMainComponent implements OnInit {
           //     volvalue = 0;
           //   }
           //   this.beginvolValue = volvalue;
+        } else {
+          alert(data.message);
+        }
+      },
+      error => {
+        console.log(error);
+      }
+    );
+    this.appService.postAliData(this.appProperties.mmsMachinesTestGetStateUrl, {
+      vmCode: urlParse(window.location.search)['vmCode'],
+    }, this.token).subscribe(
+      data => {
+        console.log(data);
+        if (data.status === 1) {
+          this.state = data.returnObject;
         } else {
           alert(data.message);
         }
@@ -499,5 +518,43 @@ export class AddMainComponent implements OnInit {
       }
     }
     return text;
+  }
+  mselectState(flag) {
+    const _this = this;
+      switch (flag) {
+        case '1':
+          machinesTest(this.appProperties.mmsMachinesTestFailUrl + `?vmCode=${urlParse(window.location.search)['vmCode']}`, '已将测试设置为失败');
+          break;
+        case '2':
+          machinesTest(this.appProperties.mmsMachinesTestSuccessUrl + `?vmCode=${urlParse(window.location.search)['vmCode']}`, '已将测试设置为成功');
+          break;
+        case '3':
+          machinesTest(this.appProperties.mmsMachinesTestStartUrl + `?vmCode=${urlParse(window.location.search)['vmCode']}`, '已开始测试');
+          break;
+        case '4':
+          machinesTest(this.appProperties.mmsMachinesTestGetTestResultUrl + `?vmCode=${urlParse(window.location.search)['vmCode']}`, '成功');
+          break;
+      }
+      function machinesTest(url, message) {
+        _this.appService.postData(url, '', _this.token).subscribe(
+          data => {
+            console.log(data);
+            if (data.status === 1) {
+              if (message === '成功') {
+                _this.isVisibleOpenState = true;
+                _this.purchaseTestResult = data.returnObject.purchaseTestResult;
+                _this.replenishTestResult  = data.returnObject.replenishTestResult ;
+              } else {
+                alert(message);
+              }
+            } else {
+              alert(data.message);
+            }
+          },
+          error => {
+            console.log(error);
+          }
+        );
+      }
   }
 }

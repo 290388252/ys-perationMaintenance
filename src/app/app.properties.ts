@@ -24,6 +24,11 @@ export class AppProperties {
   public machineControlGetReplenishInfoUrl: string;
   public adminCreateForeverStrQrUrl: string;
   public machineControlAdjustReplenish: string;
+  public mmsMachinesTestGetStateUrl: string;
+  public mmsMachinesTestFailUrl: string;
+  public mmsMachinesTestSuccessUrl: string;
+  public mmsMachinesTestStartUrl: string;
+  public mmsMachinesTestGetTestResultUrl: string;
   // WeChat
   public indexListUrl: string;
   public smsSendUrl: string;
@@ -32,8 +37,8 @@ export class AppProperties {
 
   constructor() {
     // Public
-    this.appUrl = 'http://47.106.92.82:6662/ys_mms/mms';
-    // this.appUrl = 'http://192.168.0.114:6662/ys_mms/mms';
+    // this.appUrl = 'http://47.106.92.82:6662/ys_mms/mms';
+    this.appUrl = 'http://192.168.0.113:6662/ys_mms/mms';
     this.adminUrl = 'http://119.23.233.123:6662/ys_admin';
     this.imgUrl = this.adminUrl + '/files/';
     this.isClosedUrl = this.appUrl + '/change/isClosed';
@@ -48,11 +53,16 @@ export class AppProperties {
     this.reviseUrl = this.appUrl + '/revise/do'; // old /index/revise
     this.restartUrl = this.appUrl + '/command/restart?vmCode='; // old /machineControl/restart
     this.volumeUrl = this.appUrl + '/command/updateVolume'; // old /index/updateVolume
-    this.canReplenishUrl = this.appUrl + '/change/canReplenish'; // old /index/canReplenish
+    this.canReplenishUrl = this.appUrl + '/login/canReplenish'; // old /index/canReplenish
     this.machineControlUrl = this.appUrl + '/change/itemInfo'; // old /machineControl/getChangeInfo
     this.machineControlGetReplenishInfoUrl = this.appUrl + '/change/ultimateInfo?vmCode='; // old /machineControl/getReplenishInfo
     this.adminCreateForeverStrQrUrl = this.appUrl + '/admin/createStrQr';
     this.machineControlAdjustReplenish = this.appUrl + '/adjust/replenish?'; // old /machineControl/adjustReplenish
+    this.mmsMachinesTestGetStateUrl = this.appUrl + '/machinesTest/getState';
+    this.mmsMachinesTestFailUrl = this.appUrl + '/machinesTest/fail';
+    this.mmsMachinesTestSuccessUrl = this.appUrl + '/machinesTest/success';
+    this.mmsMachinesTestStartUrl = this.appUrl + '/machinesTest/start';
+    this.mmsMachinesTestGetTestResultUrl = this.appUrl + '/machinesTest/getTestResult';
 
     // WeChat
     this.indexListUrl = this.appUrl + '/item/home'; // old /index/listWay

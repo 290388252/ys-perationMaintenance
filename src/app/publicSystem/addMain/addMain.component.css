@@ -671,6 +671,11 @@ button{
     background-size: 100% 100%;
   }
 }
+.select-state{
+  width: 96px;
+  font-size: 10px;
+  padding: 0;
+}
 .weui-mask {
   position: fixed;
   z-index: 1000;
