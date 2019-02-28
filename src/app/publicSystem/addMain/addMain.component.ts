@@ -23,10 +23,12 @@ export class AddMainComponent implements OnInit {
   public isVisibleOpenEightDoor = false;
   public isVisibleOpenDetail = false;
   public isVisibleOpenState = false;
+  public isVisibleOpenFailState = false;
   public purchaseTestResult  = false;
   public replenishTestResult = false;
   public token: string;
   public state: string;
+  public failStateRemark: string;
   public selectState = 0;
   public count = 1;
   public restartTimes = 15; // 重启时间（秒）
@@ -491,6 +493,8 @@ export class AddMainComponent implements OnInit {
 
   closeDetail() {
     this.isVisibleOpenDetail = false;
+    this.isVisibleOpenState = false;
+    this.isVisibleOpenFailState = false;
   }
 
   turnImg(item) {
@@ -523,10 +527,10 @@ export class AddMainComponent implements OnInit {
     const _this = this;
       switch (flag) {
         case '1':
-          machinesTest(this.appProperties.mmsMachinesTestFailUrl + `?vmCode=${urlParse(window.location.search)['vmCode']}`, '已将测试设置为失败');
+          this.isVisibleOpenFailState = true;
           break;
         case '2':
-          machinesTest(this.appProperties.mmsMachinesTestSuccessUrl + `?vmCode=${urlParse(window.location.search)['vmCode']}`, '已将测试设置为成功');
+          machinesTest(this.appProperties.mmsMachinesTestSuccessUrl + `?vmCode=${urlParse(window.location.search)['vmCode']}&remark=${'成功'}`, '已将测试设置为成功');
           break;
         case '3':
           machinesTest(this.appProperties.mmsMachinesTestStartUrl + `?vmCode=${urlParse(window.location.search)['vmCode']}`, '已开始测试');
@@ -556,5 +560,22 @@ export class AddMainComponent implements OnInit {
           }
         );
       }
+  }
+  commit() {
+    this.appService.postData(this.appProperties.mmsMachinesTestFailUrl + `?vmCode=${urlParse(window.location.search)['vmCode']}&remark${this.failStateRemark}`, '', this.token).subscribe(
+      data => {
+        console.log(data);
+        if (data.status === 1) {
+          alert('已将测试设置为失败');
+          this.isVisibleOpenFailState = false;
+        } else {
+          alert(data.message);
+          this.isVisibleOpenFailState = false;
+        }
+      },
+      error => {
+        console.log(error);
+      }
+    );
   }
 }

@@ -143,7 +143,7 @@
       <p style="color: black;font-size: 17px">{{temperature}}</p>
     </div>
     <div style="position: absolute;top: 0;right: 0;">
-      <span>机器异常了略略略</span>
+      <span>{{state}}</span>
       <select (change)="mselectState($event.target.value)" class="form-control select-state" style="height: 25px" [(ngModel)]="selectState">
         <option value="0">请选择状态</option>
         <option value="1">测试失败</option>
@@ -264,19 +264,17 @@
     </ng-template>
   </nz-modal>
 
-  <nz-modal [nzVisible]="isVisibleOpenState" [nzContent]="modalContentD" [nzFooter]="modalFooterD"
+  <nz-modal [nzVisible]="isVisibleOpenState" [nzContent]="modalContentS" [nzFooter]="modalFooterS"
             [nzClosable]="false">
-    <ng-template #modalContentD>
+    <ng-template #modalContentS>
       购买测试记录:
       <table class="table-bordered table-hover">
         <thead>
         <tr>
-          <th>商品名称</th>
-          <th>数量</th>
-          <th>货道号</th>
-          <th>创建时间</th>
-          <th>测试人手机</th>
-          <th>描述</th>
+          <th style="padding: 5px">商品名称</th>
+          <th style="padding: 5px">数量</th>
+          <th style="padding: 5px">货道号</th>
+          <th style="padding: 5px">创建时间</th>
         </tr>
         </thead>
         <tbody>
@@ -285,8 +283,6 @@
           <td class="td-padding">{{item.num}}</td>
           <td class="td-padding">{{item.wayNumber}}</td>
           <td class="td-padding">{{item.createTime}}</td>
-          <td class="td-padding">{{item.phone}}</td>
-          <td class="td-padding">{{item.remark}}</td>
         </tr>
         </tbody>
       </table>
@@ -294,12 +290,10 @@
       <table class="table-bordered table-hover">
         <thead>
         <tr>
-          <th>商品名称</th>
-          <th>数量</th>
-          <th>货道号</th>
-          <th>创建时间</th>
-          <th>测试人手机</th>
-          <th>描述</th>
+          <th style="padding: 5px">商品名称</th>
+          <th style="padding: 5px">数量</th>
+          <th style="padding: 5px">货道号</th>
+          <th style="padding: 5px">创建时间</th>
         </tr>
         </thead>
         <tbody>
@@ -308,13 +302,24 @@
           <td class="td-padding">{{item.num}}</td>
           <td class="td-padding">{{item.wayNumber}}</td>
           <td class="td-padding">{{item.createTime}}</td>
-          <td class="td-padding">{{item.phone}}</td>
-          <td class="td-padding">{{item.remark}}</td>
         </tr>
         </tbody>
       </table>
     </ng-template>
-    <ng-template #modalFooterD>
+    <ng-template #modalFooterS>
+      <button nz-button nzType="primary" (click)="closeDetail()">关闭</button>
+    </ng-template>
+  </nz-modal>
+
+  <nz-modal [nzVisible]="isVisibleOpenFailState" [nzContent]="modalContentZ" [nzFooter]="modalFooterZ"
+            [nzClosable]="false">
+    <ng-template #modalContentZ>
+      <span>测试失败原因</span>
+      <input type="text" class="form-control" placeholder="测试失败原因" style="font-size: 12px"
+             [(ngModel)]="failStateRemark" name="failStateRemark">
+      <button nz-button nzType="primary" style="margin-left: 76%;margin-top: 10px;" (click)="commit()">提交</button>
+    </ng-template>
+    <ng-template #modalFooterZ>
       <button nz-button nzType="primary" (click)="closeDetail()">关闭</button>
     </ng-template>
   </nz-modal>
