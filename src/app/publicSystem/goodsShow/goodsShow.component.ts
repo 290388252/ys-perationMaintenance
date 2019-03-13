@@ -27,6 +27,7 @@ export class GoodsShowComponent implements OnInit {
   public count = 0;
   private timeInterval;
   public flag;
+  public cihuo;
   public img = this.appProperties.imgUrl;
   public replenishList = [];
   public price: string;
@@ -42,7 +43,7 @@ export class GoodsShowComponent implements OnInit {
     this.waterVoucherList = [];
     this.flag = sessionStorage.getItem('flag');
     this.token = sessionStorage.getItem('token');
-    // this.flag = urlParse(window.location.search)['flag'];
+    this.cihuo = urlParse(window.location.search)['cihuo'];
     this.goodsList = [];
     this.isVisibleOpen = false;
     this.isVisibleFixed = false;

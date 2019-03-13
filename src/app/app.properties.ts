@@ -37,8 +37,8 @@ export class AppProperties {
 
   constructor() {
     // Public
-    // this.appUrl = 'http://47.106.92.82:6662/ys_mms/mms';
-    this.appUrl = 'http://192.168.0.113:6662/ys_mms/mms';
+    this.appUrl = 'http://47.106.92.82:6662/ys_mms/mms';
+    // this.appUrl = 'http://192.168.0.113:6662/ys_mms/mms';
     this.adminUrl = 'http://119.23.233.123:6662/ys_admin';
     this.imgUrl = this.adminUrl + '/files/';
     this.isClosedUrl = this.appUrl + '/change/isClosed';

@@ -12,6 +12,7 @@ import {AddMainModule} from './addMain.module';
   styleUrls: ['./addMain.component.css']
 })
 export class AddMainComponent implements OnInit {
+  public item;
   public indexList = [];
   public eightIndexList = [];
   public eightDoorFlag = 0;
@@ -20,12 +21,16 @@ export class AddMainComponent implements OnInit {
   private wayNumber: number;
   public loadingVisible = false;
   public isVisibleOpenDoor = false;
+  public isVisiblebuhuo = false;
   public isVisibleOpenEightDoor = false;
   public isVisibleOpenDetail = false;
   public isVisibleOpenState = false;
   public isVisibleOpenFailState = false;
+  public isVisibleOpenSuccess = false;
   public purchaseTestResult  = false;
+  public nopurchaseTestResult  = false;
   public replenishTestResult = false;
+  public noreplenishTestResult = false;
   public token: string;
   public state: string;
   public failStateRemark: string;
@@ -49,6 +54,7 @@ export class AddMainComponent implements OnInit {
   public visible = false;
   public volValue;
   public fullNum;
+  public recommendCapacity;
   public numDetail;
   public costPrice;
   public price;
@@ -247,13 +253,15 @@ export class AddMainComponent implements OnInit {
         console.log(error);
       }
     );
-    this.appService.postAliData(this.appProperties.mmsMachinesTestGetStateUrl, {
-      vmCode: urlParse(window.location.search)['vmCode'],
+    this.appService.postAliData(this.appProperties.mmsMachinesTestGetStateUrl + `?vmCode=${urlParse(window.location.search)['vmCode']}`, {
     }, this.token).subscribe(
       data => {
         console.log(data);
         if (data.status === 1) {
-          this.state = data.returnObject;
+          this.state = data.returnObject.state;
+          if (data.returnObject.error) {
+            alert(data.returnObject.error);
+          }
         } else {
           alert(data.message);
         }
@@ -272,6 +280,7 @@ export class AddMainComponent implements OnInit {
     this.weight = weight;
     this.oneWeight = item.weight;
     this.fullNum = item.fullNum;
+    this.recommendCapacity = item.recommendCapacity;
     this.numDetail = item.num;
     this.isVisibleOpenDetail = true;
   }
@@ -284,8 +293,15 @@ export class AddMainComponent implements OnInit {
       this.eightIndexList = this.indexList.slice(4, 8);
     }
   }
+  yesOpenDoor(item) {
+    this.isVisiblebuhuo = true;
+    this.item = item;
+  }
+  noOpenDoor() {
+    this.isVisiblebuhuo = false;
+  }
   // 开门接口
-  openDoor(item) {
+  openDoor(flag) {
     if (this.token === null
       || this.token === undefined
       || this.token === 'undefined') {
@@ -300,37 +316,70 @@ export class AddMainComponent implements OnInit {
         alert('亲,服务器还没反应过来,请勿再点击');
       } else {
         this.clickMore = true;
-        this.appService.getDataOpen(this.appProperties.addOpendoorUrl,
-          {vmCode: urlParse(window.location.search)['vmCode'], wayNum: item.wayNumber},
-          this.token).subscribe(
-          data => {
-            console.log(data);
-            this.clickMore = false;
-            if (data.status === 1001) {
-              // this.isVisibleOpen = true;
-              this.router.navigate(['goodsShow'], {
-                queryParams: {
-                  vmCode: urlParse(window.location.search)['vmCode'],
-                  // flag: 4,
-                }});
-              sessionStorage.setItem('flag', '4');
-            } else if (data.status === 1002) {
-              this.router.navigate(['goodsShow'], {
-                queryParams: {
-                  vmCode: urlParse(window.location.search)['vmCode'],
-                  // flag: 3,
-                }});
-              sessionStorage.setItem('flag', '3');
-            } else if (data.status === -1) {
-              this.router.navigate(['vmLogin']);
-            } else {
-              alert(data.message);
+        if (flag === 1) {
+          this.appService.getDataOpen(this.appProperties.addOpendoorUrl,
+            {vmCode: urlParse(window.location.search)['vmCode'], wayNum: this.item.wayNumber, barterNum: 1},
+            this.token).subscribe(
+            data => {
+              console.log(data);
+              this.clickMore = false;
+              if (data.status === 1001) {
+                this.router.navigate(['goodsShow'], {
+                  queryParams: {
+                    vmCode: urlParse(window.location.search)['vmCode'],
+                    cihuo: 1,
+                  }});
+                sessionStorage.setItem('flag', '4');
+              } else if (data.status === 1002) {
+                this.router.navigate(['goodsShow'], {
+                  queryParams: {
+                    vmCode: urlParse(window.location.search)['vmCode'],
+                    cihuo: 1,
+                  }});
+                sessionStorage.setItem('flag', '3');
+              } else if (data.status === -1) {
+                this.router.navigate(['vmLogin']);
+              } else {
+                alert(data.message);
+              }
+            },
+            error => {
+              console.log(error);
             }
-          },
-          error => {
-            console.log(error);
-          }
-        );
+          );
+        } else if (flag === 2) {
+          this.appService.getDataOpen(this.appProperties.addOpendoorUrl,
+            {vmCode: urlParse(window.location.search)['vmCode'], wayNum: this.item.wayNumber},
+            this.token).subscribe(
+            data => {
+              console.log(data);
+              this.clickMore = false;
+              if (data.status === 1001) {
+                // this.isVisibleOpen = true;
+                this.router.navigate(['goodsShow'], {
+                  queryParams: {
+                    vmCode: urlParse(window.location.search)['vmCode'],
+                    // flag: 4,
+                  }});
+                sessionStorage.setItem('flag', '4');
+              } else if (data.status === 1002) {
+                this.router.navigate(['goodsShow'], {
+                  queryParams: {
+                    vmCode: urlParse(window.location.search)['vmCode'],
+                    // flag: 3,
+                  }});
+                sessionStorage.setItem('flag', '3');
+              } else if (data.status === -1) {
+                this.router.navigate(['vmLogin']);
+              } else {
+                alert(data.message);
+              }
+            },
+            error => {
+              console.log(error);
+            }
+          );
+        }
       }
     }
   }
@@ -495,6 +544,7 @@ export class AddMainComponent implements OnInit {
     this.isVisibleOpenDetail = false;
     this.isVisibleOpenState = false;
     this.isVisibleOpenFailState = false;
+    this.isVisibleOpenSuccess = false;
   }
 
   turnImg(item) {
@@ -524,6 +574,7 @@ export class AddMainComponent implements OnInit {
     return text;
   }
   mselectState(flag) {
+    console.log(flag);
     const _this = this;
       switch (flag) {
         case '1':
@@ -540,7 +591,7 @@ export class AddMainComponent implements OnInit {
           break;
       }
       function machinesTest(url, message) {
-        _this.appService.postData(url, '', _this.token).subscribe(
+        _this.appService.postAliData(url, '', _this.token).subscribe(
           data => {
             console.log(data);
             if (data.status === 1) {
@@ -551,6 +602,10 @@ export class AddMainComponent implements OnInit {
               } else {
                 alert(message);
               }
+            }  else if (data.status === 1704) {
+              _this.isVisibleOpenSuccess = true;
+              _this.nopurchaseTestResult = data.returnObject.notPurchaseTest;
+              _this.noreplenishTestResult  = data.returnObject.notReplenishTest ;
             } else {
               alert(data.message);
             }
@@ -562,7 +617,7 @@ export class AddMainComponent implements OnInit {
       }
   }
   commit() {
-    this.appService.postData(this.appProperties.mmsMachinesTestFailUrl + `?vmCode=${urlParse(window.location.search)['vmCode']}&remark${this.failStateRemark}`, '', this.token).subscribe(
+    this.appService.postAliData(this.appProperties.mmsMachinesTestFailUrl + `?vmCode=${urlParse(window.location.search)['vmCode']}&remark${this.failStateRemark}`, '', this.token).subscribe(
       data => {
         console.log(data);
         if (data.status === 1) {

@@ -24,7 +24,7 @@
       <p class="title">.</p>
       <div class="context-five" *ngIf="isFiveDoor">
         <div style="float: left;margin-top: 5px">
-          <div (click)="openDoor(item)" *ngFor="let item of fiveIndexListLeft"
+          <div (click)="yesOpenDoor(item)" *ngFor="let item of fiveIndexListLeft"
                [ngClass]="item['wayItemList'].length === 1 ? 'boxssf-one' : 'boxssf'"
                class=" card text-white addMain-bottom">
             <div>
@@ -51,7 +51,7 @@
           </div>
         </div>
         <div style="float: left;margin-top: 5px">
-          <div (click)="openDoor(item)" *ngFor="let item of fiveIndexListRigth"
+          <div (click)="yesOpenDoor(item)" *ngFor="let item of fiveIndexListRigth"
                [ngClass]="item['wayItemList'].length === 1 ? 'boxss-one' : 'boxss'"
                class=" card text-white addMain-bottom">
             <div>
@@ -81,7 +81,7 @@
 
 
       <div class="context" *ngIf="isFourDoor">
-        <div (click)="openDoor(item)" *ngFor="let item of indexList"
+        <div (click)="yesOpenDoor(item)" *ngFor="let item of indexList"
              [ngClass]="item['wayItemList'].length === 1 ? 'box-one' : 'box'" class=" card text-white mb-3">
           <div [ngClass]="item['wayItemList'].length === 1 ? 'box-body-one' : 'box-body'">
             <img class="col-img" src="{{img}}{{item['wayItemList'][0]['pic']}}" alt="">
@@ -113,7 +113,7 @@
       </div>
       <!--8门-->
       <div class="context" *ngIf="isEightDoor">
-        <div (click)="openDoor(item)" *ngFor="let item of eightIndexList" [ngClass]="item['wayItemList'].length === 1 ? 'boxs-eight-one' : 'boxs-eight'" class=" card text-white addMain-bottom">
+        <div (click)="yesOpenDoor(item)" *ngFor="let item of eightIndexList" [ngClass]="item['wayItemList'].length === 1 ? 'boxs-eight-one' : 'boxs-eight'" class=" card text-white addMain-bottom">
           <div style="text-align: center">
             <img class="eight-img-one" src="{{img}}{{item['wayItemList'][0]['pic']}}" alt="">
             <p class="text-eight-one"  style="color:#333333;font-wayWeight: 900;">重量:{{item['wayWeight']}}</p>
@@ -146,7 +146,7 @@
       <span>{{state}}</span>
       <select (change)="mselectState($event.target.value)" class="form-control select-state" style="height: 25px" [(ngModel)]="selectState">
         <option value="0">请选择状态</option>
-        <option value="1">测试失败</option>
+        <option value="1"><button (click)="mselectState(1)">测试失败</button></option>
         <option value="2">测试成功</option>
         <option value="3">开始测试</option>
         <option value="4">测试记录</option>
@@ -161,6 +161,18 @@
     <!--<div class="my-open">-->
     <!--</div>-->
   </div>
+  <nz-modal [nzVisible]="isVisiblebuhuo" [nzTitle]="modalTitlebuhuo" [nzContent]="modalContentbuhuo" [nzFooter]="modalFooterbuhuo" [nzClosable]="false">
+    <ng-template #modalTitlebuhuo>
+      <h6>选择本次操作类型</h6>
+    </ng-template>
+    <ng-template #modalContentbuhuo style="text-align: center" >
+      <button nz-button nzType="primary" (click)="openDoor(1)" style="width: 32%">撤货</button>
+      <button nz-button nzType="primary" (click)="noOpenDoor()" style="width: 32%">取消</button>
+      <button nz-button nzType="primary" (click)="openDoor(2)" style="width: 32%">补货</button>
+    </ng-template>
+    <ng-template #modalFooterbuhuo>
+    </ng-template>
+  </nz-modal>
   <nz-modal [nzVisible]="isVisibleOpenDoor" [nzContent]="modalContents" [nzFooter]="modalFooters" [nzClosable]="false">
     <ng-template #modalContents #modalFooters style="text-align: center">
       <p style="font-size: medium;">请选择货道</p>
@@ -258,6 +270,7 @@
       <p style="font-size: medium;">规格:{{oneWeight}}</p>
       <p style="font-size: medium;">重量:{{weight}}</p>
       <p style="font-size: medium;">最大容量:{{fullNum}}桶</p>
+      <p style="font-size: medium;">推荐最大容量:{{recommendCapacity}}桶</p>
     </ng-template>
     <ng-template #modalFooterD>
       <button nz-button nzType="primary" (click)="closeDetail()">关闭</button>
@@ -307,6 +320,45 @@
       </table>
     </ng-template>
     <ng-template #modalFooterS>
+      <button nz-button nzType="primary" (click)="closeDetail()">关闭</button>
+    </ng-template>
+  </nz-modal>
+
+  <nz-modal [nzVisible]="isVisibleOpenSuccess" [nzContent]="modalContentSuccess" [nzFooter]="modalFooterSuccess"
+            [nzClosable]="false">
+    <ng-template #modalContentSuccess>
+      未进行购买测试的记录:
+      <table class="table-bordered table-hover">
+        <thead>
+        <tr>
+          <th style="padding: 5px">货道号</th>
+          <th style="padding: 5px">待测试次数</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let item of nopurchaseTestResult">
+          <td class="td-padding" style="text-align: center">{{item.key}}</td>
+          <td class="td-padding" style="text-align: center">{{item.value}}</td>
+        </tr>
+        </tbody>
+      </table>
+      未进行补货测试记录:
+      <table class="table-bordered table-hover">
+        <thead>
+        <tr>
+          <th style="padding: 5px">货道号</th>
+          <th style="padding: 5px">待测试次数</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let item of noreplenishTestResult">
+          <td class="td-padding" style="text-align: center">{{item.key}}</td>
+          <td class="td-padding" style="text-align: center">{{item.value}}</td>
+        </tr>
+        </tbody>
+      </table>
+    </ng-template>
+    <ng-template #modalFooterSuccess>
       <button nz-button nzType="primary" (click)="closeDetail()">关闭</button>
     </ng-template>
   </nz-modal>

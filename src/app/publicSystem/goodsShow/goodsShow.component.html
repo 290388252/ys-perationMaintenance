@@ -1,7 +1,8 @@
 <div class="am-message result" style="background-size: 100% 0;margin-top: 1%;border-top: 1px solid #e5e5e5;" [hidden]="close">
   <div [hidden]="flag === '1' || flag === '2'" style="height: 30px;">
     <img src="../../../assets/main/my_success.png" style="width: 24px;height: 24px;margin-top: -12px;">
-    <span style="font-size: 18px;color: #333333;font-weight: bolder;">补货成功</span>
+    <span *ngIf="cihuo !== '1'" style="font-size: 18px;color: #333333;font-weight: bolder;">补货成功</span>
+    <span *ngIf="cihuo === '1'" style="font-size: 18px;color: #333333;font-weight: bolder;">撤货成功</span>
     <p style="font-size: 12px;color: #F6151C">(如数量不对请点击修正，补货输入正数，拿货输入负数！并与后台人员联系修正补货数，所有补货数据以系统为准！！！)</p>
   </div>
 
