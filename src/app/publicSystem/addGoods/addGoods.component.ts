@@ -26,6 +26,7 @@ export class AddGoodsComponent implements OnInit {
   public sureButtonText = '输入确定';
   public nameOne = '';
   public nameTwo = '';
+  public oneTime = '';
   private saveNum = [];
 
   constructor(private router: Router,
@@ -39,6 +40,7 @@ export class AddGoodsComponent implements OnInit {
     this.token = sessionStorage.getItem('token');
     this.goods = urlParse(window.location.href)['goods'];
     this.doorNums = urlParse(window.location.href)['doorNums'];
+    this.oneTime = urlParse(window.location.href)['oneTime'];
     console.log(urlParse(window.location.href)['itemName'].split(','));
     this.nameOne = urlParse(window.location.href)['itemName'].split(',')[0];
     this.nameTwo = urlParse(window.location.href)['itemName'].split(',')[1];
@@ -61,16 +63,66 @@ export class AddGoodsComponent implements OnInit {
         if (this.num === undefined || this.num2 === undefined) {
           alert('您还有商品数量未输入');
         } else {
-          this.setTimer();
+          if (this.oneTime === '1') {
+            this.adjustOnce();
+          } else {
+            this.setTimer();
+          }
         }
       } else {
         if (this.num === undefined) {
           alert('您还有商品数量未输入');
         } else {
-          this.setTimer();
+          if (this.oneTime === '1') {
+            this.adjustOnce();
+          } else {
+            this.setTimer();
+          }
         }
       }
     }
+  }
+
+  adjustOnce() {
+    let num;
+    if (this.goods === 'true') {
+        this.saveNum.push(this.num);
+        this.saveNum.push(this.num2);
+        num = [this.num, this.num2].join(',');
+    } else {
+        this.saveNum.push(this.num);
+        num = this.num;
+        this.count++;
+    }
+    this.appService.postAliData(this.appProperties.onceReviseUrl,
+      {
+        vmCode: urlParse(window.location.search)['vmCode'],
+        wayNum: urlParse(window.location.search)['wayNo'],
+        times: 1,
+        num: num,
+        orderNumber: urlParse(window.location.href)['orderNumber']
+      }, this.token).subscribe(
+      data => {
+        console.log(data);
+        if (data.status === 1) {
+            alert('校准成功');
+            this.sureButtonText = '如果有误可重新输入后点此按钮重新校准';
+        } else if (data.status === -1) {
+          this.router.navigate(['vmLogin'], {
+            queryParams: {
+              vmCode: urlParse(window.location.search)['vmCode']
+            }
+          });
+        } else if (data.status === 3) {
+          alert('校准失败请重试！');
+        } else {
+          alert(data.message);
+        }
+      },
+      error => {
+        console.log(error);
+      }
+    );
   }
 
   setTimer() {

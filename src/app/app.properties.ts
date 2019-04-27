@@ -17,6 +17,7 @@ export class AppProperties {
   public aliMachineQueryDetailUrl: string;
   public aliMachineQueryTradeDetailUrl: string;
   public reviseUrl: string;
+  public onceReviseUrl: string;
   public restartUrl: string;
   public volumeUrl: string;
   public canReplenishUrl: string;
@@ -29,6 +30,8 @@ export class AppProperties {
   public mmsMachinesTestSuccessUrl: string;
   public mmsMachinesTestStartUrl: string;
   public mmsMachinesTestGetTestResultUrl: string;
+  public itemGetPriceListUrl: string;
+  public itemUpdatePriceUrl: string;
   // WeChat
   public indexListUrl: string;
   public smsSendUrl: string;
@@ -37,8 +40,9 @@ export class AppProperties {
 
   constructor() {
     // Public
-    this.appUrl = 'http://47.106.92.82:6662/ys_mms/mms';
-    // this.appUrl = 'http://192.168.0.113:6662/ys_mms/mms';
+    // this.appUrl = 'http://47.106.92.82:6662/ys_mms/mms';
+    // this.appUrl = 'http://119.23.233.123:6662/ys_mms/mms';
+    this.appUrl = 'http://192.168.0.119:6662/ys_mms/mms';
     this.adminUrl = 'http://119.23.233.123:6662/ys_admin';
     this.imgUrl = this.adminUrl + '/files/';
     this.isClosedUrl = this.appUrl + '/change/isClosed';
@@ -51,6 +55,7 @@ export class AppProperties {
     this.aliMachineQueryTradeDetailUrl = this.appUrl + '/aliMachine/queryTradeDetail';
     this.adminOauth2Url = this.appUrl + '/admin/oauth2';
     this.reviseUrl = this.appUrl + '/revise/do'; // old /index/revise
+    this.onceReviseUrl = this.appUrl + '/revise/onceRevise'; // old /index/revise
     this.restartUrl = this.appUrl + '/command/restart?vmCode='; // old /machineControl/restart
     this.volumeUrl = this.appUrl + '/command/updateVolume'; // old /index/updateVolume
     this.canReplenishUrl = this.appUrl + '/login/canReplenish'; // old /index/canReplenish
@@ -63,10 +68,12 @@ export class AppProperties {
     this.mmsMachinesTestSuccessUrl = this.appUrl + '/machinesTest/success';
     this.mmsMachinesTestStartUrl = this.appUrl + '/machinesTest/start';
     this.mmsMachinesTestGetTestResultUrl = this.appUrl + '/machinesTest/getTestResult';
+    this.itemGetPriceListUrl = this.appUrl + '/item/getPriceList';
+    this.itemUpdatePriceUrl = this.appUrl + '/item/updatePrice';
 
     // WeChat
     this.indexListUrl = this.appUrl + '/item/home'; // old /index/listWay
-    this.smsSendUrl = 'http://47.106.92.82:6662/ys_sms' + '/sms/send';
+    this.smsSendUrl = 'http://120.79.74.231:6662/ys_sms' + '/sms/send';
     // this.smsSendUrl = this.appUrl + '/sms/send';
 
     // AliPay

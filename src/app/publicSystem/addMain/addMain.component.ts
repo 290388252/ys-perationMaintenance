@@ -40,6 +40,7 @@ export class AddMainComponent implements OnInit {
   public num: number;
   public num2: number;
   public wayNo: number;
+  public wayNoOnceOpen: number;
   public wayIndex: number;
   public temperature: number;
   // public img = 'http://lenvar-resource-products.oss-cn-shenzhen.aliyuncs.com/';
@@ -60,7 +61,12 @@ export class AddMainComponent implements OnInit {
   public price;
   public weight;
   public oneWeight;
+  public prices;
   public itemName;
+  public basicItemId;
+  public selectMoney = '';
+  public priceList = [];
+  public onceReplenishVmcode;
 
   constructor(private router: Router,
               private modalService: NzModalService,
@@ -73,6 +79,9 @@ export class AddMainComponent implements OnInit {
     // 数据初始化
     this.token = urlParse(window.location.search)['token'];
     console.log(urlParse(window.location.search)['token']);
+    const vmCode = urlParse(window.location.search)['vmCode'];
+    this.onceReplenishVmcode = ['1988001541', '1988001540', '1999000000', '1999000001', '1996000003'].includes(vmCode);
+    console.log(this.onceReplenishVmcode);
     sessionStorage.setItem('token', urlParse(window.location.search)['token']);
     // 数据初始化
     this.getInitData();
@@ -275,14 +284,27 @@ export class AddMainComponent implements OnInit {
   detail(item, event, weight) {
     event.stopPropagation();
     console.log(item);
+    this.basicItemId = item.basicItemId;
     this.itemName = item.itemName;
     this.costPrice = item.costPrice;
     this.weight = weight;
     this.oneWeight = item.weight;
+    this.prices = item.price;
     this.fullNum = item.fullNum;
     this.recommendCapacity = item.recommendCapacity;
     this.numDetail = item.num;
     this.isVisibleOpenDetail = true;
+    this.wayNumber = item.wayNumber;
+    this.appService.postAliData(this.appProperties.itemGetPriceListUrl + `?basicItemId=${item.basicItemId}`, {
+    }, this.token).subscribe(
+      data => {
+        console.log(data);
+        this.priceList = data.returnObject;
+      },
+      error => {
+        console.log(error);
+      }
+    );
   }
 
   eigthDoorChoose(flag) {
@@ -294,8 +316,10 @@ export class AddMainComponent implements OnInit {
     }
   }
   yesOpenDoor(item) {
+    console.log(item);
     this.isVisiblebuhuo = true;
     this.item = item;
+    this.wayNoOnceOpen = item.wayNumber;
   }
   noOpenDoor() {
     this.isVisiblebuhuo = false;
@@ -316,9 +340,9 @@ export class AddMainComponent implements OnInit {
         alert('亲,服务器还没反应过来,请勿再点击');
       } else {
         this.clickMore = true;
-        if (flag === 1) {
+        if (flag === 5 || flag === 6) {
           this.appService.getDataOpen(this.appProperties.addOpendoorUrl,
-            {vmCode: urlParse(window.location.search)['vmCode'], wayNum: this.item.wayNumber, barterNum: 1},
+            {vmCode: urlParse(window.location.search)['vmCode'], wayNum: this.item.wayNumber, barterNum: flag},
             this.token).subscribe(
             data => {
               console.log(data);
@@ -466,7 +490,37 @@ export class AddMainComponent implements OnInit {
       this.isVisibleOpenDoor = true;
     }
   }
-
+  onceResetWeight() {
+    console.log(this.indexList);
+    if (this.indexList[this.wayNoOnceOpen]['wayItemList'].length > 1) {
+      this.visible = true;
+    } else {
+      this.visible = false;
+    }
+    if (this.indexList[this.wayNoOnceOpen]['wayItemList'].length > 1) {
+      this.visible = true;
+    } else {
+      this.visible = false;
+    }
+    const orderNumber = [];
+    const itemName = [];
+    for (let i = 0; i < this.indexList[this.wayNoOnceOpen]['wayItemList'].length; i++) {
+      orderNumber.push(this.indexList[this.wayNoOnceOpen]['wayItemList'][i].orderNumber);
+      itemName.push(this.indexList[this.wayNoOnceOpen]['wayItemList'][i].itemName);
+    }
+    // 跳转校准
+    this.router.navigate(['addGoods'], {
+      queryParams: {
+        vmCode: urlParse(window.location.search)['vmCode'],
+        goods: this.visible,
+        orderNumber: orderNumber.join(','),
+        itemName: itemName.join(','),
+        wayNo: this.wayNoOnceOpen,
+        doorNums: this.indexList.length,
+        oneTime: 1
+      }
+    });
+  }
   // 机器重启
   reStart() {
     this.appService.getAliData(this.appProperties.restartUrl + urlParse(window.location.search)['vmCode'],
@@ -626,6 +680,23 @@ export class AddMainComponent implements OnInit {
         } else {
           alert(data.message);
           this.isVisibleOpenFailState = false;
+        }
+      },
+      error => {
+        console.log(error);
+      }
+    );
+  }
+  mselectMoney(val) {
+    console.log(val);
+    this.appService.postAliData(this.appProperties.itemUpdatePriceUrl
+      + `?basicItemId=${this.basicItemId}&vmCode=${urlParse(window.location.search)['vmCode']}&wayNumber=${this.wayNumber}&itemPriceId=${val}`, '', this.token).subscribe(
+      data => {
+        console.log(data);
+        if (data.status === 1) {
+          alert('改价成功');
+        } else {
+          alert('改价失败');
         }
       },
       error => {
