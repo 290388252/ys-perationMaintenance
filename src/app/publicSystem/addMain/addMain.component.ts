@@ -66,7 +66,8 @@ export class AddMainComponent implements OnInit {
   public basicItemId;
   public selectMoney = '';
   public priceList = [];
-  public onceReplenishVmcode;
+  public machinesVersion;
+  public replenishTips;
 
   constructor(private router: Router,
               private modalService: NzModalService,
@@ -80,8 +81,7 @@ export class AddMainComponent implements OnInit {
     this.token = urlParse(window.location.search)['token'];
     console.log(urlParse(window.location.search)['token']);
     const vmCode = urlParse(window.location.search)['vmCode'];
-    this.onceReplenishVmcode = ['1988001541', '1988001540', '1999000000', '1999000001', '1996000003'].includes(vmCode);
-    console.log(this.onceReplenishVmcode);
+    // this.onceReplenishVmcode = ['1988001541', '1988001540', '1999000000', '1999000001', '1996000003'].includes(vmCode);
     sessionStorage.setItem('token', urlParse(window.location.search)['token']);
     // 数据初始化
     this.getInitData();
@@ -136,7 +136,7 @@ export class AddMainComponent implements OnInit {
         orderNumber: orderNumber.join(','),
         itemName: itemName.join(','),
         wayNo: this.wayNo,
-        doorNums: this.indexList.length
+        doorNums: this.indexList.length,
       }
     });
   }
@@ -217,6 +217,7 @@ export class AddMainComponent implements OnInit {
       data => {
         console.log(data);
         if (data.status === 1) {
+          this.machinesVersion = data.returnObject.machinesVersion;
           if (data.returnObject.wayInfo.length <= 4) {
             this.isFourDoor = true;
             this.isFiveDoor = false;
@@ -341,36 +342,65 @@ export class AddMainComponent implements OnInit {
       } else {
         this.clickMore = true;
         if (flag === 5 || flag === 6) {
-          this.appService.getDataOpen(this.appProperties.addOpendoorUrl,
-            {vmCode: urlParse(window.location.search)['vmCode'], wayNum: this.item.wayNumber, barterNum: flag},
-            this.token).subscribe(
-            data => {
-              console.log(data);
-              this.clickMore = false;
-              if (data.status === 1001) {
-                this.router.navigate(['goodsShow'], {
-                  queryParams: {
-                    vmCode: urlParse(window.location.search)['vmCode'],
-                    cihuo: 1,
-                  }});
-                sessionStorage.setItem('flag', '4');
-              } else if (data.status === 1002) {
-                this.router.navigate(['goodsShow'], {
-                  queryParams: {
-                    vmCode: urlParse(window.location.search)['vmCode'],
-                    cihuo: 1,
-                  }});
-                sessionStorage.setItem('flag', '3');
-              } else if (data.status === -1) {
-                this.router.navigate(['vmLogin']);
-              } else {
-                alert(data.message);
-              }
-            },
-            error => {
-              console.log(error);
+          // this.appService.getDataOpen(this.appProperties.addOpendoorUrl,
+          //   {vmCode: urlParse(window.location.search)['vmCode'], wayNum: this.item.wayNumber, barterNum: flag},
+          //   this.token).subscribe(
+          //   data => {
+          //     console.log(data);
+          //     this.clickMore = false;
+          //     if (data.status === 1001) {
+          //       this.router.navigate(['goodsShow'], {
+          //         queryParams: {
+          //           vmCode: urlParse(window.location.search)['vmCode'],
+          //           cihuo: 1,
+          //         }});
+          //       sessionStorage.setItem('flag', '4');
+          //     } else if (data.status === 1002) {
+          //       this.router.navigate(['goodsShow'], {
+          //         queryParams: {
+          //           vmCode: urlParse(window.location.search)['vmCode'],
+          //           cihuo: 1,
+          //         }});
+          //       sessionStorage.setItem('flag', '3');
+          //     } else if (data.status === -1) {
+          //       this.router.navigate(['vmLogin']);
+          //     } else {
+          //       alert(data.message);
+          //     }
+          //   },
+          //   error => {
+          //     console.log(error);
+          //   }
+          // );
+          // 撤货
+          if (this.indexList[this.wayNoOnceOpen]['wayItemList'].length > 1) {
+            this.visible = true;
+          } else {
+            this.visible = false;
+          }
+          if (this.indexList[this.wayNoOnceOpen]['wayItemList'].length > 1) {
+            this.visible = true;
+          } else {
+            this.visible = false;
+          }
+          const orderNumber = [];
+          const itemName = [];
+          for (let i = 0; i < this.indexList[this.wayNoOnceOpen]['wayItemList'].length; i++) {
+            orderNumber.push(this.indexList[this.wayNoOnceOpen]['wayItemList'][i].orderNumber);
+            itemName.push(this.indexList[this.wayNoOnceOpen]['wayItemList'][i].itemName);
+          }
+          // 跳转校准
+          this.router.navigate(['addGoods'], {
+            queryParams: {
+              vmCode: urlParse(window.location.search)['vmCode'],
+              goods: this.visible,
+              orderNumber: orderNumber.join(','),
+              itemName: itemName.join(','),
+              wayNo: this.wayNoOnceOpen,
+              doorNums: this.indexList.length,
+              chehuo: flag
             }
-          );
+          });
         } else if (flag === 2) {
           this.appService.getDataOpen(this.appProperties.addOpendoorUrl,
             {vmCode: urlParse(window.location.search)['vmCode'], wayNum: this.item.wayNumber},
@@ -438,14 +468,20 @@ export class AddMainComponent implements OnInit {
     // }
     // this.volValue = this.endVole;
     this.volValue = 0;
-    console.log('vmcode');
-    console.log(urlParse(window.location.search)['vmCode']);
     console.log(this.volValue);
+  }
+
+  tipsOk() {
+    this.replenishTips = false;
+    if (this.isEightDoor) {
+      this.isVisibleOpenEightDoor = true;
+    } else {
+      this.isVisibleOpenDoor = true;
+    }
   }
 
   // 音量提交
   myVolOk(): void {
-    console.log('123');
     this.appService.getAliData(this.appProperties.volumeUrl,
       {'volume': this.volValue, 'vmCode': urlParse(window.location.search)['vmCode']}, this.token).subscribe(
       data => {
@@ -477,6 +513,7 @@ export class AddMainComponent implements OnInit {
     //   this.beginvolValue = this.endVole;
     // }
     this.isVisible = false;
+    this.replenishTips = false;
   }
 
   // 校准重量
@@ -484,42 +521,101 @@ export class AddMainComponent implements OnInit {
     this.wayNo = undefined;
     this.num = undefined;
     this.count = 1;
-    if (this.isEightDoor) {
-      this.isVisibleOpenEightDoor = true;
+    if (this.machinesVersion === 'new') {
+      this.replenishTips = true;
     } else {
-      this.isVisibleOpenDoor = true;
+      this.replenishTips = false;
+      if (this.isEightDoor) {
+        this.isVisibleOpenEightDoor = true;
+      } else {
+        this.isVisibleOpenDoor = true;
+      }
     }
   }
   onceResetWeight() {
     console.log(this.indexList);
-    if (this.indexList[this.wayNoOnceOpen]['wayItemList'].length > 1) {
-      this.visible = true;
-    } else {
-      this.visible = false;
-    }
-    if (this.indexList[this.wayNoOnceOpen]['wayItemList'].length > 1) {
-      this.visible = true;
-    } else {
-      this.visible = false;
-    }
-    const orderNumber = [];
-    const itemName = [];
-    for (let i = 0; i < this.indexList[this.wayNoOnceOpen]['wayItemList'].length; i++) {
-      orderNumber.push(this.indexList[this.wayNoOnceOpen]['wayItemList'][i].orderNumber);
-      itemName.push(this.indexList[this.wayNoOnceOpen]['wayItemList'][i].itemName);
-    }
-    // 跳转校准
-    this.router.navigate(['addGoods'], {
-      queryParams: {
-        vmCode: urlParse(window.location.search)['vmCode'],
-        goods: this.visible,
-        orderNumber: orderNumber.join(','),
-        itemName: itemName.join(','),
-        wayNo: this.wayNoOnceOpen,
-        doorNums: this.indexList.length,
-        oneTime: 1
-      }
-    });
+    this.appService.getDataOpen(this.appProperties.openCheckBeforeReviseUrl,
+      {vmCode: urlParse(window.location.search)['vmCode'],
+        wayNum: this.wayNoOnceOpen},
+      this.token).subscribe(
+      data => {
+        console.log(data);
+        if (data.status === 1) {
+          this.appService.getDataOpen(this.appProperties.mmsOpenOnceOneUrl,
+            {vmCode: urlParse(window.location.search)['vmCode'], wayNum: this.item.wayNumber},
+            this.token).subscribe(
+            datas => {
+              console.log(datas);
+              this.clickMore = false;
+              if (datas.status === 1001) {
+                // this.isVisibleOpen = true;
+                this.router.navigate(['goodsShow'], {
+                  queryParams: {
+                    vmCode: urlParse(window.location.search)['vmCode'],
+                    // flag: 4,
+                  }});
+                sessionStorage.setItem('flag', '4');
+              } else if (datas.status === 1002) {
+                this.router.navigate(['goodsShow'], {
+                  queryParams: {
+                    vmCode: urlParse(window.location.search)['vmCode'],
+                    // flag: 3,
+                  }});
+                sessionStorage.setItem('flag', '3');
+              } else if (datas.status === -1) {
+                this.router.navigate(['vmLogin']);
+              } else {
+                alert(datas.message);
+              }
+            },
+            error => {
+              console.log(error);
+            }
+          );
+        } else {
+          if (this.wayNoOnceOpen === 3) {
+            this.wayIndex = 0;
+          } else if (this.wayNoOnceOpen === 4) {
+            this.wayIndex = 1;
+          } else if (this.wayNoOnceOpen === 1) {
+            this.wayIndex = 2;
+          } else if (this.wayNoOnceOpen === 2) {
+            this.wayIndex = 3;
+          } else if (this.wayNoOnceOpen === 5) {
+            this.wayIndex = 4;
+          }
+          if (this.indexList[this.wayIndex]['wayItemList'].length > 1) {
+            this.visible = true;
+          } else {
+            this.visible = false;
+          }
+          if (this.indexList[this.wayIndex]['wayItemList'].length > 1) {
+            this.visible = true;
+          } else {
+            this.visible = false;
+          }
+          const orderNumber = [];
+          const itemName = [];
+          for (let i = 0; i < this.indexList[this.wayIndex]['wayItemList'].length; i++) {
+            orderNumber.push(this.indexList[this.wayIndex]['wayItemList'][i].orderNumber);
+            itemName.push(this.indexList[this.wayIndex]['wayItemList'][i].itemName);
+          }
+          // 跳转校准
+          this.router.navigate(['addGoods'], {
+            queryParams: {
+              vmCode: urlParse(window.location.search)['vmCode'],
+              goods: this.visible,
+              orderNumber: orderNumber.join(','),
+              itemName: itemName.join(','),
+              wayNo: this.wayNoOnceOpen,
+              doorNums: this.indexList.length,
+              machinesVersion: 'new'
+            }
+          });
+        }
+      }, error => {
+        console.log(error);
+      });
   }
   // 机器重启
   reStart() {

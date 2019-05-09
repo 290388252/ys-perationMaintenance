@@ -167,10 +167,11 @@
     </ng-template>
     <ng-template #modalContentbuhuo style="text-align: center" >
       <button nz-button nzType="primary" (click)="openDoor(6)" style="width: 99%;margin-bottom: 5px">撤货到其他机器</button>
-      <button *ngIf="onceReplenishVmcode" nz-button nzType="primary" (click)="onceResetWeight()" style="width: 99%;margin-bottom: 5px">一次校准</button>
+      <button *ngIf="machinesVersion === 'new'" nz-button nzType="primary" (click)="onceResetWeight()" style="width: 99%;margin-bottom: 5px">一次校准</button>
       <button nz-button nzType="primary" (click)="openDoor(5)" style="width: 99%;margin-bottom: 5px">撤货</button>
+      <button *ngIf="machinesVersion === 'old'" nz-button nzType="primary" (click)="openDoor(2)" style="width: 99%;margin-bottom: 5px">补货</button>
+      <!--<button *ngIf="machinesVersion === 'new'" nz-button nzType="primary" (click)="openDoor(3)" style="width: 99%;margin-bottom: 5px">一次校准补货</button>-->
       <button nz-button nzType="primary" (click)="noOpenDoor()" style="width: 99%;margin-bottom: 5px">取消</button>
-      <button nz-button nzType="primary" (click)="openDoor(2)" style="width: 99%;margin-bottom: 5px">补货</button>
     </ng-template>
     <ng-template #modalFooterbuhuo>
     </ng-template>
@@ -406,6 +407,21 @@
     <ng-template #modalvolFooter>
       <button nz-button nzType="default" (click)="myVolCancel()">取消</button>
       <button nz-button nzType="primary" (click)="myVolOk()">提交</button>
+    </ng-template>
+  </nz-modal>
+
+  <nz-modal [(nzVisible)]="replenishTips" [nzTitle]="modalTipsTitle" [nzContent]="modalTips" [nzFooter]="modalTipsFooter"
+            (nzOnCancel)="myVolCancel()">
+    <ng-template #modalTipsTitle>
+      提示
+    </ng-template>
+    <ng-template #modalTips>
+      <p>该机器已升级，补货操作可按照新补货流程进行（直接点击窗口，输入实际商品数量，校准一次后进行补货），如果是更换商品后补货，请继续按照原流程进行（先做2次校准，再进行补货）</p>
+    </ng-template>
+
+    <ng-template #modalTipsFooter>
+      <button nz-button nzType="default" (click)="myVolCancel()">取消</button>
+      <button nz-button nzType="primary" (click)="tipsOk()">更换商品</button>
     </ng-template>
   </nz-modal>
 

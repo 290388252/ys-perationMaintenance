@@ -26,8 +26,10 @@ export class AddGoodsComponent implements OnInit {
   public sureButtonText = '输入确定';
   public nameOne = '';
   public nameTwo = '';
-  public oneTime = '';
+  public machinesVersion = '';
+  public chehuo = '';
   private saveNum = [];
+  private openCheckTime = 1;
 
   constructor(private router: Router,
               private modalService: NzModalService,
@@ -40,7 +42,8 @@ export class AddGoodsComponent implements OnInit {
     this.token = sessionStorage.getItem('token');
     this.goods = urlParse(window.location.href)['goods'];
     this.doorNums = urlParse(window.location.href)['doorNums'];
-    this.oneTime = urlParse(window.location.href)['oneTime'];
+    this.machinesVersion = urlParse(window.location.href)['machinesVersion'];
+    this.chehuo = urlParse(window.location.href)['chehuo'];
     console.log(urlParse(window.location.href)['itemName'].split(','));
     this.nameOne = urlParse(window.location.href)['itemName'].split(',')[0];
     this.nameTwo = urlParse(window.location.href)['itemName'].split(',')[1];
@@ -63,7 +66,7 @@ export class AddGoodsComponent implements OnInit {
         if (this.num === undefined || this.num2 === undefined) {
           alert('您还有商品数量未输入');
         } else {
-          if (this.oneTime === '1') {
+          if (this.machinesVersion === 'new') {
             this.adjustOnce();
           } else {
             this.setTimer();
@@ -73,7 +76,7 @@ export class AddGoodsComponent implements OnInit {
         if (this.num === undefined) {
           alert('您还有商品数量未输入');
         } else {
-          if (this.oneTime === '1') {
+          if (this.machinesVersion === 'new') {
             this.adjustOnce();
           } else {
             this.setTimer();
@@ -106,7 +109,8 @@ export class AddGoodsComponent implements OnInit {
         console.log(data);
         if (data.status === 1) {
             alert('校准成功');
-            this.sureButtonText = '如果有误可重新输入后点此按钮重新校准';
+            this.open();
+            // this.sureButtonText = '如果有误可重新输入后点此按钮重新校准';
         } else if (data.status === -1) {
           this.router.navigate(['vmLogin'], {
             queryParams: {
@@ -188,6 +192,39 @@ export class AddGoodsComponent implements OnInit {
             this.sureButtonText = '如果有误可重新输入后点此按钮重新校准';
             this.backButton = true;
             alert('校准成功');
+            if (this.chehuo === '5' || this.chehuo === '6') {
+              this.appService.getDataOpen(this.appProperties.addOpendoorUrl,
+                {vmCode: urlParse(window.location.search)['vmCode'],
+                  wayNum: urlParse(window.location.search)['wayNo'],
+                  barterNum: this.chehuo},
+                this.token).subscribe(
+                datas => {
+                  console.log(datas);
+                  if (datas.status === 1001) {
+                    this.router.navigate(['goodsShow'], {
+                      queryParams: {
+                        vmCode: urlParse(window.location.search)['vmCode'],
+                        cihuo: 1,
+                      }});
+                    sessionStorage.setItem('flag', '4');
+                  } else if (datas.status === 1002) {
+                    this.router.navigate(['goodsShow'], {
+                      queryParams: {
+                        vmCode: urlParse(window.location.search)['vmCode'],
+                        cihuo: 1,
+                      }});
+                    sessionStorage.setItem('flag', '3');
+                  } else if (datas.status === -1) {
+                    this.router.navigate(['vmLogin']);
+                  } else {
+                    alert(datas.message);
+                  }
+                },
+                errors => {
+                  console.log(errors);
+                }
+              );
+            }
           } else {
             this.times = 2;
           }
@@ -222,6 +259,64 @@ export class AddGoodsComponent implements OnInit {
         token: sessionStorage.getItem('token')
       }
     });
+  }
+
+  open() {
+    this.openCheckTime ++;
+    this.disableButton = true;
+    this.appService.getDataOpen(this.appProperties.openCheckAfterReviseUrl,
+      {vmCode: urlParse(window.location.search)['vmCode'],
+        wayNum: urlParse(window.location.search)['wayNo']},
+      this.token).subscribe(
+      data => {
+        console.log(data);
+        if (data.status === 1) {
+          this.disableButton = false;
+          this.appService.getDataOpen(this.appProperties.mmsOpenOnceOneUrl,
+            {vmCode: urlParse(window.location.search)['vmCode'],
+              wayNum: urlParse(window.location.search)['wayNo']},
+            this.token).subscribe(
+            datas => {
+              console.log(datas);
+              if (datas.status === 1001) {
+                this.router.navigate(['goodsShow'], {
+                  queryParams: {
+                    vmCode: urlParse(window.location.search)['vmCode'],
+                  }});
+                sessionStorage.setItem('flag', '4');
+              } else if (datas.status === 1002) {
+                this.router.navigate(['goodsShow'], {
+                  queryParams: {
+                    vmCode: urlParse(window.location.search)['vmCode'],
+                  }});
+                sessionStorage.setItem('flag', '3');
+              } else if (datas.status === -1) {
+                this.router.navigate(['vmLogin']);
+              } else {
+                alert(datas.message);
+              }
+            },
+            errors => {
+              console.log(errors);
+            }
+          );
+        } else {
+          if (this.openCheckTime >= 10) {
+            this.disableButton = false;
+            this.sureButtonText = '如果有误可重新输入后点此按钮重新校准';
+            this.openCheckTime = 1;
+          } else {
+            setTimeout(() => {
+              this.open();
+            }, 1000);
+          }
+        }
+      },
+      error => {
+        console.log(error);
+      }
+    );
+
   }
 
 }

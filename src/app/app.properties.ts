@@ -11,6 +11,7 @@ export class AppProperties {
   public adminLoginUrl: string;
   public adminOauth2Url: string;
   public addOpendoorUrl: string;
+  public mmsOpenOnceOneUrl: string;
   public operateOpendoorUrl: string;
   public orderResetWaysNumUrl: string;
   public aliMachineQueryVMListUrl: string;
@@ -32,6 +33,8 @@ export class AppProperties {
   public mmsMachinesTestGetTestResultUrl: string;
   public itemGetPriceListUrl: string;
   public itemUpdatePriceUrl: string;
+  public openCheckAfterReviseUrl: string;
+  public openCheckBeforeReviseUrl: string;
   // WeChat
   public indexListUrl: string;
   public smsSendUrl: string;
@@ -48,6 +51,7 @@ export class AppProperties {
     this.isClosedUrl = this.appUrl + '/change/isClosed';
     this.adminLoginUrl = this.appUrl + '/login/do'; // old /admin/login
     this.addOpendoorUrl = this.appUrl + '/open/one'; // old /index/yunWeiOpenDoor
+    this.mmsOpenOnceOneUrl = this.appUrl + '/open/onceOne'; // old /index/yunWeiOpenDoor
     this.operateOpendoorUrl = this.appUrl + '/open/all'; // old /index/operateOpenDoor
     this.orderResetWaysNumUrl = this.appUrl + '/adjust/readHB?vmCode='; // old /order/resetWaysNum/
     this.aliMachineQueryVMListUrl = this.appUrl + '/aliMachine/queryVMList';
@@ -70,6 +74,8 @@ export class AppProperties {
     this.mmsMachinesTestGetTestResultUrl = this.appUrl + '/machinesTest/getTestResult';
     this.itemGetPriceListUrl = this.appUrl + '/item/getPriceList';
     this.itemUpdatePriceUrl = this.appUrl + '/item/updatePrice';
+    this.openCheckAfterReviseUrl = this.appUrl + '/open/checkAfterRevise';
+    this.openCheckBeforeReviseUrl = this.appUrl + '/open/checkBeforeRevise';
 
     // WeChat
     this.indexListUrl = this.appUrl + '/item/home'; // old /index/listWay

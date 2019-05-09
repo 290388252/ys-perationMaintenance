@@ -7,9 +7,9 @@
     <div class="center-content">
       <div style="margin-left: 5px;margin-right: 5px">
         <p style="color: #3399ff;margin-left: 40%;padding: 6px 0;">温馨提示:</p>
-        <span *ngIf="oneTime === '1'" style="color: red">请正确填写当前货道商品数量!!</span>
-        <span *ngIf="oneTime !== '1'" style="color: red">请正确填写当前货道商品数量，两次商品数据不可相同，必须拿出一桶或者放入一桶!!</span>
-        <p *ngIf="oneTime !== '1'" style="color: #5f5a5a;margin-top: 5px;margin-bottom: 5px">当前次数: <span style="color: red">{{times}}</span>次</p>
+        <span *ngIf="machinesVersion === 'new'" style="color: red">请正确填写当前货道商品数量!!</span>
+        <span *ngIf="machinesVersion !== 'new'" style="color: red">请正确填写当前货道商品数量，两次商品数据不可相同，必须拿出一桶或者放入一桶!!</span>
+        <p *ngIf="machinesVersion !== 'new'" style="color: #5f5a5a;margin-top: 5px;margin-bottom: 5px">当前次数: <span style="color: red">{{times}}</span>次</p>
         <div [hidden]="backButton">
           <span style="color: black">{{nameOne}}数量:</span><input (click)="focusCode()" type="number" [(ngModel)]="num" class="inputs" placeholder="请输入整数">
         </div>
