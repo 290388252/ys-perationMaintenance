@@ -30,6 +30,7 @@ export class AddGoodsComponent implements OnInit {
   public chehuo = '';
   private saveNum = [];
   private openCheckTime = 1;
+  private isClick = true;
 
   constructor(private router: Router,
               private modalService: NzModalService,
@@ -43,7 +44,7 @@ export class AddGoodsComponent implements OnInit {
     this.goods = urlParse(window.location.href)['goods'];
     this.doorNums = urlParse(window.location.href)['doorNums'];
     this.machinesVersion = urlParse(window.location.href)['machinesVersion'];
-    this.chehuo = urlParse(window.location.href)['chehuo'];
+    this.chehuo = urlParse(window.location.href)['chehuo'] === undefined ? '' : urlParse(window.location.href)['chehuo'];
     console.log(urlParse(window.location.href)['itemName'].split(','));
     this.nameOne = urlParse(window.location.href)['itemName'].split(',')[0];
     this.nameTwo = urlParse(window.location.href)['itemName'].split(',')[1];
@@ -55,34 +56,41 @@ export class AddGoodsComponent implements OnInit {
     window.location.href = 'tel://10086';
   }
   yes() {
-    if (this.backButton) {
-      this.count = 1;
-      this.times = 1;
-      this.backButton = false;
-      this.saveNum = [];
-      this.sureButtonText = '输入确定';
-    } else {
-      if (this.goods === 'true') {
-        if (this.num === undefined || this.num2 === undefined) {
-          alert('您还有商品数量未输入');
-        } else {
-          if (this.machinesVersion === 'new') {
-            this.adjustOnce();
-          } else {
-            this.setTimer();
-          }
-        }
+    if (this.isClick) {
+      this.isClick = false;
+      const _this = this;
+      if (this.backButton) {
+        this.count = 1;
+        this.times = 1;
+        this.backButton = false;
+        this.saveNum = [];
+        this.sureButtonText = '输入确定';
       } else {
-        if (this.num === undefined) {
-          alert('您还有商品数量未输入');
-        } else {
-          if (this.machinesVersion === 'new') {
-            this.adjustOnce();
+        if (this.goods === 'true') {
+          if (this.num === undefined || this.num2 === undefined) {
+            alert('您还有商品数量未输入');
           } else {
-            this.setTimer();
+            if (this.machinesVersion === 'new') {
+              this.adjustOnce();
+            } else {
+              this.setTimer();
+            }
+          }
+        } else {
+          if (this.num === undefined) {
+            alert('您还有商品数量未输入');
+          } else {
+            if (this.machinesVersion === 'new') {
+              this.adjustOnce();
+            } else {
+              this.setTimer();
+            }
           }
         }
       }
+      setTimeout(function() {
+        _this.isClick = true;
+      }, 1000);
     }
   }
 
@@ -108,7 +116,7 @@ export class AddGoodsComponent implements OnInit {
       data => {
         console.log(data);
         if (data.status === 1) {
-            alert('校准成功');
+            // alert('校准成功');
             this.open();
             // this.sureButtonText = '如果有误可重新输入后点此按钮重新校准';
         } else if (data.status === -1) {
@@ -205,6 +213,9 @@ export class AddGoodsComponent implements OnInit {
                       queryParams: {
                         vmCode: urlParse(window.location.search)['vmCode'],
                         cihuo: 1,
+                        wayNum: urlParse(window.location.search)['wayNo'],
+                        orderNumber: urlParse(window.location.href)['orderNumber'],
+                        machinesVersion: this.machinesVersion
                       }});
                     sessionStorage.setItem('flag', '4');
                   } else if (datas.status === 1002) {
@@ -212,6 +223,9 @@ export class AddGoodsComponent implements OnInit {
                       queryParams: {
                         vmCode: urlParse(window.location.search)['vmCode'],
                         cihuo: 1,
+                        wayNum: urlParse(window.location.search)['wayNo'],
+                        orderNumber: urlParse(window.location.href)['orderNumber'],
+                        machinesVersion: this.machinesVersion
                       }});
                     sessionStorage.setItem('flag', '3');
                   } else if (datas.status === -1) {
@@ -264,6 +278,7 @@ export class AddGoodsComponent implements OnInit {
   open() {
     this.openCheckTime ++;
     this.disableButton = true;
+    const cihuo = this.chehuo === '' ? '' : 1;
     this.appService.getDataOpen(this.appProperties.openCheckAfterReviseUrl,
       {vmCode: urlParse(window.location.search)['vmCode'],
         wayNum: urlParse(window.location.search)['wayNo']},
@@ -271,10 +286,11 @@ export class AddGoodsComponent implements OnInit {
       data => {
         console.log(data);
         if (data.status === 1) {
+          alert('校准成功');
           this.disableButton = false;
           this.appService.getDataOpen(this.appProperties.mmsOpenOnceOneUrl,
             {vmCode: urlParse(window.location.search)['vmCode'],
-              wayNum: urlParse(window.location.search)['wayNo']},
+              wayNum: urlParse(window.location.search)['wayNo'], barterNum: this.chehuo},
             this.token).subscribe(
             datas => {
               console.log(datas);
@@ -282,12 +298,20 @@ export class AddGoodsComponent implements OnInit {
                 this.router.navigate(['goodsShow'], {
                   queryParams: {
                     vmCode: urlParse(window.location.search)['vmCode'],
+                    wayNum: urlParse(window.location.search)['wayNo'],
+                    orderNumber: urlParse(window.location.href)['orderNumber'],
+                    cihuo: cihuo,
+                    machinesVersion: this.machinesVersion
                   }});
                 sessionStorage.setItem('flag', '4');
               } else if (datas.status === 1002) {
                 this.router.navigate(['goodsShow'], {
                   queryParams: {
                     vmCode: urlParse(window.location.search)['vmCode'],
+                    wayNum: urlParse(window.location.search)['wayNo'],
+                    orderNumber: urlParse(window.location.href)['orderNumber'],
+                    cihuo: cihuo,
+                    machinesVersion: this.machinesVersion
                   }});
                 sessionStorage.setItem('flag', '3');
               } else if (datas.status === -1) {

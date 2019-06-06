@@ -5,22 +5,27 @@
     <span *ngIf="cihuo === '1'" style="font-size: 18px;color: #333333;font-weight: bolder;">撤货成功</span>
     <p style="font-size: 12px;color: #F6151C">(如数量不对请点击修正，补货输入正数，拿货输入负数！并与后台人员联系修正补货数，所有补货数据以系统为准！！！)</p>
   </div>
-
+<!--item.changeNum > 0 && flag === '1'"-->
   <div style="margin-top: 55px">
-    <a [hidden]="item.changeNum > 0 && flag === '1'" href="javascript:void(0);" *ngFor="let item of replenishList;let i = index" class="weui-media-box weui-media-box_appmsg">
+    <a href="javascript:void(0);" *ngFor="let item of replenishList;let i = index" class="weui-media-box weui-media-box_appmsg">
       <div class="weui-media-box__hd">
         <img class="weui-media-box__thumb" [src]="img+item.pic" alt="">
       </div>
       <div class="weui-media-box__bd">
         <h4 class="weui-media-box__title">{{item.itemName}}</h4>
         <h5 style="margin-top: 1px" class="weui-media-box__desc">{{turnText(item)}}
-          <button class="fixed-button" [hidden]="flag === '1' || flag === '2'" (click)="fixedNum(item, i)">修正数量</button>
+          <button class="fixed-button" [hidden]="flag === '1' || flag === '2'" (click)="fixedNum(item, i)">修正补货数量</button>
+        </h5>
+        <br>
+        <h5 *ngIf="machinesVersion === 'new'" style="margin-top: 1px" class="weui-media-box__desc">{{turnTotalText(item)}}
+          <button class="fixed-button" [hidden]="flag === '1' || flag === '2'" (click)="fixedTotalNum(item, i)">修正商品总数</button>
         </h5>
       </div>
     </a>
   </div>
+
   <div style="margin-top: 18px;margin-bottom: 5px;">
-    <button nz-button nzType="default" (click)="exit()">返回首页</button>
+    <button nz-button nzType="default" (click)="exit()">确认数量</button>
   </div>
 
 </div>
@@ -75,5 +80,15 @@
   </ng-template>
   <ng-template #modalFooterWarn>
     <button nz-button nzType="primary" (click)="yes()">确定</button>
+  </ng-template>
+</nz-modal>
+<nz-modal [nzVisible]="isVisibleTotal" [nzContent]="modalContentTotal" [nzFooter]="modalFooterTotal" [nzClosable]="false">
+  <ng-template #modalContentTotal>
+    <p>请检查货道总数量是否正确，如不正确请点击修正数量校准！</p>
+    <nz-input-number style="width: 99%;" [(ngModel)]="numTotal" [nzPlaceHolder]="'请输入桶数'" [nzMin]="-9999" [nzMax]="99999999"
+                     [nzStep]="1"></nz-input-number>
+  </ng-template>
+  <ng-template #modalFooterTotal>
+    <button nz-button nzType="primary" (click)="yesTotal()">确定</button>
   </ng-template>
 </nz-modal>

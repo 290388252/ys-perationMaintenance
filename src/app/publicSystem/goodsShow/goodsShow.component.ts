@@ -18,11 +18,14 @@ export class GoodsShowComponent implements OnInit {
   public isVisibleOpen: boolean;
   public isVisibleFixed: boolean;
   public isVisibleWarn: boolean;
+  public isVisibleTotal = false;
   public token: string;
   public wayNum: string;
   public basicItemId: string;
   public index: string;
-  public num: number;
+  public indexTotal: string;
+  public num;
+  public numTotal;
   public goodsList = [];
   public count = 0;
   private timeInterval;
@@ -31,6 +34,7 @@ export class GoodsShowComponent implements OnInit {
   public img = this.appProperties.imgUrl;
   public replenishList = [];
   public price: string;
+  public machinesVersion: string;
   public couponList;
   public waterVoucherList = [];
 
@@ -41,6 +45,7 @@ export class GoodsShowComponent implements OnInit {
   ngOnInit() {
     this.couponList = [];
     this.waterVoucherList = [];
+    this.machinesVersion = urlParse(window.location.search)['machinesVersion'];
     this.flag = sessionStorage.getItem('flag');
     this.token = sessionStorage.getItem('token');
     this.cihuo = urlParse(window.location.search)['cihuo'];
@@ -60,24 +65,91 @@ export class GoodsShowComponent implements OnInit {
       }
     return text;
   }
+  turnTotalText(item) {
+    let text;
+    if (urlParse(window.location.search)['machinesVersion'] === 'new') {
+      text = item.sumNewNum === undefined ? `货道总数${item.sumNum}` : `货道总数${item.sumNewNum}`;
+    }
+    return text;
+  }
   fixedNum(item, index) {
     this.isVisibleFixed = true;
     this.wayNum = item.wayNum;
     this.basicItemId = item.basicItemId;
     this.index = index;
   }
+  fixedTotalNum(item, index) {
+    this.wayNum = item.wayNum;
+    this.basicItemId = item.basicItemId;
+    this.isVisibleTotal = true;
+    this.indexTotal = index;
+  }
   yes() {
     this.isVisibleWarn = false;
   }
+  yesTotal() {
+    console.log(this.numTotal);
+    this.appService.getAliData(this.appProperties.machineOnceAdjustReplenishSum +
+      `vmCode=${urlParse(window.location.search)['vmCode']}&wayNum=${this.wayNum}&basicItemId=${this.basicItemId}&adjustNum=${this.numTotal}`,
+      '', this.token).subscribe(
+      data => {
+        console.log(data);
+        if (data.status === 1) {
+          alert('修改成功');
+          this.appService.postAliData(this.appProperties.onceReviseUrl,
+            {
+              vmCode: urlParse(window.location.search)['vmCode'],
+              wayNum: Number.parseInt(urlParse(window.location.search)['wayNum']),
+              times: 2,
+              num: '1',
+              orderNumber: urlParse(window.location.href)['orderNumber']},
+            this.token).subscribe(
+            datas => {
+              console.log(datas);
+            }, errors => {
+              console.log(errors);
+            });
+          this.replenishList[this.indexTotal].sumNewNum = this.numTotal;
+        } else {
+          alert(data.message);
+        }
+        this.isVisibleTotal = false;
+      },
+      error2 => {
+        console.log(error2);
+      }
+    );
+  }
   fixedYes() {
-    this.appService.getAliData(this.appProperties.machineControlAdjustReplenish +
-      `vmCode=${urlParse(window.location.search)['vmCode']}&wayNum=${this.wayNum}&basicItemId=${this.basicItemId}&adjustNum=${this.num}`,
+    let url;
+    if (urlParse(window.location.search)['machinesVersion'] === 'new') {
+      url = this.appProperties.machineOnceAdjustReplenish;
+    } else {
+      url = this.appProperties.machineControlAdjustReplenish;
+    }
+    let num;
+    this.cihuo === '1' ? num = -this.num : num = this.num;
+    this.appService.getAliData(url +
+      `vmCode=${urlParse(window.location.search)['vmCode']}&wayNum=${this.wayNum}&basicItemId=${this.basicItemId}&adjustNum=${num}`,
       '', this.token).subscribe(
       data => {
         console.log(data);
         if (data.status === 1) {
           this.replenishList[this.index].changeNewNum = this.num;
           alert('修改成功');
+          this.appService.postAliData(this.appProperties.onceReviseUrl,
+            {
+              vmCode: urlParse(window.location.search)['vmCode'],
+              wayNum: Number.parseInt(urlParse(window.location.search)['wayNum']),
+              times: 2,
+              num: this.num,
+              orderNumber: urlParse(window.location.href)['orderNumber']},
+            this.token).subscribe(
+            datas => {
+              console.log(datas);
+            }, errors => {
+              console.log(errors);
+            });
         } else {
           alert(data.message);
         }
@@ -145,7 +217,7 @@ export class GoodsShowComponent implements OnInit {
       {vmCode: urlParse(window.location.search)['vmCode']}, this.token).subscribe(
       data2 => {
         this.count++;
-        if (this.count === 25) {
+        if (this.count === 20) {
           this.isVisibleOpen = true;
           clearInterval(this.timeInterval);
         }
@@ -166,14 +238,35 @@ export class GoodsShowComponent implements OnInit {
           this.close = false;
           this.more = true;
           this.single = true;
+          this.isVisibleOpen = false;
           clearInterval(this.timeInterval);
-          this.appService.getAliData(this.appProperties.machineControlGetReplenishInfoUrl + urlParse(window.location.search)['vmCode'], '',
+          let url;
+          if (urlParse(window.location.search)['machinesVersion'] === 'new'
+            || urlParse(window.location.search)['machinesVersion'] === 'vision') {
+            url = this.appProperties.machineControlGetReplenishInfoNewUrl + urlParse(window.location.search)['vmCode'] + '&currWay=' + Number.parseInt(urlParse(window.location.search)['wayNum']);
+          } else {
+            url = this.appProperties.machineControlGetReplenishInfoUrl + urlParse(window.location.search)['vmCode'];
+          }
+          this.appService.getAliData(url, '',
             this.token).subscribe(
             data3 => {
               console.log(data3);
               if (data3.status === 1 && data3.returnObject !== '') {
                 this.replenishList = data3.returnObject;
-              }  else {
+                this.appService.postAliData(this.appProperties.onceReviseUrl,
+                  {
+                    vmCode: urlParse(window.location.search)['vmCode'],
+                    wayNum: Number.parseInt(urlParse(window.location.search)['wayNum']),
+                    times: 2,
+                    num: '1',
+                    orderNumber: urlParse(window.location.href)['orderNumber']},
+                  this.token).subscribe(
+                  datas => {
+                    console.log(datas);
+                  }, errors => {
+                    console.log(errors);
+                  });
+              } else {
                 this.replenishList = [];
                 alert(data3.message);
               }

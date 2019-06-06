@@ -7,10 +7,12 @@ export class AppProperties {
   public appUrl: string;
   public adminUrl: string;
   public imgUrl: string;
+  public vmAdvertisingImg: string;
   public isClosedUrl: string;
   public adminLoginUrl: string;
   public adminOauth2Url: string;
   public addOpendoorUrl: string;
+  public visionOnedoorUrl: string;
   public mmsOpenOnceOneUrl: string;
   public operateOpendoorUrl: string;
   public orderResetWaysNumUrl: string;
@@ -24,8 +26,11 @@ export class AppProperties {
   public canReplenishUrl: string;
   public machineControlUrl: string;
   public machineControlGetReplenishInfoUrl: string;
+  public machineControlGetReplenishInfoNewUrl: string;
   public adminCreateForeverStrQrUrl: string;
   public machineControlAdjustReplenish: string;
+  public machineOnceAdjustReplenish: string;
+  public machineOnceAdjustReplenishSum: string;
   public mmsMachinesTestGetStateUrl: string;
   public mmsMachinesTestFailUrl: string;
   public mmsMachinesTestSuccessUrl: string;
@@ -44,13 +49,15 @@ export class AppProperties {
   constructor() {
     // Public
     // this.appUrl = 'http://47.106.92.82:6662/ys_mms/mms';
-    // this.appUrl = 'http://119.23.233.123:6662/ys_mms/mms';
-    this.appUrl = 'http://192.168.0.119:6662/ys_mms/mms';
+    this.appUrl = 'http://119.23.233.123:6662/ys_mms/mms';
+    // this.appUrl = 'http://192.168.0.119:6662/ys_mms/mms';
     this.adminUrl = 'http://119.23.233.123:6662/ys_admin';
     this.imgUrl = this.adminUrl + '/files/';
+    this.vmAdvertisingImg = this.adminUrl + '/vmAdvertisingImg/';
     this.isClosedUrl = this.appUrl + '/change/isClosed';
     this.adminLoginUrl = this.appUrl + '/login/do'; // old /admin/login
     this.addOpendoorUrl = this.appUrl + '/open/one'; // old /index/yunWeiOpenDoor
+    this.visionOnedoorUrl = this.appUrl + '/open/visionOne'; // old /index/yunWeiOpenDoor
     this.mmsOpenOnceOneUrl = this.appUrl + '/open/onceOne'; // old /index/yunWeiOpenDoor
     this.operateOpendoorUrl = this.appUrl + '/open/all'; // old /index/operateOpenDoor
     this.orderResetWaysNumUrl = this.appUrl + '/adjust/readHB?vmCode='; // old /order/resetWaysNum/
@@ -65,8 +72,11 @@ export class AppProperties {
     this.canReplenishUrl = this.appUrl + '/login/canReplenish'; // old /index/canReplenish
     this.machineControlUrl = this.appUrl + '/change/itemInfo'; // old /machineControl/getChangeInfo
     this.machineControlGetReplenishInfoUrl = this.appUrl + '/change/ultimateInfo?vmCode='; // old /machineControl/getReplenishInfo
+    this.machineControlGetReplenishInfoNewUrl = this.appUrl + '/change/ultimateInfoNew?vmCode='; // old /machineControl/getReplenishInfo
     this.adminCreateForeverStrQrUrl = this.appUrl + '/admin/createStrQr';
     this.machineControlAdjustReplenish = this.appUrl + '/adjust/replenish?'; // old /machineControl/adjustReplenish
+    this.machineOnceAdjustReplenish = this.appUrl + '/adjust/onceReplenish?'; // old /machineControl/adjustReplenish
+    this.machineOnceAdjustReplenishSum = this.appUrl + '/adjust/onceReplenishSum?'; // old /machineControl/adjustReplenish
     this.mmsMachinesTestGetStateUrl = this.appUrl + '/machinesTest/getState';
     this.mmsMachinesTestFailUrl = this.appUrl + '/machinesTest/fail';
     this.mmsMachinesTestSuccessUrl = this.appUrl + '/machinesTest/success';

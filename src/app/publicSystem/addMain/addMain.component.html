@@ -3,13 +3,13 @@
   <!--</div>-->
   <div class="bgimg">
     <div class="logo">
+      <span style="
+    position: absolute;
+    z-index: 1;
+    left: 27%;font-weight: 600">售货机编号:{{vmCode}}</span>
       <carousel>
         <slide>
           <img src="../../../assets/main/banner1.png" alt="first slide" style="display: block; width: 100%;height: 116px;">
-          <div class="carousel-caption d-none d-md-block">
-            <h3>First slide label</h3>
-            <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
-          </div>
         </slide>
       </carousel>
       <br>
@@ -128,6 +128,65 @@
           </div>
         </div>
       </div>
+
+      <div class="context" *ngIf="isTwoDoor">
+        <div (click)="yesOpenDoor(item)" *ngFor="let item of indexList" class="boxtwo card text-white mb-3">
+          <img *ngIf="item['wayItemList'][0]['img'] !== ''" [src]="vmAdvertisingImg+item['wayItemList'][0]['img']" alt="" width="60" style="position: absolute">
+          <div style="width: 100%">
+            <div style="width: 100%;display: flex;">
+              <div [ngClass]="item['wayItemList'].length === 1 ? 'box-body-one' : 'box-body-two'">
+                <img onclick="return false" class="col-img" src="{{img}}{{item['wayItemList'][0]['pic']}}" alt="">
+                <!--<span class="w-n-size">重量：{{item['wayWeight']}}</span>-->
+                <!--<br>-->
+                <span class="w-n-size">数量：{{item['wayItemList'][0]['num']}}</span>
+
+              </div>
+              <div [hidden]="item['wayItemList'].length === 1" class="box-body-two" >
+                <img onclick="return false" class="col-img" [src]="turnImg(item['wayItemList'])" alt="">
+                <!--<span class="w-n-size">重量：{{item['wayWeight']}}</span>-->
+                <!--<br>-->
+                <span class="w-n-size">数量：{{turn(item['wayItemList'], 'num')}}</span>
+              </div>
+
+            </div>
+            <div style="width: 100%;display: flex;" *ngIf="item['wayItemList'].length > 2">
+              <div class="box-body-two" >
+                <img onclick="return false" class="col-img" src="{{img}}{{item['wayItemList'][2]['pic']}}" alt="">
+                <!--<span class="w-n-size">重量：{{item['wayWeight']}}</span>-->
+                <!--<br>-->
+                <span class="w-n-size">数量：{{item['wayItemList'][2]['num']}}</span>
+              </div>
+              <div *ngIf="item['wayItemList'].length > 3" class="box-body-two" >
+                <img onclick="return false" class="col-img" src="{{img}}{{item['wayItemList'][3]['pic']}}" alt="">
+                <!--<span class="w-n-size">重量：{{item['wayWeight']}}</span>-->
+                <!--<br>-->
+                <span class="w-n-size">数量：{{item['wayItemList'][3]['num']}}</span>
+              </div>
+            </div>
+
+            <div style="width: 100%;display: flex;" *ngIf="item['wayItemList'].length > 4">
+              <div class="box-body-two" >
+                <img onclick="return false" class="col-img" src="{{img}}{{item['wayItemList'][4]['pic']}}" alt="">
+                <!--<span class="w-n-size">重量：{{item['wayWeight']}}</span>-->
+                <!--<br>-->
+                <span class="w-n-size">数量：{{item['wayItemList'][4]['num']}}</span>
+              </div>
+              <div *ngIf="item['wayItemList'].length > 5" class="box-body-two" >
+                <img onclick="return false" class="col-img" src="{{img}}{{item['wayItemList'][5]['pic']}}" alt="">
+                <!--<span class="w-n-size">重量：{{item['wayWeight']}}</span>-->
+                <!--<br>-->
+                <span class="w-n-size">数量：{{item['wayItemList'][5]['num']}}</span>
+              </div>
+            </div>
+          </div>
+          <!--<button class="detail-button" *ngIf="item['wayItemList'].length < 5"  style="position: absolute;top: 250px;left: 45px;"></button>-->
+          <!--<button class="detail-button" *ngIf="item['wayItemList'].length > 4"  style="position: absolute;top: 356px;left: 45px;"></button>-->
+          <!--<button (click)="detail(item['wayItemList'][1], $event, item['wayWeight'])"-->
+                  <!--class="detail-button-four-second"></button>-->
+
+        </div>
+      </div>
+
     </div>
     <!--<div class="foot">-->
     <!--<img class="foot-img" src="../../../assets/main/logo1.png" alt="">-->
@@ -154,7 +213,7 @@
     </div>
     <div class="my-restart">
       <button (click)="reStart()" type="button">重启</button>
-      <button (click)="resetNum()" type="button">校准所有</button>
+      <button (click)="resetNum()" type="button">刷新重量</button>
       <button (click)="adjustVol()" type="button">调节音量</button>
       <button (click)="resetWeight()" type="button">校准</button>
     </div>
@@ -167,9 +226,10 @@
     </ng-template>
     <ng-template #modalContentbuhuo style="text-align: center" >
       <button nz-button nzType="primary" (click)="openDoor(6)" style="width: 99%;margin-bottom: 5px">撤货到其他机器</button>
-      <button *ngIf="machinesVersion === 'new'" nz-button nzType="primary" (click)="onceResetWeight()" style="width: 99%;margin-bottom: 5px">一次校准</button>
-      <button nz-button nzType="primary" (click)="openDoor(5)" style="width: 99%;margin-bottom: 5px">撤货</button>
-      <button *ngIf="machinesVersion === 'old'" nz-button nzType="primary" (click)="openDoor(2)" style="width: 99%;margin-bottom: 5px">补货</button>
+      <button *ngIf="machinesVersion === 'new'" nz-button nzType="primary" (click)="onceResetWeight()" style="width: 99%;margin-bottom: 5px">{{machinesVersion === 'new' ? '直接补货' : '补货'}}</button>
+      <button *ngIf="machinesVersion === 'new'" nz-button nzType="primary" (click)="openDoor(1)" style="width: 99%;margin-bottom: 5px">校准库存</button>
+      <button nz-button nzType="primary" (click)="openDoor(5)" style="width: 99%;margin-bottom: 5px">{{machinesVersion === 'new' ? '校准撤货' : '撤货'}}</button>
+      <button *ngIf="machinesVersion !== 'new'" nz-button nzType="primary" (click)="openDoor(2)" style="width: 99%;margin-bottom: 5px">补货</button>
       <!--<button *ngIf="machinesVersion === 'new'" nz-button nzType="primary" (click)="openDoor(3)" style="width: 99%;margin-bottom: 5px">一次校准补货</button>-->
       <button nz-button nzType="primary" (click)="noOpenDoor()" style="width: 99%;margin-bottom: 5px">取消</button>
     </ng-template>

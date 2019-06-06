@@ -46,7 +46,9 @@ export class AddMainComponent implements OnInit {
   // public img = 'http://lenvar-resource-products.oss-cn-shenzhen.aliyuncs.com/';
   // public img = 'http://119.23.233.123:6662/ys_admin/files/';
   public img = this.appProperties.imgUrl;
+  public vmAdvertisingImg = this.appProperties.vmAdvertisingImg;
   public clickMore = false;
+  public isTwoDoor = false; // 2门
   public isFourDoor = false; // 四门
   public isFiveDoor = false; // 五门
   public isEightDoor = false; // 8门
@@ -68,6 +70,7 @@ export class AddMainComponent implements OnInit {
   public priceList = [];
   public machinesVersion;
   public replenishTips;
+  public vmCode;
 
   constructor(private router: Router,
               private modalService: NzModalService,
@@ -80,7 +83,7 @@ export class AddMainComponent implements OnInit {
     // 数据初始化
     this.token = urlParse(window.location.search)['token'];
     console.log(urlParse(window.location.search)['token']);
-    const vmCode = urlParse(window.location.search)['vmCode'];
+    this.vmCode = urlParse(window.location.search)['vmCode'];
     // this.onceReplenishVmcode = ['1988001541', '1988001540', '1999000000', '1999000001', '1996000003'].includes(vmCode);
     sessionStorage.setItem('token', urlParse(window.location.search)['token']);
     // 数据初始化
@@ -218,10 +221,11 @@ export class AddMainComponent implements OnInit {
         console.log(data);
         if (data.status === 1) {
           this.machinesVersion = data.returnObject.machinesVersion;
-          if (data.returnObject.wayInfo.length <= 4) {
+          if (data.returnObject.wayInfo.length === 4) {
             this.isFourDoor = true;
             this.isFiveDoor = false;
             this.isEightDoor = false;
+            this.isTwoDoor = false;
             this.indexList = data.returnObject.wayInfo;
             for (let i = 0; i < 2; i++) {
               this.indexList.unshift(this.indexList.pop());
@@ -233,6 +237,7 @@ export class AddMainComponent implements OnInit {
             this.isFourDoor = false;
             this.isFiveDoor = true;
             this.isEightDoor = false;
+            this.isTwoDoor = false;
             data.returnObject.wayInfo.forEach((item, index) => {
               if (index > 1) {
                 this.fiveIndexListRigth.push(item);
@@ -244,8 +249,15 @@ export class AddMainComponent implements OnInit {
             this.isFourDoor = false;
             this.isFiveDoor = false;
             this.isEightDoor = true;
+            this.isTwoDoor = false;
             this.indexList = data.returnObject.wayInfo;
             this.eightIndexList = data.returnObject.wayInfo.slice(0, 4);
+          } else if (data.returnObject.wayInfo.length === 2) {
+            this.isFourDoor = false;
+            this.isFiveDoor = false;
+            this.isEightDoor = false;
+            this.isTwoDoor = true;
+            this.indexList = data.returnObject.wayInfo;
           }
           console.log(this.indexList);
           this.temperature = data.returnObject.temperature;
@@ -373,21 +385,22 @@ export class AddMainComponent implements OnInit {
           //   }
           // );
           // 撤货
-          if (this.indexList[this.wayNoOnceOpen]['wayItemList'].length > 1) {
+          this.wayIndex = this.returnWayIndex(this.wayNoOnceOpen);
+          if (this.indexList[this.wayIndex]['wayItemList'].length > 1) {
             this.visible = true;
           } else {
             this.visible = false;
           }
-          if (this.indexList[this.wayNoOnceOpen]['wayItemList'].length > 1) {
+          if (this.indexList[this.wayIndex]['wayItemList'].length > 1) {
             this.visible = true;
           } else {
             this.visible = false;
           }
           const orderNumber = [];
           const itemName = [];
-          for (let i = 0; i < this.indexList[this.wayNoOnceOpen]['wayItemList'].length; i++) {
-            orderNumber.push(this.indexList[this.wayNoOnceOpen]['wayItemList'][i].orderNumber);
-            itemName.push(this.indexList[this.wayNoOnceOpen]['wayItemList'][i].itemName);
+          for (let i = 0; i < this.indexList[this.wayIndex]['wayItemList'].length; i++) {
+            orderNumber.push(this.indexList[this.wayIndex]['wayItemList'][i].orderNumber);
+            itemName.push(this.indexList[this.wayIndex]['wayItemList'][i].itemName);
           }
           // 跳转校准
           this.router.navigate(['addGoods'], {
@@ -398,21 +411,33 @@ export class AddMainComponent implements OnInit {
               itemName: itemName.join(','),
               wayNo: this.wayNoOnceOpen,
               doorNums: this.indexList.length,
-              chehuo: flag
+              chehuo: flag,
+              machinesVersion: this.machinesVersion
             }
           });
         } else if (flag === 2) {
-          this.appService.getDataOpen(this.appProperties.addOpendoorUrl,
+          const url = this.machinesVersion === 'vision' ? this.appProperties.visionOnedoorUrl : this.appProperties.addOpendoorUrl;
+          console.log(this.machinesVersion);
+          console.log(url);
+          this.appService.getDataOpen(url,
             {vmCode: urlParse(window.location.search)['vmCode'], wayNum: this.item.wayNumber},
             this.token).subscribe(
             data => {
               console.log(data);
               this.clickMore = false;
+              const orderNumber = [];
+              this.wayIndex = this.returnWayIndex(this.item.wayNumber);
+              for (let i = 0; i < this.indexList[this.wayIndex]['wayItemList'].length; i++) {
+                orderNumber.push(this.indexList[this.wayIndex]['wayItemList'][i].orderNumber);
+              }
               if (data.status === 1001) {
                 // this.isVisibleOpen = true;
                 this.router.navigate(['goodsShow'], {
                   queryParams: {
                     vmCode: urlParse(window.location.search)['vmCode'],
+                    wayNum: this.item.wayNumber,
+                    orderNumber: orderNumber.join(','),
+                    machinesVersion: this.machinesVersion
                     // flag: 4,
                   }});
                 sessionStorage.setItem('flag', '4');
@@ -420,6 +445,9 @@ export class AddMainComponent implements OnInit {
                 this.router.navigate(['goodsShow'], {
                   queryParams: {
                     vmCode: urlParse(window.location.search)['vmCode'],
+                    wayNum: this.item.wayNumber,
+                    orderNumber: orderNumber.join(','),
+                    machinesVersion: this.machinesVersion
                     // flag: 3,
                   }});
                 sessionStorage.setItem('flag', '3');
@@ -433,6 +461,37 @@ export class AddMainComponent implements OnInit {
               console.log(error);
             }
           );
+        } else if (flag === 1) {
+          this.wayIndex = this.returnWayIndex(this.wayNoOnceOpen);
+          if (this.indexList[this.wayIndex]['wayItemList'].length > 1) {
+            this.visible = true;
+          } else {
+            this.visible = false;
+          }
+          if (this.indexList[this.wayIndex]['wayItemList'].length > 1) {
+            this.visible = true;
+          } else {
+            this.visible = false;
+          }
+          console.log(this.indexList[this.wayIndex]);
+          const orderNumber = [];
+          const itemName = [];
+          for (let i = 0; i < this.indexList[this.wayIndex]['wayItemList'].length; i++) {
+            orderNumber.push(this.indexList[this.wayIndex]['wayItemList'][i].orderNumber);
+            itemName.push(this.indexList[this.wayIndex]['wayItemList'][i].itemName);
+          }
+          // 跳转校准
+          this.router.navigate(['addGoods'], {
+            queryParams: {
+              vmCode: urlParse(window.location.search)['vmCode'],
+              goods: this.visible,
+              orderNumber: orderNumber.join(','),
+              itemName: itemName.join(','),
+              wayNo: this.wayNoOnceOpen,
+              doorNums: this.indexList.length,
+              machinesVersion: this.machinesVersion
+            }
+          });
         }
       }
     }
@@ -546,12 +605,19 @@ export class AddMainComponent implements OnInit {
             this.token).subscribe(
             datas => {
               console.log(datas);
-              this.clickMore = false;
+              const orderNumber = [];
+              this.wayIndex = this.returnWayIndex(this.wayNoOnceOpen);
+              for (let i = 0; i < this.indexList[this.wayIndex]['wayItemList'].length; i++) {
+                orderNumber.push(this.indexList[this.wayIndex]['wayItemList'][i].orderNumber);
+              }
               if (datas.status === 1001) {
                 // this.isVisibleOpen = true;
                 this.router.navigate(['goodsShow'], {
                   queryParams: {
                     vmCode: urlParse(window.location.search)['vmCode'],
+                    wayNum: this.item.wayNumber,
+                    orderNumber: orderNumber.join(','),
+                    machinesVersion: this.machinesVersion
                     // flag: 4,
                   }});
                 sessionStorage.setItem('flag', '4');
@@ -559,6 +625,9 @@ export class AddMainComponent implements OnInit {
                 this.router.navigate(['goodsShow'], {
                   queryParams: {
                     vmCode: urlParse(window.location.search)['vmCode'],
+                    wayNum: this.item.wayNumber,
+                    orderNumber: orderNumber.join(','),
+                    machinesVersion: this.machinesVersion
                     // flag: 3,
                   }});
                 sessionStorage.setItem('flag', '3');
@@ -573,22 +642,7 @@ export class AddMainComponent implements OnInit {
             }
           );
         } else {
-          if (this.wayNoOnceOpen === 3) {
-            this.wayIndex = 0;
-          } else if (this.wayNoOnceOpen === 4) {
-            this.wayIndex = 1;
-          } else if (this.wayNoOnceOpen === 1) {
-            this.wayIndex = 2;
-          } else if (this.wayNoOnceOpen === 2) {
-            this.wayIndex = 3;
-          } else if (this.wayNoOnceOpen === 5) {
-            this.wayIndex = 4;
-          }
-          if (this.indexList[this.wayIndex]['wayItemList'].length > 1) {
-            this.visible = true;
-          } else {
-            this.visible = false;
-          }
+          this.wayIndex = this.returnWayIndex(this.wayNoOnceOpen);
           if (this.indexList[this.wayIndex]['wayItemList'].length > 1) {
             this.visible = true;
           } else {
@@ -645,43 +699,43 @@ export class AddMainComponent implements OnInit {
   }
 
   openAll() {
-    let way;
-    if (this.isFourDoor) {
-      way = '1,2,3,4';
-    } else {
-      way = '1,2,3,4,5';
-    }
-    this.appService.postAliData(this.appProperties.operateOpendoorUrl
-      + '?vmCode=' + urlParse(window.location.search)['vmCode'],
-      // + '&wayNum=' + way,
-      '', this.token).subscribe(
-      data => {
-        console.log(data);
-        if (data.code === -1) {
-          this.router.navigate(['vmLogin']);
-        } else if (data.code === 0) {
-          // this.isVisibleOpen = true;
-          this.router.navigate(['goodsShow'], {
-            queryParams: {
-              vmCode: urlParse(window.location.search)['vmCode'],
-              // flag: 4,
-            }});
-          sessionStorage.setItem('flag', '4');
-        }  else if (data.code === 4) {
-          this.router.navigate(['goodsShow'], {
-            queryParams: {
-              vmCode: urlParse(window.location.search)['vmCode'],
-              // flag: 3,
-            }});
-          sessionStorage.setItem('flag', '3');
-        } else {
-          alert(data.msg);
-        }
-      },
-      error => {
-        console.log(error);
-      }
-    );
+    // let way;
+    // if (this.isFourDoor) {
+    //   way = '1,2,3,4';
+    // } else {
+    //   way = '1,2,3,4,5';
+    // }
+    // this.appService.postAliData(this.appProperties.operateOpendoorUrl
+    //   + '?vmCode=' + urlParse(window.location.search)['vmCode'],
+    //   // + '&wayNum=' + way,
+    //   '', this.token).subscribe(
+    //   data => {
+    //     console.log(data);
+    //     if (data.code === -1) {
+    //       this.router.navigate(['vmLogin']);
+    //     } else if (data.code === 0) {
+    //       // this.isVisibleOpen = true;
+    //       this.router.navigate(['goodsShow'], {
+    //         queryParams: {
+    //           vmCode: urlParse(window.location.search)['vmCode'],
+    //           // flag: 4,
+    //         }});
+    //       sessionStorage.setItem('flag', '4');
+    //     }  else if (data.code === 4) {
+    //       this.router.navigate(['goodsShow'], {
+    //         queryParams: {
+    //           vmCode: urlParse(window.location.search)['vmCode'],
+    //           // flag: 3,
+    //         }});
+    //       sessionStorage.setItem('flag', '3');
+    //     } else {
+    //       alert(data.msg);
+    //     }
+    //   },
+    //   error => {
+    //     console.log(error);
+    //   }
+    // );
   }
 
   no() {
@@ -799,5 +853,24 @@ export class AddMainComponent implements OnInit {
         console.log(error);
       }
     );
+  }
+  returnWayIndex(wayNumber) {
+    let index;
+    if (this.indexList.length < 5 && this.indexList.length > 2) {
+      if (wayNumber === 3) {
+        index = 0;
+      } else if (wayNumber === 4) {
+        index = 1;
+      } else if (wayNumber === 1) {
+        index = 2;
+      } else if (wayNumber === 2) {
+        index = 3;
+      } else if (wayNumber === 5) {
+        index = 4;
+      }
+    } else {
+        index = wayNumber - 1;
+    }
+    return index;
   }
 }
